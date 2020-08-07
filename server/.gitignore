@@ -4,5 +4,4 @@
 /node_modules
 
 # database
-*.sqlite
-
+/*/*.sqlite
