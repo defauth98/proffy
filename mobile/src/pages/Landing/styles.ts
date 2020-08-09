@@ -52,9 +52,6 @@ const styles = StyleSheet.create({
     maxWidth: 140,
     marginTop: 40,
   },
-  heartIcon: {
-    paddingLeft: 100,
-  },
 });
 
 export default styles;
