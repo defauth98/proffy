@@ -49,9 +49,7 @@ const TeacherList: React.FC = () => {
       },
     });
 
-    useFocusEffect(() => {
-      LoadFavorites()
-    })
+    console.log(response.data)
 
     setTeachers(response.data);
     toggleHandleFiltersVisible()

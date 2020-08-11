@@ -36,11 +36,11 @@ const Favorites: React.FC = () => {
           paddingBottom: 16
         }}
       >
-
+        {favorites.map((teacher: Teacher) => {
+          return <TeacherItem key={teacher.id} teacher={teacher} favorited />
+        })}
       </ScrollView>
-      {favorites.map((teacher: Teacher) => {
-        return <TeacherItem key={teacher.id} teacher={teacher} favorited />
-      })}
+
     </View >
   );
 }
