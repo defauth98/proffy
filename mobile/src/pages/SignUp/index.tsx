@@ -6,7 +6,7 @@ import styles from './styles';
 const SignUp: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tela de cadastro, cadastra ae o corno</Text>
+      <Text style={styles.title}>Tela de cadastro</Text>
     </View>
   );
 };
