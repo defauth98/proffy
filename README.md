@@ -24,13 +24,17 @@ Durante essa semana de muito networking e muito código, foi contruido uma aplic
     <img alt="capa" title="capa" src=".github/capa.svg" width="700px" />
 </h1>
 
-## Interface web e mobile
+## Novas funcionalidades (Versão 2.0)
 
-<h1 align="center">
-    <img alt="gif-web"  src=".github/web.gif" width="500px" />
-    <img alt="gif-mobile"  src=".github/mobile.gif" width="130px" height="260px" />
-</h1>
-
+- [ ] Autenticação de usuários
+- [ ] Recuperação de senhas
+- [ ] Perfil do proffy
+- [ ] Splash Screen no React Native
+- [ ] Paginação na listagem de proffys
+- [ ] Exibindo horários disponiveis dos proffys
+- [ ] Salvando seus proffys favoritos
+- [ ] Logout da aplicação
+- [ ] Deploy da aplicação
 
 ## :computer: Tecnologias
 
@@ -48,7 +52,6 @@ Esse projeto foi desenvolvido com as seguintes técnologias:
 [reactjs]: https://reactjs.org
 [rn]: https://facebook.github.io/react-native/
 [yarn]: https://yarnpkg.com/
-
 
 ## :file_folder: Como acessar o layout
 
