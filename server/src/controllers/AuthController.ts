@@ -1,42 +1,43 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import db from '../database/connection';
+import crypto from 'crypto';
 
-import { secret } from '../config/auth'
+import mailer from '../modules/mailer';
+import { secret } from '../config/auth';
 
 export const saltRounds = 10;
 
 function generateToken(id: string) {
   return jwt.sign({ id }, secret, {
-    expiresIn: 86400
-  })
+    expiresIn: 86400,
+  });
 }
 
 export default class AuthController {
   async signin(req: Request, res: Response) {
-    const { name, surname, email, password } = req.body;
+    const { name, email, password, whatsapp, bio, avatar } = req.body;
 
     try {
-      const userExists = await db('users').where({ email })
+      const userExists = await db('users').where({ email });
 
       if (userExists[0]) {
         return res.status(400).json({
-          error: "Email já cadastrado"
-        })
+          error: 'Email já cadastrado',
+        });
       }
 
       await bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(password, salt, async function (err, hash) {
           await db('users').insert({
             name,
-            surname,
             email,
             password: hash,
-            whatsapp: '',
-            bio: '',
-            avatar: ''
-          })
+            whatsapp,
+            bio,
+            avatar,
+          });
 
           const newUser = await db('users').where({ email });
 
@@ -44,12 +45,15 @@ export default class AuthController {
             User: {
               id: newUser[0].id,
               email: newUser[0].email,
-            }, token: generateToken(newUser[0].id)
+            },
+            token: generateToken(newUser[0].id),
           });
         });
       });
     } catch (error) {
-      return res.status(400).json({ error: "Erro inesperado ao criar o usuário" })
+      return res
+        .status(400)
+        .json({ error: 'Erro inesperado ao criar o usuário' });
     }
   }
 
@@ -57,28 +61,59 @@ export default class AuthController {
     const { email, password } = req.body;
 
     try {
-      const users = await db('users').where({ email })
+      const users = await db('users').where({ email });
       if (!users[0]) {
-        return res.json({ Error: "Email not exists" })
+        return res.json({ Error: 'Email not exists' });
       }
 
       const userPassword = users[0].password;
 
       await bcrypt.compare(password, userPassword, function (err, result) {
         if (result) {
+          const token = generateToken(users[0].id);
 
-          const token = generateToken(users[0].id)
-
-          return res.status(200).json({ message: "Login success", token })
-
-
+          return res.status(200).json({ message: 'Login success', token });
         } else {
-          return res.status(400).json({ error: "Wrong password" })
+          return res.status(400).json({ error: 'Wrong password' });
         }
       });
-
     } catch (error) {
-      return res.status(400).json({ error: "Login error" })
+      return res.status(400).json({ error: 'Login error' });
+    }
+  }
+
+  async forgotPassword(req: Request, res: Response) {
+    const { email } = req.body;
+
+    try {
+      const user = await db('users').where({ email });
+
+      if (!user) return res.status(400).json({ error: 'User not found' });
+
+      const token = crypto.randomBytes(20).toString('hex');
+
+      const now = new Date();
+      now.setHours(now.getHours() + 1);
+
+      const updatedUserID = await db('users')
+        .update({
+          passwordResetToken: token,
+          passwordResetExpires: now,
+        })
+        .where({ email });
+
+      const updatedUser = await db('users').where({ id: updatedUserID });
+
+      await mailer.sendMail({
+        from: 'ProffyApp <app@proffy.com>',
+        to: email,
+        subject: 'Recuperação de Senha',
+        text: `Para recuperar sua senha use o token: 
+          ${token}`,
+      });
+      return res.json({ updatedUser });
+    } catch (error) {
+      return res.json({ error });
     }
   }
 }

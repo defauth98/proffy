@@ -12,7 +12,9 @@
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.7",
     "@types/express": "^4.17.7",
+    "@types/express-handlebars": "^3.1.0",
     "@types/jsonwebtoken": "^8.5.0",
+    "@types/nodemailer": "^6.4.0",
     "ts-node-dev": "^1.0.0-pre.56",
     "typescript": "^3.9.7"
   },
@@ -22,6 +24,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.2",
+    "nodemailer": "^6.4.11",
+    "nodemailer-express-handlebars": "^4.0.0",
     "sqlite3": "^5.0.0"
   }
 }

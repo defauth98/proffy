@@ -1,20 +1,22 @@
-import express from 'express'
-import ClassesController from './controllers/ClassesController'
-import ConnectionController from './controllers/ConnectionsController'
-import AuthController from './controllers/AuthController'
+import express from 'express';
+import ClassesController from './controllers/ClassesController';
+import ConnectionController from './controllers/ConnectionsController';
+import AuthController from './controllers/AuthController';
 
-const routes = express.Router()
-const classesController = new ClassesController()
-const connectionsController = new ConnectionController()
-const authController = new AuthController()
+const routes = express.Router();
+const classesController = new ClassesController();
+const connectionsController = new ConnectionController();
+const authController = new AuthController();
 
-routes.post('/sign', authController.signin)
-routes.post('/login', authController.login)
+routes.post('/signup', authController.signin);
+routes.post('/login', authController.login);
 
-routes.get('/classes', classesController.index)
-routes.post('/classes', classesController.create)
+routes.post('/forgot_password', authController.forgotPassword);
 
-routes.get('/connections', connectionsController.index)
-routes.post('/connections', connectionsController.create)
+routes.get('/classes', classesController.index);
+routes.post('/classes', classesController.create);
 
-export default routes
+routes.get('/connections', connectionsController.index);
+routes.post('/connections', connectionsController.create);
+
+export default routes;
