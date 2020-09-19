@@ -5,7 +5,6 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -16,6 +15,8 @@ import styles from './styles';
 
 import backgroundImage from '../../assets/images/signIn-background.png';
 import logoImage from '../../assets/images/intro.png';
+
+import FormInputs from '../../components/FormInputs';
 
 export default function LoginPage() {
   const navigation = useNavigation();
@@ -49,15 +50,9 @@ export default function LoginPage() {
             <Text style={styles.rightButtonText}>Criar uma conta</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.formInputs}>
-          <View style={[styles.inputWrapper, styles.formInputEmail]}>
-            <TextInput style={[styles.formInput]} placeholder="E-mail" />
-          </View>
 
-          <View style={[styles.inputWrapper, styles.formInputPassword]}>
-            <TextInput style={[styles.formInput]} placeholder="Senha" />
-          </View>
-        </View>
+        <FormInputs />
+
         <View style={styles.formFooter}>
           <TouchableOpacity>
             <Text style={styles.remember}>Lembrar-me</Text>

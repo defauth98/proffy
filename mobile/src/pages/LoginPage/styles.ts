@@ -52,23 +52,7 @@ const styles = StyleSheet.create({
   rightButtonText: {
     color: '#8257E5',
   },
-  formInputs: {},
-  inputWrapper: {
-    backgroundColor: '#F0F0F7',
-    height: 60,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#E6E6F0',
-  },
-  formInput: {},
-  formInputPassword: {
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-  },
-  formInputEmail: {
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-  },
+
   formFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
