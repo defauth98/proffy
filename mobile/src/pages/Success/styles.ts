@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 200,
     fontSize: 40,
-    // width: 300,
   },
   description: {
     color: '#D4C2FF',
