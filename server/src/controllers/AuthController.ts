@@ -17,7 +17,7 @@ function generateToken(id: string) {
 
 export default class AuthController {
   async signin(req: Request, res: Response) {
-    const { name, email, password, whatsapp, bio, avatar } = req.body;
+    const { name, surname, email, password } = req.body;
 
     try {
       const userExists = await db('users').where({ email });
@@ -32,11 +32,9 @@ export default class AuthController {
         bcrypt.hash(password, salt, async function (err, hash) {
           await db('users').insert({
             name,
+            surname,
             email,
             password: hash,
-            whatsapp,
-            bio,
-            avatar,
           });
 
           const newUser = await db('users').where({ email });
@@ -75,6 +73,7 @@ export default class AuthController {
         .select(
           'users.id',
           'users.name',
+          'users.password',
           'users.email',
           'users.whatsapp',
           'users.bio',
