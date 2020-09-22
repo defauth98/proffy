@@ -70,7 +70,7 @@ export default class AuthController {
       }
       const userPassword = userExists[0].password;
 
-      const user = await db('users')
+      const users = await db('users')
         .where({ email })
         .select(
           'users.id',
@@ -85,7 +85,7 @@ export default class AuthController {
         if (result) {
           const token = generateToken(userExists[0].id);
 
-          return res.status(200).json({ user, token });
+          return res.status(200).json({ user: users[0], token });
         } else {
           return res.status(400).json({ error: 'Wrong password' });
         }
