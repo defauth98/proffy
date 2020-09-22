@@ -1,7 +1,7 @@
-import React from 'react';
-import { KeyboardAvoidingView } from 'react-native';
-import { Platform } from 'react-native';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+
+import { KeyboardAvoidingView, View, Text, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import FormInputs from '../../components/FormInputs';
@@ -9,6 +9,15 @@ import FormInputs from '../../components/FormInputs';
 import styles from './styles';
 
 const SignUpWhoami: React.FC = () => {
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+
+  const navigation = useNavigation();
+
+  function handleNavigateToNextPage() {
+    navigation.navigate('SignUpCrendetials', { name, surname });
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -24,8 +33,17 @@ const SignUpWhoami: React.FC = () => {
       </View>
       <View style={styles.formWrapper}>
         <Text style={styles.formTitle}>02. Email e senha</Text>
-        <FormInputs />
-        <RectButton style={styles.button}>
+        <FormInputs
+          setFirtInput={setName}
+          setSecondInput={setSurname}
+          firstInputPlaceholder="Nome"
+          secondInputPlaceholder="Sobrenome"
+          isSecondInputPassword={false}
+        />
+        <RectButton
+          style={[styles.button, styles.buttonPurple]}
+          onPress={() => handleNavigateToNextPage()}
+        >
           <Text style={styles.buttonText}>Próximo</Text>
         </RectButton>
       </View>

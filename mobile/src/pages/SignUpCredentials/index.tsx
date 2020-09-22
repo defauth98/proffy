@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
 import { View, Text } from 'react-native';
@@ -9,6 +9,9 @@ import FormInputs from '../../components/FormInputs';
 import styles from './styles';
 
 const SignUpCrendetials: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -24,7 +27,13 @@ const SignUpCrendetials: React.FC = () => {
       </View>
       <View style={styles.formWrapper}>
         <Text style={styles.formTitle}>01. Quem é você?</Text>
-        <FormInputs />
+        <FormInputs
+          setFirtInput={setEmail}
+          setSecondInput={setPassword}
+          firstInputPlaceholder="Nome"
+          secondInputPlaceholder="Sobrenome"
+          isSecondInputPassword={false}
+        />
         <RectButton style={styles.button}>
           <Text style={styles.buttonText}>Próximo</Text>
         </RectButton>

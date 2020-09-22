@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  TextInput,
 } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
+
+import { AuthContext } from '../../contexts/auth';
 
 import backgroundImage from '../../assets/images/signIn-background.png';
 import logoImage from '../../assets/images/intro.png';
@@ -19,7 +22,23 @@ import logoImage from '../../assets/images/intro.png';
 import FormInputs from '../../components/FormInputs';
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // @todo função de lembrar para entrar automaticamente
+  // const [rememberMe, setRememberMe] = useState(false);
+
+  const { signed, login, user } = useContext(AuthContext);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    if (user && signed) {
+      navigation.navigate('Landing');
+    }
+  }, [user]);
+
+  function handleLogin() {
+    login(email, password);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -51,7 +70,12 @@ export default function LoginPage() {
           </TouchableOpacity>
         </View>
 
-        <FormInputs />
+        <FormInputs
+          setFirtInput={setEmail}
+          setSecondInput={setPassword}
+          firstInputPlaceholder="E-mail"
+          secondInputPlaceholder="Senha"
+        />
 
         <View style={styles.formFooter}>
           <TouchableOpacity>
@@ -61,7 +85,7 @@ export default function LoginPage() {
             <Text style={styles.forget}>Esqueci minha senha</Text>
           </TouchableOpacity>
         </View>
-        <RectButton style={styles.formButton}>
+        <RectButton style={styles.formButton} onPress={() => handleLogin()}>
           <Text style={styles.formButtonText}>Entrar</Text>
         </RectButton>
       </View>

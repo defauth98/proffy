@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonPurple: {
+    backgroundColor: '#8257E5',
+  },
   buttonText: {
     color: '#9C98A6',
   },
