@@ -32,7 +32,7 @@ const SignUpWhoami: React.FC = () => {
         </View>
       </View>
       <View style={styles.formWrapper}>
-        <Text style={styles.formTitle}>02. Email e senha</Text>
+        <Text style={styles.formTitle}>01. Quem é você?</Text>
         <FormInputs
           setFirtInput={setName}
           setSecondInput={setSurname}

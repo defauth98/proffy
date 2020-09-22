@@ -6,6 +6,12 @@ interface AuthContextData {
   signed: boolean;
   user: object;
   login(email: string, password: string): Promise<void>;
+  SignIn(
+    email: string,
+    password: string,
+    name: string,
+    surname: string
+  ): Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -28,8 +34,24 @@ export const AuthProvider: React.FC = ({ children }) => {
     setUser(response.data.user);
   }
 
+  async function SignIn(
+    name: string,
+    password: string,
+    surname: string,
+    email: string
+  ) {
+    const response = await api.post('signup', {
+      name,
+      surname,
+      email,
+      password,
+    });
+
+    console.log(response);
+  }
+
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, login }}>
+    <AuthContext.Provider value={{ signed: !!user, user, login, SignIn }}>
       {children}
     </AuthContext.Provider>
   );

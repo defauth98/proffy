@@ -1,16 +1,43 @@
-import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
 import { View, Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import FormInputs from '../../components/FormInputs';
+import { AuthContext } from '../../contexts/auth';
+
+import api from '../../services/api';
 
 import styles from './styles';
 
-const SignUpCrendetials: React.FC = () => {
+interface SingUpCredentialsProps {
+  route: {
+    params: {
+      name: string;
+      surname: string;
+    };
+  };
+}
+
+const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigation = useNavigation();
+
+  const { SignIn, user, signed } = useContext(AuthContext);
+
+  async function handleSignIn() {
+    const { name, surname } = route.params;
+
+    SignIn(name, surname, email, password);
+
+    if (user && signed) {
+      navigation.navigate('Landing');
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -26,15 +53,15 @@ const SignUpCrendetials: React.FC = () => {
         </View>
       </View>
       <View style={styles.formWrapper}>
-        <Text style={styles.formTitle}>01. Quem é você?</Text>
+        <Text style={styles.formTitle}>02. Email e senha</Text>
         <FormInputs
           setFirtInput={setEmail}
           setSecondInput={setPassword}
-          firstInputPlaceholder="Nome"
-          secondInputPlaceholder="Sobrenome"
-          isSecondInputPassword={false}
+          firstInputPlaceholder="E-mail"
+          secondInputPlaceholder="Senha"
+          isSecondInputPassword={true}
         />
-        <RectButton style={styles.button}>
+        <RectButton style={styles.button} onPress={() => handleSignIn()}>
           <Text style={styles.buttonText}>Próximo</Text>
         </RectButton>
       </View>

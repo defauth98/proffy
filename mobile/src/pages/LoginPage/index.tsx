@@ -75,6 +75,7 @@ export default function LoginPage() {
           setSecondInput={setPassword}
           firstInputPlaceholder="E-mail"
           secondInputPlaceholder="Senha"
+          isSecondInputPassword={true}
         />
 
         <View style={styles.formFooter}>
