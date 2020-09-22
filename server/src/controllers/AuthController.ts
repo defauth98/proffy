@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { json, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../database/connection';
@@ -61,18 +61,31 @@ export default class AuthController {
     const { email, password } = req.body;
 
     try {
-      const users = await db('users').where({ email });
-      if (!users[0]) {
-        return res.json({ Error: 'Email not exists' });
-      }
+      const userExists = await db('users')
+        .where({ email })
+        .select('users.password');
 
-      const userPassword = users[0].password;
+      if (!userExists[0]) {
+        return res.status(400).json({ Error: 'Email not exists' });
+      }
+      const userPassword = userExists[0].password;
+
+      const user = await db('users')
+        .where({ email })
+        .select(
+          'users.id',
+          'users.name',
+          'users.email',
+          'users.whatsapp',
+          'users.bio',
+          'users.avatar'
+        );
 
       await bcrypt.compare(password, userPassword, function (err, result) {
         if (result) {
-          const token = generateToken(users[0].id);
+          const token = generateToken(userExists[0].id);
 
-          return res.status(200).json({ message: 'Login success', token });
+          return res.status(200).json({ user, token });
         } else {
           return res.status(400).json({ error: 'Wrong password' });
         }
