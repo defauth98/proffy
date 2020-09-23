@@ -30,11 +30,11 @@ export default function LoginPage() {
   const { signed, login, user } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (user && signed) {
-      navigation.navigate('Landing');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user && signed) {
+  //     navigation.navigate('Landing');
+  //   }
+  // }, [user]);
 
   function handleLogin() {
     login(email, password);
@@ -64,7 +64,7 @@ export default function LoginPage() {
           <Text style={styles.formHeaderText}>Fazer login</Text>
           <TouchableOpacity
             style={styles.formHeaderRightButton}
-            onPress={() => navigation.navigate('SignUp')}
+            onPress={() => navigation.navigate('SignUpWhoami')}
           >
             <Text style={styles.rightButtonText}>Criar uma conta</Text>
           </TouchableOpacity>

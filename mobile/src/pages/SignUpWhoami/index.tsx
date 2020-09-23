@@ -7,6 +7,8 @@ import { RectButton } from 'react-native-gesture-handler';
 import FormInputs from '../../components/FormInputs';
 
 import styles from './styles';
+import PageHeader from '../../components/PageHeader';
+import SignUpHeader from '../../components/SignUpHeader';
 
 const SignUpWhoami: React.FC = () => {
   const [name, setName] = useState('');
@@ -23,6 +25,7 @@ const SignUpWhoami: React.FC = () => {
       style={styles.container}
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
     >
+      <SignUpHeader />
       <View style={styles.titleWrapper}>
         <View style={styles.title}>
           <Text style={styles.textTitle}>Crie sua conta gratuíta</Text>
