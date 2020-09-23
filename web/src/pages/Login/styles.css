@@ -1,0 +1,10 @@
+div.login-page {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+div.login-form {
+  background: #000;
+  flex: 1;
+}

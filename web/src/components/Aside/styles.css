@@ -1,0 +1,40 @@
+aside {
+  flex: 1;
+
+  background: var(--color-primary);
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+}
+
+div.background-image {
+  background-image: url('../../assets/images/background.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  width: 100%;
+  height: 95%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+}
+
+div.background-image img {
+  height: 8rem;
+}
+
+div.background-image p {
+  color: var(--color-text-in-primary);
+  width: 50%;
+
+  font-size: 2.5rem;
+
+  margin-left: 4rem;
+}
