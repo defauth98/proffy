@@ -5,10 +5,10 @@ import { Platform } from 'react-native';
 import { View, Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-import FormInputs from '../../components/FormInputs';
-import { AuthContext } from '../../contexts/auth';
+import FormInputs from '../../../components/FormInputs';
+import { AuthContext } from '../../../contexts/auth';
 
-import api from '../../services/api';
+import api from '../../../services/api';
 
 import styles from './styles';
 

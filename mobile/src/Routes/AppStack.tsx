@@ -3,15 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Landing from '../pages/Landing';
-import GiveClasses from '../pages/GiveClasses';
+import GiveClasses from '../pages/StudyTabs/GiveClasses';
 import StudyTabs from '../Routes/StudyTabs';
 import Login from '../pages/LoginPage';
-import SignUpWhoami from '../pages/SignUpWhoami';
-import SignUpCrendetials from '../pages/SignUpCredentials';
+import SignUpWhoami from '../pages/SignUp/SignUpWhoami';
+import SignUpCrendetials from '../pages/SignUp/SignUpCredentials';
 import SuccessPage from '../pages/Success';
 
-import FirstOnboarding from '../pages/FirstOnboarding';
-import SecondOnboarding from '../pages/SecondOnboarding';
+import FirstOnboarding from '../pages/Onboarding/FirstOnboarding';
+import SecondOnboarding from '../pages/Onboarding/SecondOnboarding';
 
 const { Navigator, Screen } = createStackNavigator();
 

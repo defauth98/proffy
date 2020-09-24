@@ -4,6 +4,8 @@ import './styles.css';
 
 import logo from '../../assets/images/logo.svg';
 
+// fazer o componente ficar responsive
+
 const Aside: React.FC = () => {
   return (
     <aside>

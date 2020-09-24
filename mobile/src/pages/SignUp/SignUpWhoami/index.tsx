@@ -4,11 +4,10 @@ import { KeyboardAvoidingView, View, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 
-import FormInputs from '../../components/FormInputs';
+import FormInputs from '../../../components/FormInputs';
 
 import styles from './styles';
-import PageHeader from '../../components/PageHeader';
-import SignUpHeader from '../../components/SignUpHeader';
+import SignUpHeader from '../../../components/SignUpHeader';
 
 const SignUpWhoami: React.FC = () => {
   const [name, setName] = useState('');
