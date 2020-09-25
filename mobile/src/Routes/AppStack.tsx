@@ -30,10 +30,10 @@ function AppStack() {
   return (
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
+        <Screen name="Login" component={Login} />
+
         <Screen name="FirstOnboarding" component={FirstOnboarding} />
         <Screen name="SecondOnboarding" component={SecondOnboarding} />
-
-        <Screen name="Login" component={Login} />
 
         <Screen name="SignUpWhoami" component={SignUpWhoami} />
         <Screen name="SignUpCrendetials" component={SignUpCrendetials} />

@@ -55,8 +55,6 @@ const TeacherList: React.FC = () => {
       },
     });
 
-    console.log(response.data);
-
     setTeachers(response.data);
     toggleHandleFiltersVisible();
   }

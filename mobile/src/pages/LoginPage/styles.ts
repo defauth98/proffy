@@ -57,7 +57,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
 
-    paddingVertical: 30,
+    paddingVertical: 20,
+
+    alignItems: 'center',
+  },
+  rememberContainer: {
+    flexDirection: 'row',
+
+    alignItems: 'center',
+  },
+  checkbox: {
+    color: '#04D361',
   },
   remember: {},
   forget: {},

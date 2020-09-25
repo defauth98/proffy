@@ -1,10 +1,10 @@
 import React, { createContext, useState } from 'react';
-import { SegmentedControlIOSComponent } from 'react-native';
 import api from '../services/api';
 
-interface AuthContextData {
+export interface AuthContextData {
   signed: boolean;
   user: object;
+  token: string;
   login(email: string, password: string): Promise<void>;
   SignIn(
     email: string,
@@ -20,6 +20,8 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState({});
+  const [token, setToken] = useState('');
+  const [signed, setSigned] = useState(false);
 
   async function login(email: string, password: string) {
     const response = await api.post('/login', {
@@ -28,10 +30,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     });
 
     if (response.status !== 400) {
-      setUser(response.data);
+      setUser(response.data.user);
+      setToken(response.data.token);
+      setSigned(true);
     }
-
-    setUser(response.data.user);
   }
 
   async function SignIn(
@@ -47,11 +49,13 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    console.log(response);
+    setUser(response.data.user);
+    setToken(response.data.token);
+    setSigned(true);
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, user, login, SignIn }}>
+    <AuthContext.Provider value={{ signed, user, token, login, SignIn }}>
       {children}
     </AuthContext.Provider>
   );

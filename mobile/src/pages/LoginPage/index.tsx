@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  TextInput,
+  AsyncStorage,
 } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import { RectButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,21 +25,43 @@ import FormInputs from '../../components/FormInputs';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // @todo função de lembrar para entrar automaticamente
-  // const [rememberMe, setRememberMe] = useState(false);
+  const [isSelected, setSelection] = useState(false);
 
-  const { signed, login, user } = useContext(AuthContext);
+  const { login, user, signed, token } = useContext(AuthContext);
+
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   if (user && signed) {
-  //     navigation.navigate('Landing');
-  //   }
-  // }, [user]);
-
-  function handleLogin() {
-    login(email, password);
+  async function handleToggleCheckbox() {
+    setSelection(!isSelected);
   }
+
+  async function handleLogin() {
+    await login(email, password);
+
+    if (!!user) {
+      navigateToLanding();
+    }
+
+    if (isSelected) {
+      await AsyncStorage.setItem('@proffy:token', token);
+    }
+  }
+
+  function navigateToLanding() {
+    navigation.navigate('Landing');
+  }
+
+  useEffect(() => {
+    async function isSigned() {
+      const token = await AsyncStorage.getItem('@proffy:token');
+
+      if (token) {
+        navigateToLanding();
+      }
+    }
+
+    isSigned();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -79,7 +102,12 @@ export default function LoginPage() {
         />
 
         <View style={styles.formFooter}>
-          <TouchableOpacity>
+          <TouchableOpacity style={styles.rememberContainer}>
+            <CheckBox
+              value={isSelected}
+              onValueChange={() => handleToggleCheckbox()}
+              tintColors={{ true: '#04D361', false: '#000' }}
+            />
             <Text style={styles.remember}>Lembrar-me</Text>
           </TouchableOpacity>
           <TouchableOpacity>
