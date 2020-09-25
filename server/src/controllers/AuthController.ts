@@ -73,7 +73,6 @@ export default class AuthController {
         .select(
           'users.id',
           'users.name',
-          'users.password',
           'users.email',
           'users.whatsapp',
           'users.bio',
