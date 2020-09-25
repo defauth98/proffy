@@ -29,7 +29,7 @@ Durante essa semana de muito networking e muito código, foi contruido uma aplic
 - [ ] Autenticação de usuários
 - [ ] Recuperação de senhas
 - [ ] Perfil do proffy
-- [ ] Splash Screen no React Native
+- [x] Splash Screen no React Native
 - [ ] Paginação na listagem de proffys
 - [ ] Exibindo horários disponiveis dos proffys
 - [ ] Salvando seus proffys favoritos
