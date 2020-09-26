@@ -2,7 +2,7 @@ import React from 'react';
 
 import './styles.css';
 
-import logo from '../../assets/images/logo.svg';
+import logo from '../../assets/images/asideLogo.svg';
 
 // fazer o componente ficar responsive
 
@@ -11,7 +11,6 @@ const Aside: React.FC = () => {
     <aside>
       <div className="background-image">
         <img src={logo} alt="proffy-logo" />
-        <p>Sua plataforma de estudo online.</p>
       </div>
     </aside>
   );
