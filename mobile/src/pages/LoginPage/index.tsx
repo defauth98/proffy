@@ -26,8 +26,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSelected, setSelection] = useState(false);
+  const [inputsFull, setInputsFull] = useState(false);
 
-  const { login, user, signed, token } = useContext(AuthContext);
+  const { login, user, token } = useContext(AuthContext);
 
   const navigation = useNavigation();
 
@@ -52,16 +53,24 @@ export default function LoginPage() {
   }
 
   useEffect(() => {
-    async function isSigned() {
-      const token = await AsyncStorage.getItem('@proffy:token');
-
-      if (token) {
-        navigateToLanding();
+    if (email.length >= 6) {
+      if (password.length >= 6) {
+        setInputsFull(true);
       }
     }
+  }, [email, password]);
 
-    isSigned();
-  }, []);
+  // useEffect(() => {
+  //   async function isSigned() {
+  //     const token = await AsyncStorage.getItem('@proffy:token');
+
+  //     if (token) {
+  //       navigateToLanding();
+  //     }
+  //   }
+
+  //   isSigned();
+  // }, []);
 
   return (
     <KeyboardAvoidingView
@@ -114,8 +123,20 @@ export default function LoginPage() {
             <Text style={styles.forget}>Esqueci minha senha</Text>
           </TouchableOpacity>
         </View>
-        <RectButton style={styles.formButton} onPress={() => handleLogin()}>
-          <Text style={styles.formButtonText}>Entrar</Text>
+        <RectButton
+          style={[styles.formButton, inputsFull && styles.buttonGreen]}
+          onPress={() => {
+            inputsFull ? handleLogin() : null;
+          }}
+        >
+          <Text
+            style={[
+              styles.formButtonText,
+              inputsFull && styles.buttonGreenText,
+            ]}
+          >
+            Entrar
+          </Text>
         </RectButton>
       </View>
     </KeyboardAvoidingView>

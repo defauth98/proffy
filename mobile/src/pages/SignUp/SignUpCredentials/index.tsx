@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
 import { View, Text } from 'react-native';
@@ -24,10 +24,19 @@ interface SingUpCredentialsProps {
 const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [inputsFull, setInputsFull] = useState(false);
 
   const navigation = useNavigation();
 
   const { SignIn, user, signed } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (email.length >= 6) {
+      if (password.length >= 6) {
+        setInputsFull(true);
+      }
+    }
+  }, [email, password]);
 
   async function handleSignIn() {
     const { name, surname } = route.params;
@@ -61,8 +70,17 @@ const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
           secondInputPlaceholder="Senha"
           isSecondInputPassword={true}
         />
-        <RectButton style={styles.button} onPress={() => handleSignIn()}>
-          <Text style={styles.buttonText}>Próximo</Text>
+        <RectButton
+          style={[styles.button, inputsFull && styles.buttonPurple]}
+          onPress={() => {
+            inputsFull ? handleSignIn() : null;
+          }}
+        >
+          <Text
+            style={[styles.buttonText, inputsFull && styles.buttonPurpleText]}
+          >
+            Próximo
+          </Text>
         </RectButton>
       </View>
     </KeyboardAvoidingView>

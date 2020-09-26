@@ -32,9 +32,6 @@ function AppStack() {
       <Navigator screenOptions={{ headerShown: false }}>
         <Screen name="Login" component={Login} />
 
-        <Screen name="FirstOnboarding" component={FirstOnboarding} />
-        <Screen name="SecondOnboarding" component={SecondOnboarding} />
-
         <Screen name="SignUpWhoami" component={SignUpWhoami} />
         <Screen name="SignUpCrendetials" component={SignUpCrendetials} />
 
@@ -44,6 +41,9 @@ function AppStack() {
 
         <Screen name="GiveClasses" component={GiveClasses} />
         <Screen name="StudyTabs" component={StudyTabs} />
+
+        <Screen name="FirstOnboarding" component={FirstOnboarding} />
+        <Screen name="SecondOnboarding" component={SecondOnboarding} />
       </Navigator>
     </NavigationContainer>
   );

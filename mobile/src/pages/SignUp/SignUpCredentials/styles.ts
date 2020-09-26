@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#9C98A6',
   },
+  buttonPurple: {
+    backgroundColor: '#8257E5',
+  },
+  buttonPurpleText: {
+    color: '#FFF',
+  },
 });
 
 export default styles;

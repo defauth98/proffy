@@ -72,15 +72,21 @@ const styles = StyleSheet.create({
   remember: {},
   forget: {},
   formButton: {
-    backgroundColor: '#04D361',
+    backgroundColor: '#DCDCE5',
     padding: 16,
     alignItems: 'center',
     borderRadius: 8,
   },
   formButtonText: {
     fontFamily: 'Archivo_400Regular',
-    color: '#fff',
+    color: '#9C98A6',
     fontSize: 24,
+  },
+  buttonGreen: {
+    backgroundColor: '#04D361',
+  },
+  buttonGreenText: {
+    color: '#fff',
   },
   formInputs: {},
   inputWrapper: {
@@ -90,7 +96,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E6E6F0',
   },
-  formInput: {},
   formInputPassword: {
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,

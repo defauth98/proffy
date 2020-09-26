@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { KeyboardAvoidingView, View, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,13 +7,21 @@ import { RectButton } from 'react-native-gesture-handler';
 import FormInputs from '../../../components/FormInputs';
 
 import styles from './styles';
-import SignUpHeader from '../../../components/SignUpHeader';
 
 const SignUpWhoami: React.FC = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [inputsFull, setInputsFull] = useState(false);
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    if (name.length >= 2) {
+      if (surname.length >= 2) {
+        setInputsFull(true);
+      }
+    }
+  }, [name, surname]);
 
   function handleNavigateToNextPage() {
     navigation.navigate('SignUpCrendetials', { name, surname });
@@ -22,9 +30,8 @@ const SignUpWhoami: React.FC = () => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SignUpHeader />
       <View style={styles.titleWrapper}>
         <View style={styles.title}>
           <Text style={styles.textTitle}>Crie sua conta gratuíta</Text>
@@ -43,10 +50,19 @@ const SignUpWhoami: React.FC = () => {
           isSecondInputPassword={false}
         />
         <RectButton
-          style={[styles.button, styles.buttonPurple]}
-          onPress={() => handleNavigateToNextPage()}
+          style={[styles.button, inputsFull && styles.buttonPurple]}
+          onPress={() => {
+            inputsFull ? handleNavigateToNextPage() : null;
+          }}
         >
-          <Text style={styles.buttonText}>Próximo</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              inputsFull ? styles.buttonPurpleText : null,
+            ]}
+          >
+            Próximo
+          </Text>
         </RectButton>
       </View>
     </KeyboardAvoidingView>
