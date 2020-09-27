@@ -5,6 +5,68 @@ div.login-page {
 }
 
 div.login-form {
-  background: #000;
+  background: #f0f0f7;
+
   flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  flex-direction: column;
+}
+
+div.inputs :nth-child(1) {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+div.inputs :nth-child(2) {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container label {
+  cursor: pointer;
+  display: flex;
+}
+
+.checkbox-container input[type='checkbox'] {
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-container label::before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  border-radius: 0.15em;
+  margin-right: 0.5em;
+  border: 0.05em solid black;
+}
+
+.checkbox-container input[type='checkbox']:disabled + label,
+.checkbox-container input[type='checkbox']:disabled {
+  color: #aaa;
+  cursor: default;
+}
+
+.checkbox-container input[type='checkbox']:checked + label::before {
+  content: '\002714';
+  background-color: #27ae60;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.checkbox-container input[type='checkbox']:disabled + label::before {
+  background-color: #ccc;
+  border-color: #999;
 }

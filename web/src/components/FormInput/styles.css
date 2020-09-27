@@ -1,0 +1,52 @@
+.label-float {
+  position: relative;
+
+  background-color: var(--color-box-footer);
+
+  padding: 0.8rem;
+  padding-top: 6px;
+
+  border: 1px solid var(--color-line-in-white);
+}
+
+.label-float input {
+  border: 0;
+  outline: none;
+  min-width: 180px;
+  font-size: 14px;
+  padding: 0.4rem 0;
+  font: 500 1.6rem Poppins;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -webkit-appearance: none;
+  border-radius: 0;
+
+  background-color: var(--color-box-footer);
+}
+.label-float label {
+  color: #9c98a6;
+}
+
+.label-float input::placeholder {
+  color: transparent;
+}
+
+.label-float label {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 13px;
+  margin-left: 8px;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+}
+
+.label-float input:focus + label,
+.label-float input:not(:placeholder-shown) + label {
+  font-size: 10px;
+  margin-top: 0;
+  color: #c1bccc;
+}
