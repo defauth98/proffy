@@ -34,6 +34,7 @@ const Login: React.FC = () => {
         <div className="inputs">
           <FormInput
             label="E-mail"
+            id="input-email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -41,6 +42,7 @@ const Login: React.FC = () => {
           />
           <FormInput
             label="Senha"
+            id="input-password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -74,7 +76,7 @@ const Login: React.FC = () => {
         <div className="footer">
           <div className="signup-container">
             <span>Não tem conta?</span>
-            <Link to="#asdsa" className="sign-link">
+            <Link to="signin" className="sign-link">
               Cadastre-se
             </Link>
           </div>
