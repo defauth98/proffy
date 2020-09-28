@@ -13,29 +13,30 @@
   flex-direction: column;
 }
 
-.sign-form h2 {
-  align-self: flex-start;
-
-  margin-top: 8rem;
-  margin-left: 16rem;
-  margin-bottom: 1rem;
-
-  font: 700 3rem Poppins;
-  color: var(--color-text-title);
-}
-
-.sign-form p {
-  margin-bottom: 2rem;
-  width: 40%;
-
-  align-self: flex-start;
-  margin-left: 16rem;
-}
-
-.header {
+.sign-form a {
   width: 55%;
 
+  margin-bottom: 5rem;
   margin-top: 1rem;
+}
+
+.sign-form .title-container {
+  width: 55%;
+}
+
+.sign-form .title-container h2 {
+  font: 700 3rem Poppins;
+  color: var(--color-text-title);
+  margin-bottom: 2rem;
+}
+
+.sign-form .title-container p {
+  margin-bottom: 2rem;
+  width: 70%;
+}
+
+.sign-form .inputs {
+  width: 55%;
 }
 
 .sign-form .inputs :nth-child(1) {
@@ -48,101 +49,12 @@
   border-bottom-right-radius: 8px;
 }
 
-.checkbox-container label {
-  cursor: pointer;
-  display: flex;
-
-  font: 300 1.4rem Poppins;
-  color: var(--color-text-complement);
+.sign-form .button-container {
+  width: 35rem;
 }
 
-.checkbox-container input[type='checkbox'] {
-  cursor: pointer;
-  opacity: 0;
-  position: absolute;
-  padding: 10px;
-}
-
-.checkbox-container label::before {
-  content: '';
-  width: 1em;
-  height: 1em;
-  border-radius: 0.4em;
-  margin-right: 0.5em;
-  border: 0.05em solid var(--color-line-in-white);
-  background-color: var(--color-title-in-primary);
-}
-
-.checkbox-container input[type='checkbox']:disabled + label,
-.checkbox-container input[type='checkbox']:disabled {
-  color: var(--color-title-in-primary);
-  cursor: default;
-}
-
-.checkbox-container input[type='checkbox']:checked + label::before {
-  content: '\002714';
-  background-color: var(--color-secundary-dark);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-title-in-primary);
-}
-
-.checkbox-container input[type='checkbox']:disabled + label::before {
-  background-color: var(--color-title-in-primary);
-  border-color: var(--color-title-in-primary);
-}
-
-.forget-container a {
-  width: 15rem;
-  height: 3rem;
-
-  font: 300 1.4rem Poppins;
-  color: var(--color-text-complement);
-}
-
-.sign-link {
-  color: var(--color-primary);
-  font: 700 1.5rem Poppins;
-}
-
-.checkbox-container {
-  margin-top: 0.4rem;
-}
-
-.buttons-container {
-  width: 33rem;
-  height: 3rem;
-
-  margin-top: 2rem;
-
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-
-.first-line {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.footer {
-  width: 33rem;
-
-  margin-top: 16rem;
-
-  display: flex;
-}
-
-.signup-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.button-container button {
-  width: 33rem;
+.sign-form .button-container button {
+  width: 35rem;
   height: 5.6rem;
   background: var(--color-secundary);
   color: var(--color-button-text);

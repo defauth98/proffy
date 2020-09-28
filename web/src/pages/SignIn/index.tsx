@@ -30,14 +30,15 @@ const SignIn: React.FC = () => {
   return (
     <div className="sign-page">
       <div className="sign-form">
-        <header className="header">
-          <Link to="/">
-            <img src={backIcon} alt="Ícone para voltar" />
-          </Link>
-        </header>
+        <Link to="/">
+          <img src={backIcon} alt="Ícone para voltar" />
+        </Link>
 
-        <h2>Cadastro</h2>
-        <p>Preencha os dados abaixo para começar.</p>
+        <div className="title-container">
+          <h2>Cadastro</h2>
+          <p>Preencha os dados abaixo para começar.</p>
+        </div>
+
         <div className="inputs">
           <FormInput
             label="Nome"
@@ -71,7 +72,8 @@ const SignIn: React.FC = () => {
         </div>
         <div className="button-container">
           <button
-            type="button"
+            id="login-button"
+            className="login-button"
             onClick={() => {
               handleSign();
             }}

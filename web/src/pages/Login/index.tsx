@@ -29,7 +29,9 @@ const Login: React.FC = () => {
     <div className="login-page">
       <Aside />
       <div className="login-form">
-        <h2 className="title">Fazer login</h2>
+        <div className="title-container">
+          <h2>Fazer login</h2>
+        </div>
 
         <div className="inputs">
           <FormInput

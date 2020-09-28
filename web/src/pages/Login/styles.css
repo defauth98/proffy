@@ -13,12 +13,15 @@
   flex-direction: column;
 }
 
-.login-form h2 {
+.login-form .title-container {
+  width: 34rem;
+}
+
+.login-form .title-container h2 {
   align-self: flex-start;
 
   margin-top: 15rem;
   margin-bottom: 3rem;
-  margin-left: 15.5rem;
 
   font: 700 3rem Poppins;
   color: var(--color-text-title);
@@ -116,7 +119,7 @@
 .footer {
   width: 33rem;
 
-  margin-top: 16rem;
+  margin-top: 13rem;
 
   display: flex;
 }
@@ -128,10 +131,11 @@
 }
 
 button {
-  width: 33rem;
+  width: 35rem;
   height: 5.6rem;
   background: var(--color-secundary);
-  color: var(--color-button-text);
+  color: var(--color-button-text) !important;
+
   border: 0;
   border-radius: 0.8rem;
   cursor: pointer;
