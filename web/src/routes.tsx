@@ -6,12 +6,14 @@ import TeacherList from './pages/TeacherList';
 import TeacherForm from './pages/TeacherForm';
 import Login from './pages/Login';
 import SignIn from './pages/SignIn';
+import SignInSucces from './pages/SignInSucess';
 
 function Routes() {
   return (
     <BrowserRouter>
       <Route path="/" exact component={Login} />
       <Route path="/signin" exact component={SignIn} />
+      <Route path="/signinSuccess" exact component={SignInSucces} />
 
       <Route path="/landing" exact component={Landing} />
       <Route path="/study" component={TeacherList} />
