@@ -87,6 +87,11 @@ div.inputs :nth-child(2) {
   color: var(--color-text-complement);
 }
 
+.sign-link {
+  color: var(--color-primary);
+  font: 700 1.5rem Poppins;
+}
+
 .checkbox-container {
   margin-top: 0.4rem;
 }

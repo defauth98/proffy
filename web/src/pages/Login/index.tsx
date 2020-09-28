@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import Aside from '../../components/Aside';
 import FormInput from '../../components/FormInput';
@@ -6,8 +6,25 @@ import FormInput from '../../components/FormInput';
 import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 
 import './styles.css';
+import { AuthContext } from '../../contexts/auth';
+import { Link, useHistory } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { login, signed } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (signed) history.push('/landing');
+  }, [history, signed]);
+
+  function handleLogin() {
+    login(email, password);
+  }
+
   return (
     <div className="login-page">
       <Aside />
@@ -15,8 +32,21 @@ const Login: React.FC = () => {
         <h2 className="title">Fazer login</h2>
 
         <div className="inputs">
-          <FormInput label="E-mail" />
-          <FormInput label="Senha" />
+          <FormInput
+            label="E-mail"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+          />
+          <FormInput
+            label="Senha"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
+            type="password"
+          />
         </div>
         <div className="buttons-container">
           <div className="first-line">
@@ -25,19 +55,28 @@ const Login: React.FC = () => {
               <label htmlFor="remenber">Lembrar-me</label>
             </div>
             <div className="forget-container">
-              <a href="#">Esqueci minha senha</a>
+              <Link to="#">Esqueci minha senha</Link>
             </div>
           </div>
 
           <div className="second-line">
-            <button type="button">Entrar</button>
+            <button
+              type="button"
+              onClick={() => {
+                handleLogin();
+              }}
+            >
+              Entrar
+            </button>
           </div>
         </div>
 
         <div className="footer">
           <div className="signup-container">
             <span>Não tem conta?</span>
-            <a href="#">Cadastre-se</a>
+            <Link to="#asdsa" className="sign-link">
+              Cadastre-se
+            </Link>
           </div>
           <span>
             É de graça <img alt="Coração roxo" src={purpleHeartIcon} />
