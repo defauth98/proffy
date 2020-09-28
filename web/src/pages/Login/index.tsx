@@ -57,7 +57,7 @@ const Login: React.FC = () => {
               <label htmlFor="remenber">Lembrar-me</label>
             </div>
             <div className="forget-container">
-              <Link to="#">Esqueci minha senha</Link>
+              <Link to="forget-password">Esqueci minha senha</Link>
             </div>
           </div>
 
