@@ -122,8 +122,7 @@ export default class AuthController {
         from: 'ProffyApp <app@proffy.com>',
         to: email,
         subject: 'Recuperação de Senha',
-        text: `Para recuperar sua senha use o token: 
-          ${token}`,
+        text: `Link para recuperar senha: http://localhost:3000/recovery-password/${token}`,
       });
       return res.json({ updatedUser });
     } catch (error) {
@@ -143,18 +142,25 @@ export default class AuthController {
     try {
       if (now <= user.passwordResetExpires) {
         if (user) {
-          const updatedUserID = await db('users')
-            .update({
-              password,
-              passwordResetToken: '',
-              passwordResetExpires: '',
-            })
-            .where({ passwordResetToken: token })
-            .select('*');
+          await bcrypt.genSalt(saltRounds, function (err, salt) {
+            bcrypt.hash(password, salt, async function (err, hash) {
+              const updatedUserID = await db('users')
+                .update({
+                  password: hash,
+                  passwordResetToken: null,
+                  passwordResetExpires: null,
+                })
+                .where({ passwordResetToken: token });
 
-          const updatedUser = await db('users').where({ id: updatedUserID });
+              const updatedUser = await db('users')
+                .where({
+                  id: updatedUserID,
+                })
+                .select('users.name', 'users.surname', 'users.email');
 
-          return res.status(200).json({ updatedUser });
+              return res.status(200).json({ updatedUser });
+            });
+          });
         }
       } else {
         return res.status(400).json({ error: 'token expires' });

@@ -7,14 +7,17 @@ import FormInput from '../../components/FormInput';
 import backIcon from '../../assets/images/icons/back.svg';
 
 import './styles.css';
+import api from '../../services/api';
 
-const Login: React.FC = () => {
+const ForgetPassword: React.FC = () => {
   const [email, setEmail] = useState('');
 
   const history = useHistory();
 
   function handleRecoveryPassword() {
-    history.push('/');
+    api.post('/forgot_password', { email }).then(() => {
+      history.push('/recovery-success');
+    });
   }
 
   return (
@@ -59,4 +62,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;

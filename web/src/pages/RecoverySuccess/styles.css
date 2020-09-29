@@ -1,4 +1,4 @@
-.success-page {
+.recovery-success {
   width: 100vw;
   height: 100vh;
 
@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.success-background {
+.recovery-success .recovery-background {
   background-image: url('../../assets/images/success-background.svg');
   background-repeat: no-repeat;
   background-size: contain;
@@ -25,13 +25,13 @@
   justify-content: center;
 }
 
-.success-background h2 {
+.recovery-success .recovery-background h2 {
   color: var(--color-button-text);
 
   margin-bottom: 1.4rem;
 }
 
-.success-background p {
+.recovery-success .recovery-background p {
   color: var(--color-text-in-primary);
 
   width: 30%;
@@ -39,6 +39,10 @@
   text-align: center;
 }
 
-.success-background button {
+.recovery-success .recovery-background a {
   color: var(--color-button-text);
+
+  text-decoration: none;
+
+  height: 3rem;
 }
