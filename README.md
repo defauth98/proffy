@@ -26,7 +26,7 @@ Durante essa semana de muito networking e muito código, foi contruido uma aplic
 
 ## Novas funcionalidades (Versão 2.0)
 
-- [ ] Autenticação de usuários
+- [x] Autenticação de usuários
 - [ ] Recuperação de senhas
 - [ ] Perfil do proffy
 - [x] Splash Screen no React Native

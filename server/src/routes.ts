@@ -12,6 +12,7 @@ routes.post('/signup', authController.signin);
 routes.post('/login', authController.login);
 
 routes.post('/forgot_password', authController.forgotPassword);
+routes.post('/recovery_password', authController.recoveryPassword);
 
 routes.get('/classes', classesController.index);
 routes.post('/classes', classesController.create);

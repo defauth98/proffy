@@ -130,4 +130,37 @@ export default class AuthController {
       return res.json({ error });
     }
   }
+
+  async recoveryPassword(req: Request, res: Response) {
+    const { password } = req.body;
+    const { token } = req.query;
+    const now = Date.now();
+
+    const userExists = await db('users').where({ passwordResetToken: token });
+
+    const user = userExists[0];
+
+    try {
+      if (now <= user.passwordResetExpires) {
+        if (user) {
+          const updatedUserID = await db('users')
+            .update({
+              password,
+              passwordResetToken: '',
+              passwordResetExpires: '',
+            })
+            .where({ passwordResetToken: token })
+            .select('*');
+
+          const updatedUser = await db('users').where({ id: updatedUserID });
+
+          return res.status(200).json({ updatedUser });
+        }
+      } else {
+        return res.status(400).json({ error: 'token expires' });
+      }
+    } catch (error) {
+      return res.status(400).json({ error: 'cat not update user password' });
+    }
+  }
 }
