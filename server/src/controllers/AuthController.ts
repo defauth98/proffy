@@ -1,11 +1,14 @@
-import { json, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../database/connection';
 import crypto from 'crypto';
 
 import mailer from '../modules/mailer';
-import { secret } from '../config/auth';
+
+import 'dotenv/config';
+
+const secret = process.env.SECRET as string;
 
 export const saltRounds = 10;
 
