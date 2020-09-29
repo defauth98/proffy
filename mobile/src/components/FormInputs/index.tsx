@@ -6,10 +6,10 @@ import styles from './styles';
 
 interface FormInputsProps {
   setFirtInput: Function;
-  setSecondInput: Function;
+  setSecondInput?: Function;
   firstInputPlaceholder: string;
-  secondInputPlaceholder: string;
-  isSecondInputPassword: boolean;
+  secondInputPlaceholder?: string;
+  isSecondInputPassword?: boolean;
 }
 
 const FormInputs: React.FC<FormInputsProps> = ({
@@ -21,7 +21,13 @@ const FormInputs: React.FC<FormInputsProps> = ({
 }) => {
   return (
     <View style={styles.formInputs}>
-      <View style={[styles.inputWrapper, styles.formInputEmail]}>
+      <View
+        style={[
+          styles.inputWrapper,
+          styles.formInputEmail,
+          !setSecondInput ? styles.formInputPassword : null,
+        ]}
+      >
         <TextInput
           style={[styles.formInput]}
           placeholder={firstInputPlaceholder}
@@ -31,15 +37,17 @@ const FormInputs: React.FC<FormInputsProps> = ({
         />
       </View>
 
-      <View style={[styles.inputWrapper, styles.formInputPassword]}>
-        <TextInput
-          style={[styles.formInput]}
-          placeholder={secondInputPlaceholder}
-          secureTextEntry={isSecondInputPassword}
-          onChangeText={(password) => setSecondInput(password)}
-          autoCapitalize="none"
-        />
-      </View>
+      {setSecondInput && (
+        <View style={[styles.inputWrapper, styles.formInputPassword]}>
+          <TextInput
+            style={[styles.formInput]}
+            placeholder={secondInputPlaceholder}
+            secureTextEntry={isSecondInputPassword}
+            onChangeText={(password) => setSecondInput(password)}
+            autoCapitalize="none"
+          />
+        </View>
+      )}
     </View>
   );
 };

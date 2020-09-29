@@ -119,7 +119,11 @@ export default function LoginPage() {
             />
             <Text style={styles.remember}>Lembrar-me</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ForgetPassword');
+            }}
+          >
             <Text style={styles.forget}>Esqueci minha senha</Text>
           </TouchableOpacity>
         </View>

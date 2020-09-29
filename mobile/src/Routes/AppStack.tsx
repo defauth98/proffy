@@ -9,6 +9,7 @@ import Login from '../pages/LoginPage';
 import SignUpWhoami from '../pages/SignUp/SignUpWhoami';
 import SignUpCrendetials from '../pages/SignUp/SignUpCredentials';
 import SuccessPage from '../pages/Success';
+import ForgetPassword from '../pages/RecoveryPassword';
 
 import FirstOnboarding from '../pages/Onboarding/FirstOnboarding';
 import SecondOnboarding from '../pages/Onboarding/SecondOnboarding';
@@ -31,6 +32,7 @@ function AppStack() {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
         <Screen name="Login" component={Login} />
+        <Screen name="ForgetPassword" component={ForgetPassword} />
 
         <Screen name="SignUpWhoami" component={SignUpWhoami} />
         <Screen name="SignUpCrendetials" component={SignUpCrendetials} />

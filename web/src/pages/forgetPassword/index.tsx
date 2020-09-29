@@ -15,7 +15,7 @@ const ForgetPassword: React.FC = () => {
   const history = useHistory();
 
   function handleRecoveryPassword() {
-    api.post('/forgot_password', { email }).then(() => {
+    api.post('/forget_password', { email }).then(() => {
       history.push('/recovery-success');
     });
   }
