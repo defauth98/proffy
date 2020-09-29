@@ -6,10 +6,13 @@ import Landing from '../pages/Landing';
 import GiveClasses from '../pages/StudyTabs/GiveClasses';
 import StudyTabs from '../Routes/StudyTabs';
 import Login from '../pages/LoginPage';
+
 import SignUpWhoami from '../pages/SignUp/SignUpWhoami';
 import SignUpCrendetials from '../pages/SignUp/SignUpCredentials';
-import SuccessPage from '../pages/Success';
+import SignSuccess from '../pages/SignSuccess';
+
 import ForgetPassword from '../pages/RecoveryPassword';
+import RecoverySuccess from '../pages/RecoverySuccess';
 
 import FirstOnboarding from '../pages/Onboarding/FirstOnboarding';
 import SecondOnboarding from '../pages/Onboarding/SecondOnboarding';
@@ -32,12 +35,13 @@ function AppStack() {
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
         <Screen name="Login" component={Login} />
-        <Screen name="ForgetPassword" component={ForgetPassword} />
 
         <Screen name="SignUpWhoami" component={SignUpWhoami} />
         <Screen name="SignUpCrendetials" component={SignUpCrendetials} />
+        <Screen name="SignSuccess" component={SignSuccess} />
 
-        <Screen name="SuccessPage" component={SuccessPage} />
+        <Screen name="ForgetPassword" component={ForgetPassword} />
+        <Screen name="RecoverySuccess" component={RecoverySuccess} />
 
         <Screen name="Landing" component={Landing} />
 

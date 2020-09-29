@@ -32,7 +32,7 @@ export default function LoginPage() {
 
   function handleForgetPassword() {
     api.post('/forget_password', { email }).then(() => {
-      navigation.navigate('Login');
+      navigation.navigate('RecoverySuccess');
     });
   }
 
