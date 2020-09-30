@@ -1,8 +1,11 @@
 import express from 'express';
+
 import ClassesController from './controllers/ClassesController';
 import ConnectionController from './controllers/ConnectionsController';
 import AuthController from './controllers/AuthController';
 import UserController from './controllers/UsersController';
+
+import AuthMiddleware from './middlewares/authMiddleware';
 
 const routes = express.Router();
 const classesController = new ClassesController();
@@ -18,6 +21,8 @@ routes.post('/recovery_password', authController.recoveryPassword);
 
 routes.get('/users/:id', userController.index);
 routes.put('/users/:id', userController.update);
+
+routes.use(AuthMiddleware);
 
 routes.get('/classes', classesController.index);
 routes.post('/classes', classesController.create);
