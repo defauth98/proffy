@@ -1,18 +1,25 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 
-import db from '../database/connection'
-
-import { saltRounds } from './AuthController'
+import db from '../database/connection';
 
 export default class UserController {
   async index(req: Request, res: Response) {
-    const users = await db('users');
+    const { id } = req.params;
+    const users = await db('users')
+      .where({ id })
+      .select(
+        'users.name',
+        'users.surname',
+        'users.email',
+        'users.avatar',
+        'users.whatsapp',
+        'users.bio'
+      );
 
     if (!users) {
       return res.status(400).json({
-        error: "Erro ao listar os usuários"
-      })
+        error: 'Erro ao listar os usuários',
+      });
     }
 
     return res.json(users);
@@ -25,45 +32,36 @@ export default class UserController {
       await db('users').where({ id }).del();
 
       return res.status(204).json({
-        message: 'Usuário deletado com sucesso.'
+        message: 'Usuário deletado com sucesso.',
       });
-
     } catch (error) {
-
       return res.status(400).json({
-        error: 'Erro inesperado ao tentar deletar um usuário'
-      })
+        error: 'Erro inesperado ao tentar deletar um usuário',
+      });
     }
   }
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { email, password } = req.body;
-
-    const userExists = await db('users').where({ id });
-
-    if (!userExists[0]) {
-      return res.status(400).json({ error: "Usuário não existe" });
-    }
+    const { name, surname, email, whatsapp, bio } = req.body;
 
     try {
-      await bcrypt.genSalt(saltRounds, function (err, salt) {
-        bcrypt.hash(password, salt, async function (err, hash) {
-          await db('users').insert({
-            email,
-            password: hash
-          })
-        })
-      })
+      const updatedUserID = await db('users')
+        .update({ name, surname, whatsapp, email, bio })
+        .where({ id });
 
-    }
-    catch (error) {
+      const updatedUser = await db('users')
+        .where({ id: updatedUserID })
+        .select(
+          'users.name',
+          'users.surname',
+          'users.email',
+          'users.avatar',
+          'users.whatsapp',
+          'users.bio'
+        );
 
-      return res.status(400).json({
-        error: "Erro inesperado ao tentar dar upgrade no usuário."
-      })
-
-    }
+      return res.status(200).json(updatedUser);
+    } catch (error) {}
   }
-
 }
