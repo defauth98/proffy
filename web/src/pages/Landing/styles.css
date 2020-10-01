@@ -6,8 +6,15 @@
   justify-content: center;
   align-items: center;
 
+  display: flex;
+  flex-direction: column;
+
   color: var(--color-text-in-primary);
   background: var(--color-primary);
+}
+
+.page-landing-container {
+  flex: 4;
 }
 
 .logo-container img {
@@ -39,9 +46,9 @@
   width: 30rem;
   height: 10.4rem;
   border-radius: 0.8rem;
-  
-  font: 700 2.0rem Archivo;
-  
+
+  font: 700 2rem Archivo;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,53 +99,140 @@
   margin-left: 0.8rem;
 }
 
-@media (min-width: 1100px){
-  #page-landing-content {
-    max-width: 1100px;
+@media (min-width: 1100px) {
+  #page-landing {
+    height: 100vh;
+    overflow: hidden;
 
-    display: grid;
-    grid-template-rows: 350px 1fr;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-areas: 
-      "logo hero hero"
-      "buttons buttons total"
-      ;
+    display: flex;
   }
 
-  .logo-container {
-    grid-area: logo;
-    text-align:left ;
-    align-self: center;
-    margin: 0;
+  header {
+    margin-top: 2rem;
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    width: 80%;
   }
 
-  .hero-image {
-    grid-area: hero;
-    justify-self: end;
+  header .user-container .user-button {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
   }
 
-  .logo-container h2 {
-    text-align: initial;
-    
-    font-size: 3.6rem;
+  header .user-container .user-button img {
+    margin-right: 2rem;
+    height: 4rem;
+    border-radius: 2rem;
   }
 
-  .logo-container img {
-    height: 100%;
+  header .user-container .user-button h2 {
+    font-family: Poppins;
+    font-size: 1.4rem;
+    font-weight: normal;
+    color: var(--color-text-in-primary);
   }
 
-  .buttons-container{
-    grid-area: buttons;
-    justify-content: flex-start;
+  header .logout-container .logout {
+    background-color: #000;
+    width: 4rem;
+    height: 4rem;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--color-primary-dark);
+
+    border-radius: 0.6rem;
   }
 
-  .buttons-container a {
-    font-weight: 2.4rem;
+  header .logout-container .logout img {
+    height: 2rem;
   }
 
-  .total-connections {
-    grid-area: total;
+  .content-container {
+    flex: 1.4;
 
-    justify-self: end;
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .content-container .hero-image {
+    height: 30rem;
+    margin-left: 10rem;
+  }
+
+  .content-container .logo-container {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+  }
+
+  .content-container .logo-container h2 {
+    text-align: left;
+  }
+
+  .landing-footer {
+    flex: 1;
+
+    display: flex;
+    width: 100%;
+    height: 30rem;
+    background: var(--color-background);
+
+    align-items: center;
+  }
+
+  .landing-footer .welcome-container {
+    width: 35rem;
+
+    margin-left: 15rem;
+  }
+
+  .landing-footer .welcome-container h1 {
+    font-size: 2rem;
+    font-weight: normal;
+    font-family: Poppins;
+    color: var(--color-text-base);
+  }
+
+  .landing-footer .welcome-container h3 {
+    font-size: 2rem;
+    font-weight: extra;
+    font-family: Poppins;
+
+    color: var(--color-text-title);
+  }
+
+  .landing-footer .total-connections {
+    width: 15rem;
+
+    display: inline-block;
+
+    color: var(--color-text-complement);
+
+    margin-right: 5rem;
+  }
+
+  .landing-footer .buttons-container {
+    display: flex;
+    flex-direction: row;
+
+    height: 8rem;
+    width: 60rem;
+  }
+
+  .landing-footer .buttons-container a {
+    height: 8rem;
   }
 }

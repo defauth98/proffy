@@ -9,16 +9,20 @@ import backIcon from '../../assets/images/icons/back.svg';
 import './styles.css';
 import api from '../../services/api';
 
+interface pageParams {
+  token: string;
+}
+
 const RecoveryPassword: React.FC = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const history = useHistory();
-  const { token } = useParams();
+  const { token } = useParams<pageParams>();
 
   async function handleRecoveryPassword() {
     if (password === passwordConfirm) {
-      const updatedUser = await api
+      await api
         .post(
           'recovery_password',
           {
@@ -30,9 +34,10 @@ const RecoveryPassword: React.FC = () => {
         )
         .then(() => {
           history.push('/');
+        })
+        .catch((err) => {
+          alert(err);
         });
-
-      console.log(updatedUser);
     }
   }
 
