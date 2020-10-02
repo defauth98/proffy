@@ -36,14 +36,14 @@ const Landing: React.FC = () => {
           </Link>
         </div>
         <div className="logout-container">
-          <Link to="/">
+          <Link className="logout-button" to="/">
             <div className="logout">
               <img src={logoutIcon} alt="" />
             </div>
           </Link>
         </div>
       </header>
-      <div id="page-landing-content" className="content-container">
+      <main id="page-landing-content" className="content-container">
         <div className="logo-container">
           <img src={logoImg} alt="Proffy" />
           <h2>Sua plataforma de estudos online.</h2>
@@ -54,16 +54,19 @@ const Landing: React.FC = () => {
           alt="Plataforma de estudos"
           className="hero-image"
         />
-      </div>
-      <footer className="landing-footer">
+      </main>
+      <footer>
         <div className="welcome-container">
-          <h1>Seja bem-vindo.</h1>
-          <h3>O que deseja fazer?</h3>
+          <div className="title">
+            <h1>Seja bem-vindo.</h1>
+            <h3>O que deseja fazer?</h3>
+          </div>
+
+          <span className="total-connections">
+            Total de {totalConnections} conexões já realizadas{' '}
+            <img src={purpleHeartIcon} alt="Coração roxo" />
+          </span>
         </div>
-        <span className="total-connections">
-          Total de {totalConnections} conexões já realizadas{' '}
-          <img src={purpleHeartIcon} alt="Coração roxo" />
-        </span>
 
         <div className="buttons-container">
           <Link to="/study" className="study">

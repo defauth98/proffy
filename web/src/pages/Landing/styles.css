@@ -3,103 +3,157 @@
   height: 100vh;
 
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  display: flex;
   flex-direction: column;
 
   color: var(--color-text-in-primary);
   background: var(--color-primary);
+  overflow-x: hidden;
 }
 
-.page-landing-container {
-  flex: 4;
-}
-
-.logo-container img {
-  height: 10rem;
-}
-
-.hero-image {
-  width: 100%;
-}
-
-.logo-container {
-  text-align: center;
-  margin-bottom: 3.2rem;
-}
-
-.logo-container h2 {
-  font-weight: 500;
-  font-size: 2.4rem;
-  line-height: 4.6rem;
-  margin-top: 0.8rem;
-}
-
-.buttons-container {
+#page-landing header {
+  width: 80%;
   display: flex;
-  justify-content: center;
-  margin: 3.2rem 0;
-}
-.buttons-container a {
-  width: 30rem;
-  height: 10.4rem;
-  border-radius: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
 
-  font: 700 2rem Archivo;
+  margin: 2rem;
+}
+
+#page-landing .user-button {
+  height: 5rem;
 
   display: flex;
   align-items: center;
+  text-decoration: none;
+}
+
+#page-landing .user-button img {
+  height: 4rem;
+  border-radius: 2rem;
+  margin-right: 1rem;
+}
+
+#page-landing .user-button h2 {
+  font-family: Poppins;
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: var(--color-text-in-primary);
+}
+
+#page-landing header .user-container .user-button img {
+  height: 4rem;
+}
+
+#page-landing .logout-container {
+  width: 4rem;
+  height: 4rem;
+
+  display: flex;
+
+  align-items: center;
   justify-content: center;
 
+  background-color: var(--color-primary-dark);
+
+  border-radius: 0.6rem;
+}
+
+#page-landing-content .logo-container {
+  display: none;
+}
+
+#page-landing-content .hero-image {
+  height: 20rem;
+
+  padding: 2rem;
+
+  margin-bottom: 2rem;
+}
+
+#page-landing footer {
+  background: var(--color-background);
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#page-landing footer .welcome-container {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 0 5rem;
+  margin-top: 5rem;
+}
+
+#page-landing footer .welcome-container h1,
+h3 {
+  font-family: Poppins;
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: var(--color-text-base);
+}
+
+#page-landing footer .welcome-container h3 {
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: var(--color-text-title);
+}
+
+#page-landing footer .welcome-container .total-connections {
+  width: 16rem;
+  color: var(--color-text-complement);
+}
+
+#page-landing footer .buttons-container {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-start;
+}
+
+#page-landing footer .buttons-container a {
+  width: 15rem;
+  height: 15rem;
+
+  border-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 2rem;
+
   text-decoration: none;
-  color: var(--color-button-text);
-
-  transition: background-color 0.2s;
+  color: var(--color-title-in-primary);
+  font-weight: bold;
+  font-size: 1.8rem;
 }
 
-.buttons-container a:first-child {
-  margin-right: 1.6rem;
+#page-landing footer .buttons-container img {
+  margin-bottom: 3rem;
 }
 
-.buttons-container a img {
-  width: 4rem;
+#page-landing footer .buttons-container .study {
+  margin-left: 5rem;
+  margin-right: 2rem;
+  background: var(--color-primary);
 }
 
-.buttons-container a.study {
-  background: var(--color-primary-lighter);
-}
-
-.buttons-container a.give-classes {
+#page-landing footer .buttons-container .give-classes {
   background: var(--color-secundary);
 }
 
-.buttons-container a.study:hover {
-  background: var(--color-primary-light);
-}
+@media (min-width: 1150px) {
+  #page-landing-content .logo-container {
+    display: flex;
+  }
 
-.buttons-container a.give-classes:hover {
-  background: var(--color-secundary-dark);
-}
-
-.buttons-container a img {
-  margin-right: 2.4rem;
-}
-
-.total-connections {
-  font-size: 1.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.total-connections img {
-  margin-left: 0.8rem;
-}
-
-@media (min-width: 1100px) {
   #page-landing {
     height: 100vh;
     overflow: hidden;
@@ -107,7 +161,7 @@
     display: flex;
   }
 
-  header {
+  #page-landing header {
     margin-top: 2rem;
     display: flex;
 
@@ -117,28 +171,27 @@
     width: 80%;
   }
 
-  header .user-container .user-button {
+  #page-landing header .user-container .user-button {
     display: flex;
     align-items: center;
 
     text-decoration: none;
   }
 
-  header .user-container .user-button img {
+  #page-landing header .user-container .user-button img {
     margin-right: 2rem;
     height: 4rem;
     border-radius: 2rem;
   }
 
-  header .user-container .user-button h2 {
+  #page-landing header .user-container .user-button h2 {
     font-family: Poppins;
     font-size: 1.4rem;
     font-weight: normal;
     color: var(--color-text-in-primary);
   }
 
-  header .logout-container .logout {
-    background-color: #000;
+  #page-landing header .logout-container .logout {
     width: 4rem;
     height: 4rem;
 
@@ -152,87 +205,99 @@
     border-radius: 0.6rem;
   }
 
-  header .logout-container .logout img {
+  #page-landing header .logout-container .logout img {
     height: 2rem;
+    padding: 0;
   }
 
-  .content-container {
-    flex: 1.4;
-
+  #page-landing .content-container {
+    flex: 1.8;
     display: flex;
+    width: 80%;
 
     justify-content: space-between;
-    align-items: center;
   }
 
-  .content-container .hero-image {
-    height: 30rem;
-    margin-left: 10rem;
-  }
-
-  .content-container .logo-container {
+  #page-landing .content-container .logo-container {
     display: flex;
-
     flex-direction: column;
-
-    justify-content: center;
   }
 
-  .content-container .logo-container h2 {
-    text-align: left;
+  #page-landing .content-container .logo-container img {
+    margin-top: 6rem;
+    height: 10rem;
   }
 
-  .landing-footer {
-    flex: 1;
+  #page-landing .content-container .logo-container h2 {
+    margin-top: 1rem;
+    width: 30rem;
 
-    display: flex;
-    width: 100%;
+    color: var(--color-text-in-primary);
+    font-size: 2.4rem;
+  }
+
+  #page-landing-content .hero-image {
+    margin-bottom: 6rem;
     height: 30rem;
-    background: var(--color-background);
-
-    align-items: center;
   }
 
-  .landing-footer .welcome-container {
-    width: 35rem;
+  #page-landing footer {
+    flex-direction: row;
+    max-height: 300px;
+    width: 100%;
+  }
 
+  #page-landing footer .welcome-container {
     margin-left: 15rem;
+    width: 100rem;
   }
 
-  .landing-footer .welcome-container h1 {
-    font-size: 2rem;
-    font-weight: normal;
-    font-family: Poppins;
-    color: var(--color-text-base);
+  #page-landing footer .buttons-container a {
+    width: 25rem;
+    height: 8rem;
+
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 2rem;
+
+    text-decoration: none;
+    color: var(--color-title-in-primary);
+    font-weight: bold;
+    font-size: 1.8rem;
   }
 
-  .landing-footer .welcome-container h3 {
-    font-size: 2rem;
-    font-weight: extra;
-    font-family: Poppins;
-
-    color: var(--color-text-title);
+  #page-landing footer .buttons-container a img {
+    margin-right: 3rem;
+    margin-top: 3rem;
+    margin-left: 1rem;
   }
 
-  .landing-footer .total-connections {
-    width: 15rem;
-
-    display: inline-block;
-
-    color: var(--color-text-complement);
-
+  #page-landing footer .buttons-container .study {
     margin-right: 5rem;
   }
 
-  .landing-footer .buttons-container {
-    display: flex;
-    flex-direction: row;
+  #page-landing footer .welcome-container {
+    margin-left: 10%;
+  }
+}
 
-    height: 8rem;
-    width: 60rem;
+@media (min-height: 900px) {
+  #page-landing .content-container {
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .landing-footer .buttons-container a {
-    height: 8rem;
+  #page-landing .content-container .logo-container img {
+    margin-top: 0;
+    height: 15rem;
+  }
+
+  #page-landing .content-container .logo-container h2 {
+    font-size: 3rem;
+  }
+
+  #page-landing .content-container img {
+    height: 40rem;
   }
 }
