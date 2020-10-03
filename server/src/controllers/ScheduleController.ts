@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import db from '../database/connection';
 
 export default class ScheduleControler {
-  async create(request: Request, response: Response) {
-    const { id } = request.params;
+  async create(req: Request, res: Response) {
+    const { id } = req.params;
 
     console.log('chegou aq');
 
@@ -15,6 +15,17 @@ export default class ScheduleControler {
       class_id: id,
     });
 
-    return response.status(200).send();
+    return res.status(200).send();
+  }
+
+  async delete(req: Request, res: Response) {
+    const { class_id, id } = req.params;
+
+    const sheduleItem = await db('class_schedule')
+      .where({ class_id })
+      .andWhere({ id })
+      .del();
+
+    return res.status(200).json({ sheduleItem });
   }
 }

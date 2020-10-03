@@ -34,6 +34,7 @@ routes.get('/classes/:id', classesController.index);
 routes.put('/classes/:id', classesController.update);
 
 routes.post('/schedule/:id', scheduleController.create);
+routes.delete('/schedule/:class_id/:id', scheduleController.delete);
 
 routes.post('/connections', connectionsController.create);
 
