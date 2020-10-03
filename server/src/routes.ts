@@ -4,6 +4,7 @@ import ClassesController from './controllers/ClassesController';
 import ConnectionController from './controllers/ConnectionsController';
 import AuthController from './controllers/AuthController';
 import UserController from './controllers/UsersController';
+import ScheduleController from './controllers/ScheduleController';
 
 import AuthMiddleware from './middlewares/authMiddleware';
 
@@ -12,6 +13,7 @@ const classesController = new ClassesController();
 const connectionsController = new ConnectionController();
 const authController = new AuthController();
 const userController = new UserController();
+const scheduleController = new ScheduleController();
 
 routes.post('/signup', authController.signin);
 routes.post('/login', authController.login);
@@ -30,6 +32,8 @@ routes.get('/classes', classesController.index);
 routes.post('/classes', classesController.create);
 routes.get('/classes/:id', classesController.index);
 routes.put('/classes/:id', classesController.update);
+
+routes.post('/schedule/:id', scheduleController.create);
 
 routes.post('/connections', connectionsController.create);
 
