@@ -43,11 +43,11 @@ export default class UserController {
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, surname, email, whatsapp, bio } = req.body;
+    const { name, surname, email, whatsapp, bio, avatar } = req.body;
 
     try {
       const updatedUserID = await db('users')
-        .update({ name, surname, whatsapp, email, bio })
+        .update({ name, surname, whatsapp, email, bio, avatar })
         .where({ id });
 
       const updatedUser = await db('users')

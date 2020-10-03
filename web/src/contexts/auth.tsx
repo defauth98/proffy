@@ -20,7 +20,7 @@ interface User {
   id: string;
   name: string;
   surname: string;
-  avatar_url: string;
+  avatar: string;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -48,7 +48,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       id: response.data.user.id,
       name: response.data.user.name,
       surname: response.data.user.surname,
-      avatar_url: response.data.user.avatar,
+      avatar: response.data.user.avatar,
     });
     setToken(response.data.token);
     setSigned(true);
@@ -70,9 +70,21 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    setUser(response.data.user);
+    const subject = await api.get(`/classes/${response.data.user.id}`, {
+      headers: { Authorization: `Bearer ${response.data.token}` },
+    });
+
+    setUser({
+      id: response.data.user.id,
+      name: response.data.user.name,
+      surname: response.data.user.surname,
+      avatar: response.data.user.avatar,
+    });
     setToken(response.data.token);
     setSigned(true);
+
+    setSubject(subject.data.class.subject);
+    setSubjectId(subject.data.class.id);
   }
 
   return (

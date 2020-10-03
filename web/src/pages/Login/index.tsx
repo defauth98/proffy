@@ -23,7 +23,9 @@ const Login: React.FC = () => {
   }, [signed, user, subject, history]);
 
   function handleLogin() {
-    login(email, password);
+    login(email, password).catch((err) => {
+      alert(err);
+    });
   }
 
   return (

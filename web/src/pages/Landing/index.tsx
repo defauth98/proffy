@@ -40,10 +40,7 @@ const Landing: React.FC = () => {
         <div className="user-container">
           <Link className="user-button" to="/perfil">
             <img
-              src={
-                user.avatar_url ||
-                'https://avatars3.githubusercontent.com/u/52966246?s=460&u=42fc97534542db683f3daab62ce627e92bef846f&v=4'
-              }
+              src="https://avatars3.githubusercontent.com/u/52966246?s=460&u=42fc97534542db683f3daab62ce627e92bef846f&v=4"
               alt="Logo-Usuário"
             />
             <h2>{`${user.name} ${user.surname}`}</h2>

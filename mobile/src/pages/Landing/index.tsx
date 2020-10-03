@@ -17,13 +17,15 @@ function Landing() {
   const navigation = useNavigation();
   const [totalConnections, setTotalConnections] = useState(0);
 
-  const { user, signed, token } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
-    api.get('connections').then((response) => {
-      const { total } = response.data;
-      setTotalConnections(total);
-    });
+    api
+      .get('connections', { headers: { Authorization: `Bearer ${token}` } })
+      .then((response) => {
+        const { total } = response.data;
+        setTotalConnections(total);
+      });
   }, []);
 
   function handleNavigateToClassesPage() {

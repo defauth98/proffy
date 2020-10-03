@@ -40,13 +40,20 @@ export default class AuthController {
             password: hash,
           });
 
-          const newUser = await db('users').where({ email });
+          const newUser = await db('users')
+            .where({ email })
+            .select(
+              'users.id',
+              'users.name',
+              'users.surname',
+              'users.email',
+              'users.whatsapp',
+              'users.bio',
+              'users.avatar'
+            );
 
           return res.status(200).json({
-            User: {
-              id: newUser[0].id,
-              email: newUser[0].email,
-            },
+            user: newUser,
             token: generateToken(newUser[0].id),
           });
         });

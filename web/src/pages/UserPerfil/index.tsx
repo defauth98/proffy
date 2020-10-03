@@ -16,7 +16,7 @@ interface ScheduleItem {
   week_day: string;
   from: Number;
   to: Number;
-  id: string;
+  id: Number;
 }
 
 function UserPerfil() {
@@ -125,6 +125,7 @@ function UserPerfil() {
 
   function handleUpdateClass(event: FormEvent) {
     event.preventDefault();
+
     api
       .put(
         `users/${user.id}`,
@@ -157,7 +158,7 @@ function UserPerfil() {
       });
   }
 
-  async function handleDeleteScheduleItem(event: FormEvent, id: number) {
+  async function handleDeleteScheduleItem(event: FormEvent, id: Number) {
     event.preventDefault();
 
     try {
@@ -169,9 +170,8 @@ function UserPerfil() {
       alert(error);
     }
 
-    const updatedScheduleItems = scheduleItems.splice(id, 1);
-
-    setScheduleItems(updatedScheduleItems);
+    // @todo update in schedulet items
+    // setScheduleItems();
   }
 
   return (
