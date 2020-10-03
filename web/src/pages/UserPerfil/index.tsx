@@ -38,7 +38,14 @@ function UserPerfil() {
     const hour = date / 60;
     const minutes = date - hour * 60;
 
-    return `${hour}:${minutes}`;
+    let hourString = hour.toString();
+    let minutesString = minutes.toString();
+
+    if (hour / 10 < 1) hourString = '0' + hourString;
+
+    if (minutes / 10 < 1) minutesString = '0' + minutesString;
+
+    return `${hourString}:${minutesString}`;
   }
 
   useEffect(() => {
