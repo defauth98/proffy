@@ -6,8 +6,6 @@ export default class ScheduleControler {
   async create(req: Request, res: Response) {
     const { id } = req.params;
 
-    console.log('chegou aq');
-
     await db('class_schedule').insert({
       week_day: 1,
       to: 600,

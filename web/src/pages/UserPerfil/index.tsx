@@ -16,6 +16,7 @@ interface ScheduleItem {
   week_day: string;
   from: Number;
   to: Number;
+  id: string;
 }
 
 function UserPerfil() {
@@ -29,10 +30,10 @@ function UserPerfil() {
   const [cost, setCost] = useState('');
 
   const [scheduleItems, setScheduleItems] = useState([
-    { week_day: 0, from: '', to: '' },
+    { week_day: 0, from: '', to: '', id: '' },
   ]);
 
-  const { token, user } = useContext(AuthContext);
+  const { token, user, subjectId } = useContext(AuthContext);
 
   function ConvertToDate(date: any): String {
     const hour = date / 60;
@@ -71,6 +72,7 @@ function UserPerfil() {
             week_day: item.week_day,
             from: ConvertToDate(item.from),
             to: ConvertToDate(item.to),
+            id: item.id,
           };
         }
       );
@@ -87,8 +89,19 @@ function UserPerfil() {
     }
   }, [history, token]);
 
-  function addNewScheduleItem() {
-    setScheduleItems([...scheduleItems, { week_day: 0, from: '', to: '' }]);
+  async function addNewScheduleItem() {
+    await api.post(
+      `/schedule/${subjectId}`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    setScheduleItems([
+      ...scheduleItems,
+      { week_day: 0, from: '', to: '', id: '' },
+    ]);
   }
 
   function setScheduleItemValue(
@@ -110,7 +123,7 @@ function UserPerfil() {
     setScheduleItems(updatedScheduleItem);
   }
 
-  function handleCreateClass(event: FormEvent) {
+  function handleUpdateClass(event: FormEvent) {
     event.preventDefault();
     api
       .put(
@@ -123,14 +136,42 @@ function UserPerfil() {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      .then(() => {})
       .then(() => {
-        alert('Update realizado com sucesso');
-        history.push('/');
-      })
-      .catch((error) => {
-        alert(error);
+        api
+          .put(
+            `/classes/${user.id}`,
+            {
+              subject: userSubject,
+              cost,
+              schedule: scheduleItems,
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+          .then(() => {
+            alert('Update realizado com sucesso');
+            history.push('/');
+          })
+          .catch((error) => {
+            alert(error);
+          });
       });
+  }
+
+  async function handleDeleteScheduleItem(event: FormEvent, id: number) {
+    event.preventDefault();
+
+    try {
+      await api.delete(`/schedule/${user.id}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert('Deletado com sucesso');
+    } catch (error) {
+      alert(error);
+    }
+
+    const updatedScheduleItems = scheduleItems.splice(id, 1);
+
+    setScheduleItems(updatedScheduleItems);
   }
 
   return (
@@ -138,7 +179,7 @@ function UserPerfil() {
       <PageHeader pageTitle="Meu perfil" />
 
       <main>
-        <form onSubmit={(event) => handleCreateClass(event)}>
+        <form onSubmit={(event) => handleUpdateClass(event)}>
           <fieldset>
             <legend>Seus dados</legend>
 
@@ -221,42 +262,50 @@ function UserPerfil() {
             </legend>
             {scheduleItems.map((scheduleItem, index) => {
               return (
-                <div key={scheduleItem.week_day} className="schedule-item">
-                  <Select
-                    name="week_day"
-                    label="Dia da semana"
-                    onChange={(e) =>
-                      setScheduleItemValue(index, 'week_day', e.target.value)
-                    }
-                    value={scheduleItem.week_day}
-                    options={[
-                      { value: '0', label: 'Domingo' },
-                      { value: '1', label: 'Segunda-Feira' },
-                      { value: '2', label: 'Terça-Feira' },
-                      { value: '3', label: 'Quarta-Feira' },
-                      { value: '4', label: 'Quinta-Feira' },
-                      { value: '5', label: 'Sexta-Feira' },
-                      { value: '6', label: 'Sábado' },
-                    ]}
-                  />
-                  <Input
-                    onChange={(e) =>
-                      setScheduleItemValue(index, 'from', e.target.value)
-                    }
-                    value={scheduleItem.from}
-                    name="from"
-                    label="Das"
-                    type="time"
-                  />
-                  <Input
-                    onChange={(e) =>
-                      setScheduleItemValue(index, 'to', e.target.value)
-                    }
-                    value={scheduleItem.to}
-                    name="to"
-                    label="Até"
-                    type="time"
-                  />
+                <div key={index} className="schedule-container">
+                  <div className="schedule-item">
+                    <Select
+                      name="week_day"
+                      label="Dia da semana"
+                      onChange={(e) =>
+                        setScheduleItemValue(index, 'week_day', e.target.value)
+                      }
+                      value={scheduleItem.week_day}
+                      options={[
+                        { value: '0', label: 'Domingo' },
+                        { value: '1', label: 'Segunda-Feira' },
+                        { value: '2', label: 'Terça-Feira' },
+                        { value: '3', label: 'Quarta-Feira' },
+                        { value: '4', label: 'Quinta-Feira' },
+                        { value: '5', label: 'Sexta-Feira' },
+                        { value: '6', label: 'Sábado' },
+                      ]}
+                    />
+                    <Input
+                      onChange={(e) =>
+                        setScheduleItemValue(index, 'from', e.target.value)
+                      }
+                      value={scheduleItem.from}
+                      name="from"
+                      label="Das"
+                      type="time"
+                    />
+                    <Input
+                      onChange={(e) =>
+                        setScheduleItemValue(index, 'to', e.target.value)
+                      }
+                      value={scheduleItem.to}
+                      name="to"
+                      label="Até"
+                      type="time"
+                    />
+                  </div>
+                  <button
+                    id="delete-button"
+                    onClick={(event) => handleDeleteScheduleItem(event, index)}
+                  >
+                    Excluir horário
+                  </button>
                 </div>
               );
             })}

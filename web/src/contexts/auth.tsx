@@ -6,6 +6,7 @@ export interface AuthContextData {
   user: User;
   token: string;
   subject: string;
+  subjectId: string;
   login(email: string, password: string): Promise<void>;
   SignIn(
     email: string,
@@ -28,9 +29,10 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [userState, setUser] = useState<User>({} as User);
-  const [subject, setSubject] = useState('');
   const [token, setToken] = useState('');
   const [signed, setSigned] = useState(false);
+  const [subject, setSubject] = useState('');
+  const [subjectId, setSubjectId] = useState('');
 
   async function login(email: string, password: string) {
     const response = await api.post('/login', {
@@ -52,6 +54,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     setSigned(true);
 
     setSubject(subject.data.class.subject);
+    setSubjectId(subject.data.class.id);
   }
 
   async function SignIn(
@@ -81,6 +84,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         login,
         SignIn,
         subject,
+        subjectId,
       }}
     >
       {children}

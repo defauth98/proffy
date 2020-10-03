@@ -13,6 +13,7 @@ interface ScheduleItem {
 export default class ClassesController {
   async index(request: Request, response: Response) {
     const { id } = request.params;
+    const { page } = request.query;
 
     if (id) {
       const userClass = await db('classes').where({ user_id: id });
@@ -50,8 +51,9 @@ export default class ClassesController {
       })
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
-      .select(['classes.*', 'users.*']);
-
+      .select(['classes.*', 'users.*'])
+      .limit(5)
+      .offset(((page as any) - 1) * 5);
     return response.json(classes);
   }
 
@@ -103,14 +105,14 @@ export default class ClassesController {
       })
       .where({ user_id: id });
 
-    schedule.map(async (scheduleItem: ScheduleItem, index: number) => {
+    schedule.map(async (scheduleItem: ScheduleItem) => {
       await db('class_schedule')
         .update({
           week_day: scheduleItem.week_day,
           from: covertHourToMinutes(scheduleItem.from),
           to: covertHourToMinutes(scheduleItem.to),
         })
-        .where({ id: index + 1 });
+        .where({ id: scheduleItem.id });
     });
 
     return response.status(200).json({ updatedClassID });
