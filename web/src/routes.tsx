@@ -7,9 +7,10 @@ import TeacherForm from './pages/TeacherForm';
 import Login from './pages/Login';
 import SignIn from './pages/SignIn';
 import SignInSucces from './pages/SignInSucess';
-import ForgetPassword from './pages/forgetPassword';
+import ForgetPassword from './pages/ForgetPassword';
 import RecoveryPassword from './pages/RecoveryPassword';
 import RecoverySuccess from './pages/RecoverySuccess';
+import UserPerfil from './pages/UserPerfil';
 
 function Routes() {
   return (
@@ -26,6 +27,7 @@ function Routes() {
       <Route path="/recovery-success" exact component={RecoverySuccess} />
 
       <Route path="/landing" exact component={Landing} />
+      <Route path="/perfil" exact component={UserPerfil} />
       <Route path="/study" component={TeacherList} />
       <Route path="/give-classes" component={TeacherForm} />
     </BrowserRouter>

@@ -22,12 +22,14 @@ routes.post('/recovery_password', authController.recoveryPassword);
 routes.get('/users/:id', userController.index);
 routes.put('/users/:id', userController.update);
 
+routes.get('/connections', connectionsController.index);
+
 routes.use(AuthMiddleware);
 
 routes.get('/classes', classesController.index);
 routes.post('/classes', classesController.create);
+routes.get('/classes/:id', classesController.index);
 
-routes.get('/connections', connectionsController.index);
 routes.post('/connections', connectionsController.create);
 
 export default routes;

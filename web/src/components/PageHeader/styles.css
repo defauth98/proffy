@@ -15,11 +15,14 @@
   padding: 1.6rem 0;
 }
 
+.page-header .top-bar-container span {
+  font-weight: bold;
+}
+
 .page-header .top-bar-container a {
   height: 3.2rem;
   transition: opacity 0.2s;
 }
-
 
 .page-header .top-bar-container a:hover {
   opacity: 0.6;
@@ -36,6 +39,36 @@
   margin: 3.2rem auto;
 }
 
+.page-header .header-content img {
+  height: 15rem;
+  border-radius: 50%;
+}
+
+.page-header .header-content.header-image {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-image: url('../../assets/images/profile-background.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.page-header .header-content.header-image h1 {
+  margin-top: 1rem;
+  font-family: Archivo;
+  font-size: 3.6rem;
+  color: var(--color-title-in-primary);
+}
+
+.page-header .header-content.header-image h3 {
+  font-family: Poppins;
+  font-weight: regular;
+  font-size: 2.4rem;
+  color: var(--color-text-in-primary);
+}
+
 .page-header .header-content strong {
   font: 700 3.6rem Archivo;
   line-height: 4.2rem;
@@ -49,11 +82,11 @@
   color: var(--color-text-in-primary);
   margin-top: 2.4rem;
 }
-@media (min-width: 700px){
+@media (min-width: 700px) {
   .page-header {
     height: 340px;
   }
-  
+
   .page-header .top-bar-container {
     max-width: 1100px;
   }
@@ -68,7 +101,6 @@
     justify-content: center;
     align-items: flex-start;
   }
-
 
   .page-header .header-content strong {
     width: 350px;

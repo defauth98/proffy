@@ -3,8 +3,9 @@ import api from '../services/api';
 
 export interface AuthContextData {
   signed: boolean;
-  user: object;
+  user: User;
   token: string;
+  subject: string;
   login(email: string, password: string): Promise<void>;
   SignIn(
     email: string,
@@ -14,12 +15,20 @@ export interface AuthContextData {
   ): Promise<void>;
 }
 
+interface User {
+  id: string;
+  name: string;
+  surname: string;
+  avatar_url: string;
+}
+
 export const AuthContext = createContext<AuthContextData>(
   {} as AuthContextData
 );
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState({});
+  const [userState, setUser] = useState<User>({} as User);
+  const [subject, setSubject] = useState('');
   const [token, setToken] = useState('');
   const [signed, setSigned] = useState(false);
 
@@ -29,9 +38,20 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    setUser(response.data.user);
+    const subject = await api.get(`/classes/${response.data.user.id}`, {
+      headers: { Authorization: `Bearer ${response.data.token}` },
+    });
+
+    setUser({
+      id: response.data.user.id,
+      name: response.data.user.name,
+      surname: response.data.user.surname,
+      avatar_url: response.data.user.avatar,
+    });
     setToken(response.data.token);
     setSigned(true);
+
+    setSubject(subject.data.class.subject);
   }
 
   async function SignIn(
@@ -53,7 +73,16 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signed, user, token, login, SignIn }}>
+    <AuthContext.Provider
+      value={{
+        signed,
+        user: userState,
+        token,
+        login,
+        SignIn,
+        subject,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

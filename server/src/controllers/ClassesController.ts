@@ -11,6 +11,19 @@ interface ScheduleItem {
 
 export default class ClassesController {
   async index(request: Request, response: Response) {
+    const { id } = request.params;
+
+    if (id) {
+      const userClass = await db('classes').where({ user_id: id });
+      const classSchedule = await db('class_schedule').where({
+        class_id: userClass[0].id,
+      });
+
+      response
+        .status(200)
+        .json({ class: userClass[0], schedule: classSchedule });
+    }
+
     const filters = request.query;
 
     const subject = filters.subject as string;

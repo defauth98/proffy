@@ -13,13 +13,14 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, signed } = useContext(AuthContext);
-
   const history = useHistory();
+  const { login, signed, user, subject } = useContext(AuthContext);
 
   useEffect(() => {
-    if (signed) history.push('/landing');
-  }, [history, signed]);
+    if (signed && user && subject) {
+      history.push('/landing');
+    }
+  }, [signed, user, subject, history]);
 
   function handleLogin() {
     login(email, password);
