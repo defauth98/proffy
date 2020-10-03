@@ -113,17 +113,19 @@ function UserPerfil() {
   function handleCreateClass(event: FormEvent) {
     event.preventDefault();
     api
-      .post('classes', {
-        name,
-        avatar,
-        whatsapp,
-        bio,
-        userSubject,
-        cost: Number(cost),
-        schedule: scheduleItems,
-      })
+      .put(
+        `users/${user.id}`,
+        {
+          name,
+          avatar,
+          whatsapp,
+          bio,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then(() => {})
       .then(() => {
-        alert('Cadastro efetuado com sucesso');
+        alert('Update realizado com sucesso');
         history.push('/');
       })
       .catch((error) => {
@@ -209,7 +211,11 @@ function UserPerfil() {
           <fieldset>
             <legend>
               Horários disponíveis
-              <button type="button" onClick={addNewScheduleItem}>
+              <button
+                type="button"
+                onClick={addNewScheduleItem}
+                id="legend-button"
+              >
                 + Novo horário
               </button>
             </legend>

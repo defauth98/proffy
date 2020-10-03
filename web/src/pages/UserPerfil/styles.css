@@ -87,6 +87,10 @@
   margin-top: 3.2rem;
 }
 
+#legend-button {
+  color: black;
+}
+
 #page-perfil main footer button:hover {
   background: var(--color-secundary-dark);
 }
@@ -94,7 +98,7 @@
 #page-perfil main fieldset legend button {
   background: none;
   border: 0;
-  color: var(--color-primary);
+  color: var(--color-primary) !important;
   font: 700 1.6rem Archivo;
   cursor: pointer;
   transition: color 0.2s;

@@ -4,6 +4,7 @@ import db from '../database/connection';
 import covertHourToMinutes from '../utils/convertHourToMinutes';
 
 interface ScheduleItem {
+  id: string;
   week_day: number;
   from: string;
   to: string;
@@ -89,5 +90,29 @@ export default class ClassesController {
         error: 'Unexpected error while creating new class',
       });
     }
+  }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { subject, cost, schedule } = request.body;
+
+    const updatedClassID = await db('classes')
+      .update({
+        subject,
+        cost,
+      })
+      .where({ user_id: id });
+
+    schedule.map(async (scheduleItem: ScheduleItem, index: number) => {
+      await db('class_schedule')
+        .update({
+          week_day: scheduleItem.week_day,
+          from: covertHourToMinutes(scheduleItem.from),
+          to: covertHourToMinutes(scheduleItem.to),
+        })
+        .where({ id: index + 1 });
+    });
+
+    return response.status(200).json({ updatedClassID });
   }
 }
