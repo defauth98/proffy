@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#8257E5',
   },
 });
 
@@ -20,7 +21,7 @@ const Routes: React.FC = () => {
   if (loading) {
     return (
       <View style={styles.activityIndicatorContainer}>
-        <ActivityIndicator size="large" color="#000" />
+        <ActivityIndicator size="large" color="#E6E6F0" />
       </View>
     );
   }

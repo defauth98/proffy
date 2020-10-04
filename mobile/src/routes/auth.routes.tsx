@@ -20,6 +20,9 @@ function AuthRoutes() {
   return (
     <NavigationContainer>
       <Navigator screenOptions={{ headerShown: false }}>
+        <Screen name="FirstOnboarding" component={FirstOnboarding} />
+        <Screen name="SecondOnboarding" component={SecondOnboarding} />
+
         <Screen name="Login" component={Login} />
 
         <Screen name="SignUpWhoami" component={SignUpWhoami} />
@@ -28,9 +31,6 @@ function AuthRoutes() {
 
         <Screen name="ForgetPassword" component={ForgetPassword} />
         <Screen name="RecoverySuccess" component={RecoverySuccess} />
-
-        <Screen name="FirstOnboarding" component={FirstOnboarding} />
-        <Screen name="SecondOnboarding" component={SecondOnboarding} />
       </Navigator>
     </NavigationContainer>
   );

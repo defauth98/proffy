@@ -35,7 +35,7 @@ export default function LoginPage() {
   }
 
   async function handleLogin() {
-    await signIn(email, password);
+    await signIn(email, password, isSelected);
   }
 
   useEffect(() => {
@@ -89,7 +89,8 @@ export default function LoginPage() {
             <CheckBox
               value={isSelected}
               onValueChange={() => handleToggleCheckbox()}
-              tintColors={{ true: '#04D361', false: '#000' }}
+              tintColors={{ true: '#04D361', false: '#9c98a6' }}
+              onFillColor="#fff"
             />
             <Text style={styles.remember}>Lembrar-me</Text>
           </TouchableOpacity>
