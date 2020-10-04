@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Landing from '../pages/Landing';
 import GiveClasses from '../pages/StudyTabs/GiveClasses';
-import StudyTabs from '../Routes/StudyTabs';
+import StudyTabs from './study.routes';
 import Login from '../pages/LoginPage';
 
 import SignUpWhoami from '../pages/SignUp/SignUpWhoami';

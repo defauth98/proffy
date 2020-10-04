@@ -14,7 +14,7 @@ import {
   Poppins_600SemiBold,
 } from '@expo-google-fonts/poppins';
 
-import AppStack from './src/Routes/AppStack';
+import Routes from './src/routes/index';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -30,7 +30,7 @@ export default function App() {
     return (
       <>
         <AuthProvider>
-          <AppStack />
+          <Routes />
           <StatusBar style="light" />
         </AuthProvider>
       </>
