@@ -2,7 +2,15 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
-// O que o contexto irá passar para o outros componentes
+export interface UserData {
+  name: string;
+  surname: string;
+  email: string;
+  avatar: string;
+  bio: string;
+  whatsapp: string;
+}
+
 interface AuthContextData {
   signed: boolean;
   user: object | null;
@@ -17,10 +25,8 @@ interface AuthContextData {
   signOut(): void;
 }
 
-// Como o objeto de contexto vai iniciar
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-// Componente de contexto que irá por volta de todos os outros componentes
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<object | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,11 +36,11 @@ export const AuthProvider: React.FC = ({ children }) => {
       const storagedUser = await AsyncStorage.getItem('@RNauth:user');
       const storagedToken = await AsyncStorage.getItem('@RNauth:token');
 
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
       if (storagedUser && storagedToken) {
         api.defaults.headers['Authorization'] = `Bearer ${storagedToken}`;
         setUser(JSON.parse(storagedUser));
+        setLoading(false);
+      } else {
         setLoading(false);
       }
     }
@@ -43,7 +49,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   async function setUserAndToken(user: object, token: string, save: boolean) {
-    // @todo adicionar um parametro save para ver se é necessário salvar no async storage
     setUser(user);
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`;
