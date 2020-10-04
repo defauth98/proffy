@@ -1,8 +1,11 @@
 import React from 'react';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+
 import TeacherList from '../pages/StudyTabs/TeacherList';
 import Favorites from '../pages/StudyTabs/Favorites';
+
+import { Ionicons } from '@expo/vector-icons';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 

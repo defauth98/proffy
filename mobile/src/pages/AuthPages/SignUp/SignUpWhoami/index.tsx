@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, View, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 
-import FormInputs from '../../../components/FormInputs';
+import FormInputs from '../../../../components/FormInputs';
 
 import styles from './styles';
 

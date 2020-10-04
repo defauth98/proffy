@@ -17,7 +17,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 // Componente de contexto que irá por volta de todos os outros componentes
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<object | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadSoragedData() {

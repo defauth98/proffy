@@ -1,31 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
-
+import api from '../../../services/api';
 import styles from './styles';
 
-import landingImg from '../../assets/images/landing.png';
-import studyIcon from '../../assets/images/icons/study.png';
-import giveClassesIcon from '../../assets/images/icons/give-classes.png';
-import heartIcon from '../../assets/images/icons/heart.png';
-
-import api from '../../services/api';
-import { AuthContext } from '../../contexts/auth';
+import landingImg from '../../../assets/images/landing.png';
+import studyIcon from '../../../assets/images/icons/study.png';
+import giveClassesIcon from '../../../assets/images/icons/give-classes.png';
+import heartIcon from '../../../assets/images/icons/heart.png';
 
 function Landing() {
   const navigation = useNavigation();
   const [totalConnections, setTotalConnections] = useState(0);
 
-  const { token } = useContext(AuthContext);
-
   useEffect(() => {
-    api
-      .get('connections', { headers: { Authorization: `Bearer ${token}` } })
-      .then((response) => {
-        const { total } = response.data;
-        setTotalConnections(total);
-      });
+    api.get('connections').then((response) => {
+      const { total } = response.data;
+      setTotalConnections(total);
+    });
   }, []);
 
   function handleNavigateToClassesPage() {

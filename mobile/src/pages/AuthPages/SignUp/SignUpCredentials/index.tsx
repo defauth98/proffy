@@ -5,10 +5,8 @@ import { Platform } from 'react-native';
 import { View, Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-import FormInputs from '../../../components/FormInputs';
-import { AuthContext } from '../../../contexts/auth';
-
-import api from '../../../services/api';
+import FormInputs from '../../../../components/FormInputs';
+import { useAuth } from '../../../../contexts/auth';
 
 import styles from './styles';
 
@@ -28,7 +26,7 @@ const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
 
   const navigation = useNavigation();
 
-  const { SignIn, user, signed } = useContext(AuthContext);
+  const { user, signed } = useAuth();
 
   useEffect(() => {
     if (email.length >= 6) {
@@ -41,7 +39,7 @@ const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
   async function handleSignIn() {
     const { name, surname } = route.params;
 
-    SignIn(name, surname, email, password);
+    // SignIn(name, surname, email, password);
 
     if (user && signed) {
       navigation.navigate('Landing');

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  AsyncStorage,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { RectButton } from 'react-native-gesture-handler';
@@ -15,12 +14,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
 
-import { AuthContext } from '../../contexts/auth';
+import backgroundImage from '../../../assets/images/signIn-background.png';
+import logoImage from '../../../assets/images/intro.png';
 
-import backgroundImage from '../../assets/images/signIn-background.png';
-import logoImage from '../../assets/images/intro.png';
-
-import FormInputs from '../../components/FormInputs';
+import FormInputs from '../../../components/FormInputs';
+import { useAuth } from '../../../contexts/auth';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -28,7 +26,7 @@ export default function LoginPage() {
   const [isSelected, setSelection] = useState(false);
   const [inputsFull, setInputsFull] = useState(false);
 
-  const { login, user, token } = useContext(AuthContext);
+  const { signIn } = useAuth();
 
   const navigation = useNavigation();
 
@@ -37,19 +35,7 @@ export default function LoginPage() {
   }
 
   async function handleLogin() {
-    await login(email, password);
-
-    if (!!user) {
-      navigateToLanding();
-    }
-
-    if (isSelected) {
-      await AsyncStorage.setItem('@proffy:token', token);
-    }
-  }
-
-  function navigateToLanding() {
-    navigation.navigate('Landing');
+    await signIn(email, password);
   }
 
   useEffect(() => {
@@ -59,18 +45,6 @@ export default function LoginPage() {
       }
     }
   }, [email, password]);
-
-  // useEffect(() => {
-  //   async function isSigned() {
-  //     const token = await AsyncStorage.getItem('@proffy:token');
-
-  //     if (token) {
-  //       navigateToLanding();
-  //     }
-  //   }
-
-  //   isSigned();
-  // }, []);
 
   return (
     <KeyboardAvoidingView

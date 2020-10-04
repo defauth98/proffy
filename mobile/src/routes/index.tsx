@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AuthRoutes from './auth.routes';
-import StudyRoutes from './study.routes';
+import HomeRoutes from './home.routes';
 
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import { useAuth } from '../contexts/auth';
@@ -25,7 +25,7 @@ const Routes: React.FC = () => {
     );
   }
 
-  return signed ? <StudyRoutes /> : <AuthRoutes />;
+  return signed ? <HomeRoutes /> : <AuthRoutes />;
 };
 
 export default Routes;

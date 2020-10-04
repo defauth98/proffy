@@ -9,17 +9,17 @@ import {
 
 import styles from './styles';
 
-import bookIcon from '../../../assets/images/icons/book.png';
-import onboardingBackgroundImage from '../../../assets/images/onboarding-background.png';
-import NextIcon from '../../../assets/images/icons/next.png';
+import bookIcon from '../../../../assets/images/icons/book.png';
+import onboardingBackgroundImage from '../../../../assets/images/onboarding-background.png';
+import NextIcon from '../../../../assets/images/icons/next.png';
 
 import { useNavigation } from '@react-navigation/native';
 
 const FirstOnboarding: React.FC = () => {
   const navigation = useNavigation();
 
-  function handleNavigateToLogin() {
-    navigation.navigate('Login');
+  function handleNavigateToNextPage() {
+    navigation.navigate('SecondOnboarding');
   }
   return (
     <View style={styles.container}>
@@ -34,9 +34,9 @@ const FirstOnboarding: React.FC = () => {
       </View>
       <View style={styles.informationWrapper}>
         <View style={styles.textContainer}>
-          <Text style={styles.textNumber}>02.</Text>
+          <Text style={styles.textNumber}>01.</Text>
           <Text style={styles.textDescription}>
-            Ou dê aulas sobre o que você mais conhece
+            Encontre vários professores para ensinar você
           </Text>
         </View>
 
@@ -45,7 +45,7 @@ const FirstOnboarding: React.FC = () => {
             <View style={styles.firstCircle}></View>
             <View style={styles.secondCircle}></View>
           </View>
-          <TouchableOpacity onPress={() => handleNavigateToLogin()}>
+          <TouchableOpacity onPress={() => handleNavigateToNextPage()}>
             <Image source={NextIcon} style={styles.arrowImage} />
           </TouchableOpacity>
         </View>

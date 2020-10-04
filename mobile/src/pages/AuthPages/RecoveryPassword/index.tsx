@@ -13,11 +13,11 @@ import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
 
-import backIcon from '../../assets/images/icons/Voltar.png';
-import backgroundImage from '../../assets/images/signIn-background.png';
-import logoImage from '../../assets/images/intro.png';
-import FormInputs from '../../components/FormInputs';
-import api from '../../services/api';
+import backIcon from '../../../assets/images/icons/Voltar.png';
+import backgroundImage from '../../../assets/images/signIn-background.png';
+import logoImage from '../../../assets/images/intro.png';
+import FormInputs from '../../../components/FormInputs';
+import api from '../../../services/api';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
