@@ -69,8 +69,12 @@ const styles = StyleSheet.create({
   checkbox: {
     color: '#04D361',
   },
-  remember: {},
-  forget: {},
+  remember: {
+    color: '#9C98A6',
+  },
+  forget: {
+    color: '#9C98A6',
+  },
   formButton: {
     backgroundColor: '#DCDCE5',
     padding: 16,

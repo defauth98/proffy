@@ -7,7 +7,7 @@ interface AuthContextData {
   signed: boolean;
   user: object | null;
   loading: boolean;
-  signIn(email: string, password: string): Promise<void>;
+  signIn(email: string, password: string, save: boolean): Promise<void>;
   signUp(
     email: string,
     password: string,
@@ -23,7 +23,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 // Componente de contexto que irá por volta de todos os outros componentes
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<object | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadSoragedData() {
@@ -42,18 +42,21 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadSoragedData();
   }, []);
 
-  async function setUserAndToken(user: object, token: string) {
+  async function setUserAndToken(user: object, token: string, save: boolean) {
+    // @todo adicionar um parametro save para ver se é necessário salvar no async storage
     setUser(user);
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-    await AsyncStorage.setItem('@RNauth:user', JSON.stringify(user));
-    await AsyncStorage.setItem('@RNauth:token', JSON.stringify(user));
+    if (save) {
+      await AsyncStorage.setItem('@RNauth:user', JSON.stringify(user));
+      await AsyncStorage.setItem('@RNauth:token', JSON.stringify(user));
+    }
   }
 
-  async function signIn(email: string, password: string) {
+  async function signIn(email: string, password: string, save: boolean) {
     const response = await api.post('/login', { email, password });
-    await setUserAndToken(response.data.user, response.data.token);
+    await setUserAndToken(response.data.user, response.data.token, save);
   }
 
   async function signUp(
@@ -69,7 +72,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    await setUserAndToken(response.data.user, response.data.token);
+    await setUserAndToken(response.data.user, response.data.token, false);
   }
 
   async function signOut() {
