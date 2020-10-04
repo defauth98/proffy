@@ -53,19 +53,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function signIn(email: string, password: string) {
     const response = await api.post('/login', { email, password });
-
-    setUser(response.data.user);
-
-    api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`;
-
-    await AsyncStorage.setItem(
-      '@RNauth:user',
-      JSON.stringify(response.data.user)
-    );
-    await AsyncStorage.setItem(
-      '@RNauth:token',
-      JSON.stringify(response.data.token)
-    );
+    await setUserAndToken(response.data.user, response.data.token);
   }
 
   async function signUp(
