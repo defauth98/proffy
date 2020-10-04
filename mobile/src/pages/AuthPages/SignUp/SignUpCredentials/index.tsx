@@ -24,9 +24,7 @@ const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
   const [password, setPassword] = useState('');
   const [inputsFull, setInputsFull] = useState(false);
 
-  const navigation = useNavigation();
-
-  const { user, signed } = useAuth();
+  const { signUp } = useAuth();
 
   useEffect(() => {
     if (email.length >= 6) {
@@ -39,11 +37,7 @@ const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
   async function handleSignIn() {
     const { name, surname } = route.params;
 
-    // SignIn(name, surname, email, password);
-
-    if (user && signed) {
-      navigation.navigate('Landing');
-    }
+    signUp(name, surname, email, password);
   }
 
   return (

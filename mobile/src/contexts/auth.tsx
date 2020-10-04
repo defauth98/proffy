@@ -8,6 +8,12 @@ interface AuthContextData {
   user: object | null;
   loading: boolean;
   signIn(email: string, password: string): Promise<void>;
+  signUp(
+    email: string,
+    password: string,
+    name: string,
+    surname: string
+  ): Promise<void>;
   signOut(): void;
 }
 
@@ -36,6 +42,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadSoragedData();
   }, []);
 
+  async function setUserAndToken(user: object, token: string) {
+    setUser(user);
+
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+    await AsyncStorage.setItem('@RNauth:user', JSON.stringify(user));
+    await AsyncStorage.setItem('@RNauth:token', JSON.stringify(user));
+  }
+
   async function signIn(email: string, password: string) {
     const response = await api.post('/login', { email, password });
 
@@ -53,6 +68,22 @@ export const AuthProvider: React.FC = ({ children }) => {
     );
   }
 
+  async function signUp(
+    name: string,
+    surname: string,
+    email: string,
+    password: string
+  ) {
+    const response = await api.post('/signup', {
+      name,
+      surname,
+      email,
+      password,
+    });
+
+    await setUserAndToken(response.data.user, response.data.token);
+  }
+
   async function signOut() {
     AsyncStorage.clear().then(() => {
       setUser(null);
@@ -61,7 +92,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, loading, signIn, signOut }}
+      value={{ signed: !!user, user, loading, signIn, signUp, signOut }}
     >
       {children}
     </AuthContext.Provider>

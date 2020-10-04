@@ -9,16 +9,21 @@ import landingImg from '../../../assets/images/landing.png';
 import studyIcon from '../../../assets/images/icons/study.png';
 import giveClassesIcon from '../../../assets/images/icons/give-classes.png';
 import heartIcon from '../../../assets/images/icons/heart.png';
+import { useAuth } from '../../../contexts/auth';
 
 function Landing() {
   const navigation = useNavigation();
   const [totalConnections, setTotalConnections] = useState(0);
+
+  const { user } = useAuth();
 
   useEffect(() => {
     api.get('connections').then((response) => {
       const { total } = response.data;
       setTotalConnections(total);
     });
+
+    console.log(user);
   }, []);
 
   function handleNavigateToClassesPage() {
@@ -28,6 +33,10 @@ function Landing() {
   function handleNavigateToStudyPages() {
     navigation.navigate('StudyTabs');
   }
+
+  // function handleSignOut() {
+  //   signOut();
+  // }
 
   return (
     <View style={styles.container}>
