@@ -59,7 +59,9 @@ export default class ClassesController {
         'users.email',
         'users.surname',
         'users.whatsapp',
-      ]);
+      ])
+      .limit(5)
+      .offset((Number(page) - 1) * 5);
 
     return response.json(classes);
   }

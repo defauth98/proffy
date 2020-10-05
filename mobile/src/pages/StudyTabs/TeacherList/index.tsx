@@ -6,7 +6,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import {
+  BorderlessButton,
+  FlatList,
+  RectButton,
+} from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -27,6 +31,8 @@ const TeacherList: React.FC = () => {
   const [subject, setSubject] = useState('');
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
+
+  const [page, setPage] = useState(1);
 
   function LoadFavorites() {
     AsyncStorage.getItem('favorites').then((response) => {
@@ -55,12 +61,38 @@ const TeacherList: React.FC = () => {
         week_day,
         subject,
         time,
+        page,
       },
     });
 
     setTeachers(teachers.data);
 
     toggleHandleFiltersVisible();
+
+    setPage(page + 1);
+  }
+
+  async function loadMoreTeachers() {
+    LoadFavorites();
+
+    const newTeachers = await api.get<[]>('classes', {
+      params: {
+        week_day,
+        subject,
+        time,
+        page,
+      },
+    });
+
+    const newItems = Array().concat(teachers, newTeachers.data);
+
+    setTeachers(newItems as any);
+  }
+
+  function renderItem(item: Teacher) {
+    return (
+      <TeacherItem teacher={item} favorited={favorites.includes(item.id)} />
+    );
   }
 
   return (
@@ -145,23 +177,14 @@ const TeacherList: React.FC = () => {
           </ScrollView>
         )}
       </PageHeader>
-      <ScrollView
+
+      <FlatList
+        data={teachers}
+        renderItem={({ item }) => renderItem(item)}
         style={styles.teacherList}
-        contentContainerStyle={{
-          paddingHorizontal: 16,
-          paddingBottom: 16,
-        }}
-      >
-        {teachers.map((teacher: Teacher) => {
-          return (
-            <TeacherItem
-              key={teacher.id}
-              teacher={teacher}
-              favorited={favorites.includes(teacher.id)}
-            />
-          );
-        })}
-      </ScrollView>
+        onEndReached={loadMoreTeachers}
+        onEndReachedThreshold={0.1}
+      />
     </KeyboardAvoidingView>
   );
 };
