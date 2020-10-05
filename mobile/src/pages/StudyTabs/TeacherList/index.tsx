@@ -69,6 +69,7 @@ const TeacherList: React.FC = () => {
     >
       <PageHeader
         title="Proffs disponíveis"
+        pageTitle="Estudar"
         headerRight={
           <BorderlessButton onPress={toggleHandleFiltersVisible}>
             <Feather name="filter" size={30} color="#fff" />

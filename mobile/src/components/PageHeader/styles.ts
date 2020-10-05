@@ -5,6 +5,9 @@ const styles = StyleSheet.create({
     padding: 40,
     backgroundColor: '#8257e5',
   },
+  pageTitle: {
+    color: '#D4C2FF',
+  },
   topBar: {
     flexDirection: 'row',
     alignItems: 'center',
