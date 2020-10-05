@@ -40,7 +40,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (email.length >= 6) {
-      if (password.length >= 6) {
+      if (password.length >= 3) {
         setInputsFull(true);
       }
     }

@@ -50,7 +50,7 @@ const TeacherList: React.FC = () => {
   async function handleFiltersSubmit() {
     LoadFavorites();
 
-    const response = await api.get('classes', {
+    const teachers = await api.get('classes', {
       params: {
         week_day,
         subject,
@@ -58,7 +58,8 @@ const TeacherList: React.FC = () => {
       },
     });
 
-    setTeachers(response.data);
+    setTeachers(teachers.data);
+
     toggleHandleFiltersVisible();
   }
 
@@ -116,13 +117,6 @@ const TeacherList: React.FC = () => {
                 <Select
                   label="Horário"
                   items={[
-                    { label: '00h', value: '00:00' },
-                    { label: '01h', value: '01:00' },
-                    { label: '02h', value: '02:00' },
-                    { label: '03h', value: '03:00' },
-                    { label: '05h', value: '05:00' },
-                    { label: '06h', value: '06:00' },
-                    { label: '07h', value: '07:00' },
                     { label: '08h', value: '08:00' },
                     { label: '09h', value: '09:00' },
                     { label: '10h', value: '10:00' },
@@ -134,11 +128,6 @@ const TeacherList: React.FC = () => {
                     { label: '16h', value: '16:00' },
                     { label: '17h', value: '17:00' },
                     { label: '18h', value: '18:00' },
-                    { label: '19h', value: '19:00' },
-                    { label: '20h', value: '20:00' },
-                    { label: '21h', value: '21:00' },
-                    { label: '22h', value: '22:00' },
-                    { label: '23h', value: '23:00' },
                   ]}
                   placeholder="Selecione"
                   defaultValue={time}

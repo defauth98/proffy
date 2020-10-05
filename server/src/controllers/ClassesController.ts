@@ -51,9 +51,16 @@ export default class ClassesController {
       })
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
-      .select(['classes.*', 'users.*'])
-      .limit(5)
-      .offset(((page as any) - 1) * 5);
+      .select([
+        'classes.*',
+        'users.name',
+        'users.avatar',
+        'users.bio',
+        'users.email',
+        'users.surname',
+        'users.whatsapp',
+      ]);
+
     return response.json(classes);
   }
 
