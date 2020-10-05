@@ -3,17 +3,15 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F0F0F7',
-    padding: 20,
+    justifyContent: 'space-between',
     flex: 1,
+    marginHorizontal: 30,
+    marginTop: 30,
   },
-  titleWrapper: {
-    flex: 1,
-  },
-  formWrapper: {
-    flex: 1,
-  },
+  titleWrapper: {},
+  formWrapper: {},
   title: {
-    marginTop: 90,
+    marginTop: 30,
     width: 240,
   },
   textTitle: {
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#32264D',
     marginTop: 20,
-    marginBottom: 10,
+
     fontSize: 20,
     padding: 10,
   },
@@ -43,8 +41,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 24,
     backgroundColor: '#DCDCE5',
+
     alignItems: 'center',
     justifyContent: 'center',
+
+    marginBottom: 40,
   },
 
   buttonText: {

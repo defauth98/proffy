@@ -30,11 +30,11 @@ const SignUpWhoami: React.FC = () => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.titleWrapper}>
         <View style={styles.title}>
-          <Text style={styles.textTitle}>Crie sua conta gratuíta</Text>
+          <Text style={styles.textTitle}>Crie sua conta gratuíta.</Text>
           <Text style={styles.textDescription}>
             Basta preencher esses dados e você estará conosco.
           </Text>

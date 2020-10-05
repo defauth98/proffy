@@ -47,7 +47,7 @@ const SignUpCrendetials: React.FC<SingUpCredentialsProps> = ({ route }) => {
     >
       <View style={styles.titleWrapper}>
         <View style={styles.title}>
-          <Text style={styles.textTitle}>Crie sua conta gratuíta</Text>
+          <Text style={styles.textTitle}>Crie sua conta gratuíta.</Text>
           <Text style={styles.textDescription}>
             Basta preencher esses dados e você estará conosco.
           </Text>
