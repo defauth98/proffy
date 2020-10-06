@@ -34,7 +34,7 @@ export default class FavoritesController {
         'users.whatsapp',
         'classes.subject',
         'classes.cost',
-        'classes.id',
+        'favorites.id',
       ]);
 
     return res.status(200).json(favoritedClasses);
@@ -44,7 +44,7 @@ export default class FavoritesController {
     const { id } = req.params;
 
     try {
-      await db('favorites').del().where({ id });
+      await db('favorites').where({ id }).del();
 
       return res.send();
     } catch (error) {

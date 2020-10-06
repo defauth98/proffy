@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
 export interface UserData {
+  id: string;
   name: string;
   surname: string;
   email: string;
@@ -13,7 +14,7 @@ export interface UserData {
 
 interface AuthContextData {
   signed: boolean;
-  user: object | null;
+  user: UserData | null;
   loading: boolean;
   signIn(email: string, password: string, save: boolean): Promise<void>;
   signUp(
@@ -28,7 +29,7 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadSoragedData();
   }, []);
 
-  async function setUserAndToken(user: object, token: string, save: boolean) {
+  async function setUserAndToken(user: UserData, token: string, save: boolean) {
     setUser(user);
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`;

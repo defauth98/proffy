@@ -26,6 +26,7 @@ export interface Teacher {
 interface TeacherItemProps {
   teacher: Teacher;
   favorited: boolean;
+  LoadFavorites(): void;
 }
 
 interface scheduleItem {
@@ -34,7 +35,11 @@ interface scheduleItem {
   week_day: Number;
 }
 
-const TeacherItem: React.FC<TeacherItemProps> = ({ teacher, favorited }) => {
+const TeacherItem: React.FC<TeacherItemProps> = ({
+  teacher,
+  favorited,
+  LoadFavorites,
+}) => {
   const [isFavorited, setIsFavorited] = useState(favorited);
   const [monday, setMonday] = useState<scheduleItem | null>(null);
   const [tuesday, setTuesday] = useState<scheduleItem | null>(null);
@@ -79,29 +84,10 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher, favorited }) => {
   }
 
   async function handleToggleFavorite() {
-    const favorites = await AsyncStorage.getItem('favorites');
+    await api.delete(`favorites/${teacher.id}`);
 
-    let favoritesArray = [];
-
-    if (favorites) {
-      favoritesArray = JSON.parse(favorites);
-    }
-
-    if (isFavorited) {
-      const favoriteIndex = favoritesArray.findIndex((teacherItem: Teacher) => {
-        return teacherItem.id === teacher.id;
-      });
-
-      favoritesArray.splice(favoriteIndex, 1);
-
-      setIsFavorited(false);
-    } else {
-      favoritesArray.push(teacher);
-
-      setIsFavorited(true);
-    }
-
-    await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
+    setIsFavorited(false);
+    LoadFavorites();
   }
 
   return (
