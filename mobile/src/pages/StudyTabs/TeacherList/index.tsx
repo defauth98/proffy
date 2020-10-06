@@ -22,10 +22,10 @@ import TeacherItem, { Teacher } from '../../../components/TeacherItem';
 import Select from '../../../components/Select';
 
 import styles from './styles';
+import { useFocusEffect } from '@react-navigation/native';
 
 const TeacherList: React.FC = () => {
   const [isFilterVisible, setFilterVisible] = useState(false);
-  const [favorites, setFavorites] = useState<number[]>([]);
 
   const [teachers, setTeachers] = useState([]);
   const [subject, setSubject] = useState('');
@@ -34,28 +34,22 @@ const TeacherList: React.FC = () => {
 
   const [page, setPage] = useState(1);
 
-  function LoadFavorites() {
-    AsyncStorage.getItem('favorites').then((response) => {
-      if (response) {
-        const favoritedTeachers = JSON.parse(response);
-        const favoritedTeachersIds = favoritedTeachers.map(
-          (teacher: Teacher) => {
-            return teacher.id;
-          }
-        );
-
-        setFavorites(favoritedTeachersIds);
-      }
-    });
-  }
-
   function toggleHandleFiltersVisible() {
     setFilterVisible(!isFilterVisible);
   }
 
-  async function handleFiltersSubmit() {
-    LoadFavorites();
+  async function resetPage() {
+    setPage(1);
+    setTeachers([]);
+  }
 
+  useFocusEffect(
+    React.useCallback(() => {
+      resetPage();
+    }, [])
+  );
+
+  async function handleFiltersSubmit() {
     const teachers = await api.get('classes', {
       params: {
         week_day,
@@ -73,8 +67,6 @@ const TeacherList: React.FC = () => {
   }
 
   async function loadMoreTeachers() {
-    LoadFavorites();
-
     const newTeachers = await api.get<[]>('classes', {
       params: {
         week_day,
@@ -90,9 +82,7 @@ const TeacherList: React.FC = () => {
   }
 
   function renderItem(item: Teacher) {
-    return (
-      <TeacherItem teacher={item} favorited={favorites.includes(item.id)} />
-    );
+    return <TeacherItem teacher={item} LoadFavorites={() => {}} />;
   }
 
   return (
@@ -181,6 +171,7 @@ const TeacherList: React.FC = () => {
       <FlatList
         data={teachers}
         renderItem={({ item }) => renderItem(item)}
+        keyExtractor={(item, index) => index.toString()}
         style={styles.teacherList}
         onEndReached={loadMoreTeachers}
         onEndReachedThreshold={0.1}

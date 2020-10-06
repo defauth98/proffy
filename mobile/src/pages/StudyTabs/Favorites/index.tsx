@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useAuth } from '../../../contexts/auth';
 
@@ -16,7 +16,7 @@ const Favorites: React.FC = () => {
   const { user } = useAuth();
 
   async function LoadFavorites() {
-    const response = await api.get(`/favorites/${user && user?.id}`);
+    const response = await api.get(`favorites/${user?.id}`);
 
     setFavorites(response.data);
   }
@@ -27,27 +27,20 @@ const Favorites: React.FC = () => {
     }, [])
   );
 
+  function renderItem(item: Teacher) {
+    return <TeacherItem teacher={item} LoadFavorites={LoadFavorites} />;
+  }
+
   return (
     <View style={styles.container}>
       <PageHeader title="Meus proffys favoritos" pageTitle="Estudar" />
-      <ScrollView
+
+      <FlatList
+        data={favorites}
+        renderItem={({ item }) => renderItem(item)}
+        keyExtractor={(item, index) => index.toString()}
         style={styles.teacherList}
-        contentContainerStyle={{
-          paddingHorizontal: 16,
-          paddingBottom: 16,
-        }}
-      >
-        {favorites.map((teacher: Teacher) => {
-          return (
-            <TeacherItem
-              key={teacher.id}
-              teacher={teacher}
-              favorited
-              LoadFavorites={LoadFavorites}
-            />
-          );
-        })}
-      </ScrollView>
+      />
     </View>
   );
 };

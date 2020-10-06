@@ -17,6 +17,7 @@ export default class ClassesController {
 
     if (id) {
       const userClass = await db('classes').where({ user_id: id });
+
       const classSchedule = await db('class_schedule').where({
         class_id: userClass[0].id,
       });
@@ -52,7 +53,9 @@ export default class ClassesController {
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
       .select([
-        'classes.*',
+        'classes.id as class_id',
+        'classes.subject',
+        'classes.cost',
         'users.name',
         'users.avatar',
         'users.bio',

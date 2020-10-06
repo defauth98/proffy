@@ -28,19 +28,19 @@ routes.put('/users/:id', userController.update);
 
 routes.get('/connections', connectionsController.index);
 
-routes.use(AuthMiddleware);
+routes.post('/favorites', favoritesController.create);
+routes.get('/favorites/:id', favoritesController.index);
+routes.delete('/favorites/:id', favoritesController.delete);
 
 routes.get('/classes', classesController.index);
 routes.post('/classes', classesController.create);
 routes.get('/classes/:id', classesController.index);
 routes.put('/classes/:id', classesController.update);
 
+routes.use(AuthMiddleware);
+
 routes.post('/schedule/:id', scheduleController.create);
 routes.delete('/schedule/:class_id/:id', scheduleController.delete);
-
-routes.post('/favorites', favoritesController.create);
-routes.get('/favorites/:id', favoritesController.index);
-routes.delete('/favorites/:id', favoritesController.delete);
 
 routes.post('/connections', connectionsController.create);
 

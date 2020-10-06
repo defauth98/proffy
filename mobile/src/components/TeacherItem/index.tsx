@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Text, Linking } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import heartOutlineIcon from '../../assets/images/icons/heart-outline.png';
 import unFavoriteIcon from '../../assets/images/icons/unfavorite.png';
@@ -12,6 +11,7 @@ import styles from './styles';
 import api from '../../services/api';
 
 import ConvertToHour from '../../utils/convertToHour';
+import { useAuth } from '../../contexts/auth';
 
 export interface Teacher {
   avatar: string;
@@ -21,11 +21,11 @@ export interface Teacher {
   name: string;
   subject: string;
   whatsapp: string;
+  class_id: string;
 }
 
 interface TeacherItemProps {
   teacher: Teacher;
-  favorited: boolean;
   LoadFavorites(): void;
 }
 
@@ -37,19 +37,32 @@ interface scheduleItem {
 
 const TeacherItem: React.FC<TeacherItemProps> = ({
   teacher,
-  favorited,
   LoadFavorites,
 }) => {
-  const [isFavorited, setIsFavorited] = useState(favorited);
+  const [isFavorited, setIsFavorited] = useState(false);
   const [monday, setMonday] = useState<scheduleItem | null>(null);
   const [tuesday, setTuesday] = useState<scheduleItem | null>(null);
   const [wednesday, setWednesday] = useState<scheduleItem | null>(null);
   const [thursday, setThursday] = useState<scheduleItem | null>(null);
   const [friday, setFriday] = useState<scheduleItem | null>(null);
 
+  const { user } = useAuth();
+
+  useEffect(() => {
+    async function checkFavoritedItem() {
+      const response = await api.get(`favorites/${teacher.class_id}`);
+
+      if (response.data[0]) {
+        setIsFavorited(true);
+      }
+    }
+
+    checkFavoritedItem();
+  }, []);
+
   useEffect(() => {
     async function getSchedule() {
-      const response = await api.get(`classes/${teacher.id}`);
+      const response = await api.get(`classes/${teacher.class_id}`);
 
       response?.data.schedule.map((responseItem: scheduleItem) => {
         switch (responseItem.week_day) {
@@ -84,9 +97,17 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
   }
 
   async function handleToggleFavorite() {
-    await api.delete(`favorites/${teacher.id}`);
+    if (isFavorited === true) {
+      await api.delete(`favorites/${teacher?.id}`);
+      setIsFavorited(false);
+    } else {
+      await api.post('favorites', {
+        favorite_user_id: user?.id,
+        favorited_class_id: teacher.class_id,
+      });
+      setIsFavorited(true);
+    }
 
-    setIsFavorited(false);
     LoadFavorites();
   }
 

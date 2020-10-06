@@ -5,6 +5,15 @@ export default class FavoritesController {
   async create(req: Request, res: Response) {
     const { favorite_user_id, favorited_class_id } = req.body;
 
+    const exists = await db('favorites').where({
+      favorite_user_id,
+      favorited_class_id,
+    });
+
+    if (!!exists[0]) {
+      return res.status(400).json({ message: 'ja favoritado' });
+    }
+
     try {
       const insertedFavorite = await db('favorites').insert({
         favorite_user_id,
@@ -34,6 +43,7 @@ export default class FavoritesController {
         'users.whatsapp',
         'classes.subject',
         'classes.cost',
+        'classes.id as class_id',
         'favorites.id',
       ]);
 
