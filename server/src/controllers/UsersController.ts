@@ -8,6 +8,7 @@ export default class UserController {
     const users = await db('users')
       .where({ id })
       .select(
+        'users.id',
         'users.name',
         'users.surname',
         'users.email',
@@ -50,18 +51,7 @@ export default class UserController {
         .update({ name, surname, whatsapp, email, bio, avatar })
         .where({ id });
 
-      const updatedUser = await db('users')
-        .where({ id: updatedUserID })
-        .select(
-          'users.name',
-          'users.surname',
-          'users.email',
-          'users.avatar',
-          'users.whatsapp',
-          'users.bio'
-        );
-
-      return res.status(200).json(updatedUser);
+      return res.status(200).json({ message: 'success' });
     } catch (error) {}
   }
 }

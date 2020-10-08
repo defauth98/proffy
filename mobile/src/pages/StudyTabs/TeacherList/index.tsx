@@ -13,8 +13,6 @@ import {
 } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 
-import AsyncStorage from '@react-native-community/async-storage';
-
 import api from '../../../services/api';
 
 import PageHeader from '../../../components/PageHeader';
@@ -23,6 +21,11 @@ import Select from '../../../components/Select';
 
 import styles from './styles';
 import { useFocusEffect } from '@react-navigation/native';
+
+interface FavoriteItem {
+  class_id: string;
+  user_id: string;
+}
 
 const TeacherList: React.FC = () => {
   const [isFilterVisible, setFilterVisible] = useState(false);
@@ -37,17 +40,6 @@ const TeacherList: React.FC = () => {
   function toggleHandleFiltersVisible() {
     setFilterVisible(!isFilterVisible);
   }
-
-  async function resetPage() {
-    setPage(1);
-    setTeachers([]);
-  }
-
-  useFocusEffect(
-    React.useCallback(() => {
-      resetPage();
-    }, [])
-  );
 
   async function handleFiltersSubmit() {
     const teachers = await api.get('classes', {

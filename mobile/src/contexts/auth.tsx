@@ -78,7 +78,9 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    await setUserAndToken(response.data.user, response.data.token, false);
+    if (response.status !== 400) {
+      signIn(email, password, true);
+    }
   }
 
   async function signOut() {

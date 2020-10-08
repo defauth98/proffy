@@ -22,6 +22,7 @@ export interface Teacher {
   subject: string;
   whatsapp: string;
   class_id: string;
+  user_id: string;
 }
 
 interface TeacherItemProps {
@@ -33,6 +34,12 @@ interface scheduleItem {
   from: Number;
   to: Number;
   week_day: Number;
+}
+
+interface ResponseItem {
+  class_id: string;
+  id: string;
+  user_id: string;
 }
 
 const TeacherItem: React.FC<TeacherItemProps> = ({
@@ -47,18 +54,6 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
   const [friday, setFriday] = useState<scheduleItem | null>(null);
 
   const { user } = useAuth();
-
-  useEffect(() => {
-    async function checkFavoritedItem() {
-      const response = await api.get(`favorites/${teacher.class_id}`);
-
-      if (response.data[0]) {
-        setIsFavorited(true);
-      }
-    }
-
-    checkFavoritedItem();
-  }, []);
 
   useEffect(() => {
     async function getSchedule() {
@@ -87,6 +82,20 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
     }
 
     getSchedule();
+  }, []);
+
+  useEffect(() => {
+    async function checkIsfavorited() {
+      const response = await api.get(`favorites/${user?.id}`);
+
+      response.data.map((responseItem: ResponseItem) => {
+        if (teacher.class_id === responseItem.class_id) {
+          setIsFavorited(true);
+        }
+      });
+    }
+
+    checkIsfavorited();
   }, []);
 
   function handleLinkToWhatsapp() {

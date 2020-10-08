@@ -16,15 +16,19 @@ export default class ClassesController {
     const { page } = request.query;
 
     if (id) {
-      const userClass = await db('classes').where({ user_id: id });
+      try {
+        const userClass = await db('classes').where({ user_id: id });
 
-      const classSchedule = await db('class_schedule').where({
-        class_id: userClass[0].id,
-      });
+        const classSchedule = await db('class_schedule').where({
+          class_id: userClass[0].id,
+        });
 
-      response
-        .status(200)
-        .json({ class: userClass[0], schedule: classSchedule });
+        return response
+          .status(200)
+          .json({ class: userClass[0], schedule: classSchedule });
+      } catch (error) {
+        return response.status(400).json({ error });
+      }
     }
 
     const filters = request.query;
@@ -56,6 +60,7 @@ export default class ClassesController {
         'classes.id as class_id',
         'classes.subject',
         'classes.cost',
+        'users.id as user_id',
         'users.name',
         'users.avatar',
         'users.bio',
