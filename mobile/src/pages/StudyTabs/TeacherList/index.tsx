@@ -20,7 +20,6 @@ import TeacherItem, { Teacher } from '../../../components/TeacherItem';
 import Select from '../../../components/Select';
 
 import styles from './styles';
-import { useFocusEffect } from '@react-navigation/native';
 
 interface FavoriteItem {
   class_id: string;
