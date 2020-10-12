@@ -3,5 +3,5 @@ export default function ConvertToDate(date: any): String {
 
   let hourString = hour.toString();
 
-  return `${hourString}h`;
+  return `${hourString}:00`;
 }

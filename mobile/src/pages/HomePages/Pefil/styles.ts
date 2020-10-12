@@ -24,22 +24,23 @@ const styles = StyleSheet.create({
   userTextTitle: {
     color: '#32264D',
 
-    fontFamily: 'Archivo_700Bold',
-    fontSize: 20,
-
     paddingBottom: 8,
+
     marginBottom: 22,
     marginTop: 22,
 
     borderBottomWidth: 1,
     borderBottomColor: '#E6E6F0',
+
+    fontFamily: 'Archivo_700Bold',
+    fontSize: 18,
   },
   labelStyle: {
     color: '#32264D',
   },
   button: {
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 150,
     backgroundColor: '#04D361',
     padding: 20,
 
@@ -77,6 +78,26 @@ const styles = StyleSheet.create({
 
     paddingTop: 10,
     marginTop: 10,
+  },
+  scheduleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    paddingBottom: 8,
+
+    marginBottom: 22,
+    marginTop: 22,
+
+    borderBottomWidth: 1,
+    borderBottomColor: '#E6E6F0',
+  },
+  scheduleAddText: {
+    color: '#8257E5',
+  },
+  scheduleText: {
+    fontFamily: 'Archivo_700Bold',
+    fontSize: 18,
   },
 });
 

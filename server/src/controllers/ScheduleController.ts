@@ -8,8 +8,8 @@ export default class ScheduleControler {
 
     await db('class_schedule').insert({
       week_day: 1,
-      to: 720,
-      from: 600,
+      from: 480,
+      to: 1020,
       class_id: id,
     });
 

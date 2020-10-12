@@ -1,3 +1,7 @@
+import {
+  Archivo_400Regular,
+  Archivo_700Bold,
+} from '@expo-google-fonts/archivo';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -25,6 +29,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  profileContainer: {
+    height: 220,
+    width: '100%',
+  },
+  profileName: {
+    color: '#fff',
+
+    fontFamily: 'Archivo_400Regular',
+    fontSize: 24,
+    lineHeight: 25,
+  },
+  profileSubject: {
+    color: '#D4C2FF',
+
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  profileAvatar: {
+    width: 140,
+    height: 140,
+
+    borderRadius: 75,
+
+    marginBottom: 10,
+  },
+  backgroundImageContainer: {
+    width: '100%',
+    height: '100%',
+
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
