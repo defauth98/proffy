@@ -46,23 +46,26 @@ const Perfil: React.FC = () => {
   }, []);
 
   async function loadSubject() {
-    const response = await api.get(`classes/${user?.id}`);
+    try {
+      const response = await api.get(`classes/${user?.id}`);
 
-    setSubject(response.data.class);
+      setSubject(response.data.class || null);
 
-    const schedule = response.data.schedule.map(
-      (scheduleItem: ScheduleItem) => {
-        return {
-          id: scheduleItem.id,
-          week_day: scheduleItem.week_day,
-          class_id: scheduleItem.class_id,
-          from: convertToHour(scheduleItem.from),
-          to: convertToHour(scheduleItem.to),
-        };
+      if (response.data.schedule) {
+        const schedule = response.data.schedule.map(
+          (scheduleItem: ScheduleItem) => {
+            return {
+              id: scheduleItem.id,
+              week_day: scheduleItem.week_day,
+              class_id: scheduleItem.class_id,
+              from: convertToHour(scheduleItem.from),
+              to: convertToHour(scheduleItem.to),
+            };
+          }
+        );
+        setSchedule(schedule);
       }
-    );
-
-    setSchedule(schedule);
+    } catch (error) {}
   }
 
   function onChangeValue(newValue: string, input: string) {
@@ -148,6 +151,37 @@ const Perfil: React.FC = () => {
     if (scheduleArray) setSchedule(scheduleArray);
   }
 
+  function renderSubjectItems() {
+    if (subject?.subject) {
+      return (
+        <>
+          <Text style={styles.userTextTitle}>Sobre a aula</Text>
+
+          <Input
+            label="Matéria"
+            content={subject?.subject}
+            onChangeValue={onChangeValue}
+          />
+
+          <Input
+            label="Custo da sua hora por aula"
+            content={subject?.cost.toString()}
+            onChangeValue={onChangeValue}
+          />
+
+          <View style={styles.scheduleContainer}>
+            <Text style={styles.scheduleText}>Horários disponíveis</Text>
+            <TouchableOpacity onPress={handleAddNewScheduleItem}>
+              <Text style={styles.scheduleAddText}>+ Novo</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      );
+    }
+
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <PageHeader
@@ -185,26 +219,7 @@ const Perfil: React.FC = () => {
             onChangeValue={onChangeValue}
           />
 
-          <Text style={styles.userTextTitle}>Sobre a aula</Text>
-
-          <Input
-            label="Matéria"
-            content={subject?.subject}
-            onChangeValue={onChangeValue}
-          />
-
-          <Input
-            label="Custo da sua hora por aula"
-            content={subject?.cost.toString()}
-            onChangeValue={onChangeValue}
-          />
-
-          <View style={styles.scheduleContainer}>
-            <Text style={styles.scheduleText}>Horários disponíveis</Text>
-            <TouchableOpacity onPress={handleAddNewScheduleItem}>
-              <Text style={styles.scheduleAddText}>+ Novo</Text>
-            </TouchableOpacity>
-          </View>
+          {renderSubjectItems()}
 
           {schedule &&
             schedule.map((scheduleItem, index) => {
@@ -295,6 +310,7 @@ const Perfil: React.FC = () => {
                 </View>
               );
             })}
+
           <View style={styles.footer}>
             <RectButton style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Salvar alterações</Text>

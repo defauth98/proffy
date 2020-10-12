@@ -50,19 +50,20 @@ const GiveClasses: React.FC = () => {
 
     setSubject(response.data.class);
 
-    const schedule = response.data.schedule.map(
-      (scheduleItem: ScheduleItem) => {
-        return {
-          id: scheduleItem.id,
-          week_day: scheduleItem.week_day,
-          class_id: scheduleItem.class_id,
-          from: convertToHour(scheduleItem.from),
-          to: convertToHour(scheduleItem.to),
-        };
-      }
-    );
-
-    setSchedule(schedule);
+    if (response.data.schedule) {
+      const schedule = response.data.schedule.map(
+        (scheduleItem: ScheduleItem) => {
+          return {
+            id: scheduleItem.id,
+            week_day: scheduleItem.week_day,
+            class_id: scheduleItem.class_id,
+            from: convertToHour(scheduleItem.from),
+            to: convertToHour(scheduleItem.to),
+          };
+        }
+      );
+      setSchedule(schedule);
+    }
   }
 
   function onChangeValue(newValue: string, input: string) {

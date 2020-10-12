@@ -5,6 +5,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import backIcon from '../../assets/images/icons/back.png';
 import logoImg from '../../assets/images/logo.png';
 import profileBackgroungImg from '../../assets/images/profile-background.png';
+import defaultUserAVatar from '../../assets/images/default-avatar.png';
 
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
@@ -46,7 +47,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             style={styles.backgroundImageContainer}
           >
             <Image
-              source={{ uri: user?.avatar }}
+              source={user?.avatar ? { uri: user?.avatar } : defaultUserAVatar}
               style={styles.profileAvatar}
             />
             <Text

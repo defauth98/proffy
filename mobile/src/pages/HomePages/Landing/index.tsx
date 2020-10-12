@@ -12,8 +12,8 @@ import landingImg from '../../../assets/images/landing.png';
 import studyIcon from '../../../assets/images/icons/study.png';
 import giveClassesIcon from '../../../assets/images/icons/give-classes.png';
 import heartIcon from '../../../assets/images/icons/heart.png';
-import defaultUserAvatar from '../../../assets/images/defauth.jpeg';
 import logoutIcon from '../../../assets/images/icons/Sair.png';
+import defaultAvatar from '../../../assets/images/default-avatar.png';
 
 function Landing() {
   const [totalConnections, setTotalConnections] = useState('');
@@ -60,7 +60,7 @@ function Landing() {
                     ? {
                         uri: userData?.avatar,
                       }
-                    : defaultUserAvatar
+                    : defaultAvatar
                 }
               />
               <Text
