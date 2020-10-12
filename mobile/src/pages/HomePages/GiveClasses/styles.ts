@@ -99,6 +99,33 @@ const styles = StyleSheet.create({
     fontFamily: 'Archivo_700Bold',
     fontSize: 18,
   },
+  profileContainer: {
+    height: 70,
+
+    flexDirection: 'row',
+
+    alignItems: 'center',
+  },
+
+  profileImage: {
+    width: 60,
+    height: 60,
+
+    borderRadius: 60,
+  },
+  profileInfo: {
+    marginLeft: 20,
+  },
+  profileName: {
+    fontFamily: 'Archivo_700Bold',
+    fontSize: 20,
+    color: '#32264D',
+  },
+  profileSubject: {
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 12,
+    color: '#6A6180',
+  },
 });
 
 export default styles;

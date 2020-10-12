@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 import { useAuth } from '../../../contexts/auth';
+import { useNavigation } from '@react-navigation/native';
 
 import PageHeader from '../../../components/PageHeader';
 import Input from '../../../components/Inputs';
+import Select from '../../../components/Select';
 
 import styles from './styles';
-import Select from '../../../components/Select';
-import { RectButton } from 'react-native-gesture-handler';
+
 import api from '../../../services/api';
 
 import convertToHour from '../../../utils/convertToHour';
-import convertHourToMinutes from '../../../utils/convertHourToMinutes';
-import { useNavigation } from '@react-navigation/native';
+
+import defaultImage from '../../../assets/images/default-avatar.png';
 
 interface Subject {
   id: string;
@@ -32,8 +34,6 @@ const GiveClasses: React.FC = () => {
   const { user } = useAuth();
   const navigation = useNavigation();
 
-  const [bio, setBio] = useState(user?.bio);
-  const [whatsapp, setWhatsapp] = useState(user?.whatsapp);
   const [subject, setSubject] = useState<Subject | null>(null);
   const [schedule, setSchedule] = useState<ScheduleItem[] | null>(null);
 
@@ -43,52 +43,48 @@ const GiveClasses: React.FC = () => {
     loadSubject();
   }, []);
 
+  useEffect(() => {
+    if (schedule === null) setSchedule([{} as ScheduleItem]);
+  }, []);
+
   async function loadSubject() {
-    const response = await api.get(`classes/${user?.id}`);
+    try {
+      const response = await api.get(`classes/${user?.id}`);
 
-    setExists(!!response.data.class);
+      setExists(!!response.data.class);
 
-    setSubject(response.data.class);
+      setSubject(response.data.class);
 
-    if (response.data.schedule) {
-      const schedule = response.data.schedule.map(
-        (scheduleItem: ScheduleItem) => {
-          return {
-            id: scheduleItem.id,
-            week_day: scheduleItem.week_day,
-            class_id: scheduleItem.class_id,
-            from: convertToHour(scheduleItem.from),
-            to: convertToHour(scheduleItem.to),
-          };
-        }
-      );
-      setSchedule(schedule);
-    }
+      if (response.data.schedule[0].class_id) {
+        const schedule = response.data.schedule.map(
+          (scheduleItem: ScheduleItem) => {
+            return {
+              id: scheduleItem.id,
+              week_day: scheduleItem.week_day,
+              class_id: scheduleItem.class_id,
+              from: convertToHour(scheduleItem.from),
+              to: convertToHour(scheduleItem.to),
+            };
+          }
+        );
+        setSchedule(schedule);
+      }
+    } catch (error) {}
   }
 
   function onChangeValue(newValue: string, input: string) {
     switch (input) {
-      case 'Whatsapp':
-        setWhatsapp(newValue);
-        break;
-      case 'Bio':
-        setBio(newValue);
-        break;
       case 'Matéria':
-        subject &&
-          setSubject({
-            id: subject?.id,
-            cost: subject?.cost,
-            subject: newValue,
-          });
+        setSubject({
+          subject: newValue,
+          cost: subject?.cost || '',
+        } as Subject);
         break;
       case 'Custo da sua hora por aula':
-        subject &&
-          setSubject({
-            id: subject?.id,
-            cost: newValue,
-            subject: subject.subject,
-          });
+        setSubject({
+          cost: newValue,
+          subject: subject?.subject || '',
+        } as Subject);
       default:
         break;
     }
@@ -96,30 +92,21 @@ const GiveClasses: React.FC = () => {
     return;
   }
 
-  async function handleScheduleDelete(class_id: string, id: number) {
-    await api.delete(`schedule/${class_id}/${id}`);
-
-    loadSubject();
-  }
-
   async function handleAddNewScheduleItem() {
-    await api.post(`schedule/${subject?.id}`);
-
-    loadSubject();
+    if (schedule) {
+      setSchedule([...schedule, {} as ScheduleItem]);
+    }
   }
 
   async function handleSubmit() {
-    await api.put(`users/${user?.id}`, {
-      whatsapp,
-      bio,
-    });
-
     if (exists) {
       await api.put(`classes/${user?.id}`, {
         subject: subject?.subject,
         cost: subject?.cost,
         schedule: schedule,
       });
+
+      navigation.navigate('Landing');
     } else {
       await api.post(`classes/`, {
         user_id: user?.id,
@@ -127,9 +114,9 @@ const GiveClasses: React.FC = () => {
         cost: subject?.cost,
         schedule: schedule,
       });
-    }
 
-    navigation.navigate('Landing');
+      navigation.navigate('RegisterSuccess');
+    }
   }
 
   function handleUpdateSchedule(index: number, value: any, field: string) {
@@ -153,9 +140,9 @@ const GiveClasses: React.FC = () => {
   return (
     <View style={styles.container}>
       <PageHeader
+        pageTitle="Dar aulas"
         title="Que incrível que você
         quer dar aulas."
-        pageTitle="Meu perfil"
         description="O primeiro passo, é preencher esse
         formulário de inscrição."
       ></PageHeader>
@@ -163,18 +150,24 @@ const GiveClasses: React.FC = () => {
       <View style={styles.userWrapper}>
         <ScrollView style={styles.userContainer}>
           <Text style={styles.userTextTitle}>Seus dados</Text>
-          <Input
-            label="Whatsapp"
-            content={whatsapp}
-            onChangeValue={onChangeValue}
-          />
-          <Input
-            label="Bio"
-            content={bio}
-            textarea
-            numberOfLines={4}
-            onChangeValue={onChangeValue}
-          />
+
+          <TouchableOpacity
+            style={styles.profileContainer}
+            onPress={() => navigation.navigate('Perfil')}
+          >
+            <Image
+              style={styles.profileImage}
+              resizeMode="cover"
+              source={user?.avatar ? { uri: user.avatar } : defaultImage}
+            />
+
+            <View style={styles.profileInfo}>
+              <Text style={styles.profileName}>
+                {user?.name} {user?.surname}
+              </Text>
+              <Text style={styles.profileSubject}>{subject?.subject}</Text>
+            </View>
+          </TouchableOpacity>
 
           <Text style={styles.userTextTitle}>Sobre a aula</Text>
 
@@ -213,10 +206,9 @@ const GiveClasses: React.FC = () => {
           {schedule &&
             schedule.map((scheduleItem, index) => {
               return (
-                <View key={`${scheduleItem.class_id}${index}`}>
+                <View key={`${scheduleItem.week_day}${index}`}>
                   <Select
                     label="Dia da semana"
-                    key={scheduleItem.class_id}
                     items={[
                       { label: 'Segunda', value: 1 },
                       { label: 'Terça', value: 2 },
@@ -284,18 +276,6 @@ const GiveClasses: React.FC = () => {
                       />
                     </View>
                   </View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      handleScheduleDelete(
-                        scheduleItem.class_id,
-                        scheduleItem.id
-                      )
-                    }
-                  >
-                    <View style={styles.delete}>
-                      <Text style={styles.deleteText}>Excluir horário</Text>
-                    </View>
-                  </TouchableOpacity>
                 </View>
               );
             })}
