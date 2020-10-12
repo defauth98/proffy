@@ -63,6 +63,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  descriptionContainer: {
+    marginVertical: 30,
+  },
+  titleDescription: {
+    fontFamily: 'Archivo_400Regular',
+    fontSize: 24,
+    lineHeight: 29,
+    color: '#FFFFFF',
+    marginBottom: 10,
+  },
+  description: {
+    fontFamily: 'Poppins_400Regular',
+    fontSize: 14,
+    lineHeight: 24,
+    color: '#D4C2FF',
+  },
 });
 
 export default styles;

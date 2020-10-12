@@ -16,6 +16,7 @@ interface PageHeaderProps {
   pageTitle: string;
   perfil?: boolean;
   subject?: string;
+  description?: string;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
@@ -25,6 +26,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   pageTitle,
   perfil,
   subject,
+  description,
 }) => {
   const { navigate } = useNavigation();
 
@@ -52,6 +54,15 @@ const PageHeader: React.FC<PageHeaderProps> = ({
             >{`${user?.name} ${user?.surname}`}</Text>
             <Text style={styles.profileSubject}>{subject}</Text>
           </ImageBackground>
+        </View>
+      );
+    }
+
+    if (description) {
+      return (
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.titleDescription}>{title}</Text>
+          <Text style={styles.description}>{description}</Text>
         </View>
       );
     }
