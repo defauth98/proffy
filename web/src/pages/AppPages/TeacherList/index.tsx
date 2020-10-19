@@ -1,12 +1,12 @@
 import React, { useState, FormEvent } from 'react';
 
-import PageHeader from '../../components/PageHeader';
-import TeacherItem, { Teacher } from '../../components/TeacherItem';
+import PageHeader from '../../../components/PageHeader';
+import TeacherItem, { Teacher } from '../../../components/TeacherItem';
 
 import './styles.css';
-import Input from '../../components/Input';
-import Select from '../../components/Select';
-import api from '../../services/api';
+import Input from '../../../components/Input';
+import Select from '../../../components/Select';
+import api from '../../../services/api';
 
 function TeacherList() {
   const [teachers, setTeachers] = useState([]);

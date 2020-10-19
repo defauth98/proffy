@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../../services/api';
+import api from '../../../services/api';
 
-import logoImg from '../../assets/images/logo.svg';
-import landingImg from '../../assets/images/landing.svg';
+import logoImg from '../../../assets/images/logo.svg';
+import landingImg from '../../../assets/images/landing.svg';
 
-import studyIcon from '../../assets/images/icons/study.svg';
-import giveClassesIcon from '../../assets/images/icons/give-classes.svg';
-import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
+import studyIcon from '../../../assets/images/icons/study.svg';
+import giveClassesIcon from '../../../assets/images/icons/give-classes.svg';
+import purpleHeartIcon from '../../../assets/images/icons/purple-heart.svg';
 
-import logoutIcon from '../../assets/images/icons/sign-out.svg';
+import logoutIcon from '../../../assets/images/icons/sign-out.svg';
 
 import './styles.css';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../../contexts/auth';
 
 const Landing: React.FC = () => {
   const [totalConnections, setTotalConnections] = useState(0);
 
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     api.get('connections').then((response) => {
@@ -39,11 +39,11 @@ const Landing: React.FC = () => {
           </Link>
         </div>
         <div className="logout-container">
-          <Link className="logout-button" to="/">
+          <button className="logout-button" onClick={signOut}>
             <div className="logout">
               <img src={logoutIcon} alt="Icone para voltar" />
             </div>
-          </Link>
+          </button>
         </div>
       </header>
       <main id="page-landing-content" className="content-container">

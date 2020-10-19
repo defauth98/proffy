@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import Aside from '../../components/Aside';
-import FormInput from '../../components/FormInput';
+import Aside from '../../../components/Aside';
+import FormInput from '../../../components/FormInput';
 
-import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
+import purpleHeartIcon from '../../../assets/images/icons/purple-heart.svg';
 
 import './styles.css';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../../contexts/auth';
 import { Link, useHistory } from 'react-router-dom';
 
 const Login: React.FC = () => {

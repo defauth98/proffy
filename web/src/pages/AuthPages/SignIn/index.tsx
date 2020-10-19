@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import Aside from '../../components/Aside';
-import FormInput from '../../components/FormInput';
+import Aside from '../../../components/Aside';
+import FormInput from '../../../components/FormInput';
 
 import './styles.css';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../../contexts/auth';
 import { Link, useHistory } from 'react-router-dom';
 
-import backIcon from '../../assets/images/icons/back.svg';
+import backIcon from '../../../assets/images/icons/back.svg';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');

@@ -11,7 +11,7 @@
 }
 
 .success-background {
-  background-image: url('../../assets/images/success-background.svg');
+  background-image: url('../../../assets/images/success-background.svg');
   background-repeat: no-repeat;
   background-size: contain;
 

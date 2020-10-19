@@ -1,16 +1,16 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
-import warningIcon from '../../assets/images/icons/warning.svg';
+import warningIcon from '../../../assets/images/icons/warning.svg';
 
 import './styles.css';
-import Input from '../../components/Input';
-import Textarea from '../../components/Textarea';
-import Select from '../../components/Select';
+import Input from '../../../components/Input';
+import Textarea from '../../../components/Textarea';
+import Select from '../../../components/Select';
 
-import PageHeader from '../../components/PageHeader';
-import api from '../../services/api';
-import { useAuth } from '../../contexts/auth';
+import PageHeader from '../../../components/PageHeader';
+import api from '../../../services/api';
+import { useAuth } from '../../../contexts/auth';
 
 interface ScheduleItem {
   week_day: string;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import checkedIcon from '../../assets/images/icons/success-check-icon.svg';
+import checkedIcon from '../../../assets/images/icons/success-check-icon.svg';
 
 import './styles.css';
 

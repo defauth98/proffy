@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
-import Aside from '../../components/Aside';
-import FormInput from '../../components/FormInput';
+import Aside from '../../../components/Aside';
+import FormInput from '../../../components/FormInput';
 
-import backIcon from '../../assets/images/icons/back.svg';
+import backIcon from '../../../assets/images/icons/back.svg';
 
 import './styles.css';
-import api from '../../services/api';
+import api from '../../../services/api';
 
 interface pageParams {
   token: string;
