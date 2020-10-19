@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Aside from '../../components/Aside';
 import FormInput from '../../components/FormInput';
 
 import './styles.css';
-import { AuthContext } from '../../contexts/auth';
+import { useAuth } from '../../contexts/auth';
 import { Link, useHistory } from 'react-router-dom';
 
 import backIcon from '../../assets/images/icons/back.svg';
@@ -15,7 +15,7 @@ const SignIn: React.FC = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
-  const { SignIn, signed } = useContext(AuthContext);
+  const { signUp, signed } = useAuth();
 
   const history = useHistory();
 
@@ -24,7 +24,7 @@ const SignIn: React.FC = () => {
   }, [history, signed]);
 
   function handleSign() {
-    SignIn(email, password, name, surname);
+    signUp(email, password, name, surname);
   }
 
   return (

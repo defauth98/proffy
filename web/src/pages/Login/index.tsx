@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Aside from '../../components/Aside';
 import FormInput from '../../components/FormInput';
@@ -6,7 +6,7 @@ import FormInput from '../../components/FormInput';
 import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 
 import './styles.css';
-import { AuthContext } from '../../contexts/auth';
+import { useAuth } from '../../contexts/auth';
 import { Link, useHistory } from 'react-router-dom';
 
 const Login: React.FC = () => {
@@ -14,16 +14,16 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const history = useHistory();
-  const { login, signed, user, subject } = useContext(AuthContext);
+  const { signIn, signed, user } = useAuth();
 
   useEffect(() => {
-    if (signed && user && subject) {
+    if (signed && user) {
       history.push('/landing');
     }
-  }, [signed, user, subject, history]);
+  }, [signed, user, history]);
 
   function handleLogin() {
-    login(email, password).catch((err) => {
+    signIn(email, password, false).catch((err) => {
       alert(err);
     });
   }

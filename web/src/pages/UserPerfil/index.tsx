@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import warningIcon from '../../assets/images/icons/warning.svg';
@@ -10,7 +10,7 @@ import Select from '../../components/Select';
 
 import PageHeader from '../../components/PageHeader';
 import api from '../../services/api';
-import { AuthContext } from '../../contexts/auth';
+import { useAuth } from '../../contexts/auth';
 
 interface ScheduleItem {
   week_day: string;
@@ -33,7 +33,7 @@ function UserPerfil() {
     { week_day: 0, from: '', to: '', id: '' },
   ]);
 
-  const { token, user, subjectId } = useContext(AuthContext);
+  const { user } = useAuth();
 
   function ConvertToDate(date: any): String {
     const hour = date / 60;
@@ -51,16 +51,14 @@ function UserPerfil() {
 
   useEffect(() => {
     async function getUserData() {
-      const userData = await api.get(`/users/${user.id}`);
+      const userData = await api.get(`/users/${user?.id}`);
 
       setName(userData.data[0].name);
       setAvatar(userData.data[0].avatar || '');
       setBio(userData.data[0].bio);
       setWhatsapp(userData.data[0].whatsapp);
 
-      const userClass = await api.get(`/classes/${user.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const userClass = await api.get(`/classes/${user?.id}`, {});
 
       setSubject(userClass.data.class.subject);
       setCost(userClass.data.class.cost);
@@ -81,27 +79,14 @@ function UserPerfil() {
     }
 
     getUserData();
-  }, [token, user.id]);
-
-  useEffect(() => {
-    if (!token) {
-      history.push('/');
-    }
-  }, [history, token]);
+  }, [user]);
 
   async function addNewScheduleItem() {
-    await api.post(
-      `/schedule/${subjectId}`,
-      {},
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
-    setScheduleItems([
-      ...scheduleItems,
-      { week_day: 0, from: '', to: '', id: '' },
-    ]);
+    // await api.post(`/schedule/${subjectId}`, {});
+    // setScheduleItems([
+    //   ...scheduleItems,
+    //   { week_day: 0, from: '', to: '', id: '' },
+    // ]);
   }
 
   function setScheduleItemValue(
@@ -127,27 +112,20 @@ function UserPerfil() {
     event.preventDefault();
 
     api
-      .put(
-        `users/${user.id}`,
-        {
-          name,
-          avatar,
-          whatsapp,
-          bio,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      .put(`users/${user?.id}`, {
+        name,
+        avatar,
+        whatsapp,
+        bio,
+      })
       .then(() => {
         api
-          .put(
-            `/classes/${user.id}`,
-            {
-              subject: userSubject,
-              cost,
-              schedule: scheduleItems,
-            },
-            { headers: { Authorization: `Bearer ${token}` } }
-          )
+          .put(`/classes/${user?.id}`, {
+            subject: userSubject,
+            cost,
+            schedule: scheduleItems,
+          })
+
           .then(() => {
             alert('Update realizado com sucesso');
             history.push('/');
@@ -162,9 +140,7 @@ function UserPerfil() {
     event.preventDefault();
 
     try {
-      await api.delete(`/schedule/${user.id}/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/schedule/${user?.id}/${id}`, {});
       alert('Deletado com sucesso');
     } catch (error) {
       alert(error);

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
@@ -7,7 +7,6 @@ import './styles.css';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import api from '../../services/api';
-import { AuthContext } from '../../contexts/auth';
 
 function TeacherList() {
   const [teachers, setTeachers] = useState([]);
@@ -15,8 +14,6 @@ function TeacherList() {
   const [subject, setSubject] = useState('');
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
-
-  const { token } = useContext(AuthContext);
 
   async function searchTeachers(e: FormEvent) {
     e.preventDefault();
@@ -27,7 +24,6 @@ function TeacherList() {
         subject,
         time,
       },
-      headers: { Authorization: `Bearer ${token}` },
     });
 
     setTeachers(response.data);

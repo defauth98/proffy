@@ -1,105 +1,104 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import api from '../services/api';
 
-export interface AuthContextData {
+export interface UserData {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  avatar: string;
+  bio: string;
+  whatsapp: string;
+}
+
+interface AuthContextData {
   signed: boolean;
-  user: User;
-  token: string;
-  subject: string;
-  subjectId: string;
-  login(email: string, password: string): Promise<void>;
-  SignIn(
+  user: UserData | null;
+  loading: boolean;
+  signIn(email: string, password: string, save: boolean): Promise<void>;
+  signUp(
     email: string,
     password: string,
     name: string,
     surname: string
   ): Promise<void>;
+  signOut(): void;
 }
 
-interface User {
-  id: string;
-  name: string;
-  surname: string;
-  avatar: string;
-}
-
-export const AuthContext = createContext<AuthContextData>(
-  {} as AuthContextData
-);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [userState, setUser] = useState<User>({} as User);
-  const [token, setToken] = useState('');
-  const [signed, setSigned] = useState(false);
-  const [subject, setSubject] = useState('');
-  const [subjectId, setSubjectId] = useState('');
+  const [user, setUser] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  async function login(email: string, password: string) {
-    const response = await api.post('/login', {
-      email,
-      password,
-    });
+  useEffect(() => {
+    async function loadSoragedData() {
+      const storagedUser = localStorage.getItem('@RNauth:user');
+      const storagedToken = localStorage.getItem('@RNauth:token');
 
-    const subject = await api.get(`/classes/${response.data.user.id}`, {
-      headers: { Authorization: `Bearer ${response.data.token}` },
-    });
+      if (storagedUser && storagedToken) {
+        api.defaults.headers['Authorization'] = `Bearer ${storagedToken}`;
+        setUser(JSON.parse(storagedUser));
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    }
 
-    setUser({
-      id: response.data.user.id,
-      name: response.data.user.name,
-      surname: response.data.user.surname,
-      avatar: response.data.user.avatar,
-    });
-    setToken(response.data.token);
-    setSigned(true);
+    loadSoragedData();
+  }, []);
 
-    setSubject(subject.data.class.subject);
-    setSubjectId(subject.data.class.id);
+  async function setUserAndToken(user: UserData, token: string, save: boolean) {
+    setUser(user);
+
+    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+    if (save) {
+      localStorage.setItem('@RNauth:user', JSON.stringify(user));
+      localStorage.setItem('@RNauth:token', JSON.stringify(user));
+    }
   }
 
-  async function SignIn(
+  async function signIn(email: string, password: string, save: boolean) {
+    const response = await api.post('/login', { email, password });
+    await setUserAndToken(response.data.user, response.data.token, save);
+  }
+
+  async function signUp(
     name: string,
-    password: string,
     surname: string,
-    email: string
+    email: string,
+    password: string
   ) {
-    const response = await api.post('signup', {
+    const response = await api.post('/signup', {
       name,
       surname,
       email,
       password,
     });
 
-    const subject = await api.get(`/classes/${response.data.user.id}`, {
-      headers: { Authorization: `Bearer ${response.data.token}` },
-    });
+    if (response.status !== 400) {
+      signIn(email, password, true);
+    }
+  }
 
-    setUser({
-      id: response.data.user.id,
-      name: response.data.user.name,
-      surname: response.data.user.surname,
-      avatar: response.data.user.avatar,
-    });
-    setToken(response.data.token);
-    setSigned(true);
+  async function signOut() {
+    localStorage.clear();
 
-    setSubject(subject.data.class.subject);
-    setSubjectId(subject.data.class.id);
+    setUser(null);
   }
 
   return (
     <AuthContext.Provider
-      value={{
-        signed,
-        user: userState,
-        token,
-        login,
-        SignIn,
-        subject,
-        subjectId,
-      }}
+      value={{ signed: !!user, user, loading, signIn, signUp, signOut }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+
+  return context;
+}
