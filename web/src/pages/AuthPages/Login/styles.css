@@ -151,3 +151,9 @@ button {
 button:hover {
   background: var(--color-secundary-dark);
 }
+
+@media (min-width: 1400px) {
+  .login-form .title-container h2 {
+    margin-top: 30rem;
+  }
+}
