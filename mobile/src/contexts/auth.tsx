@@ -56,7 +56,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     if (save) {
       await AsyncStorage.setItem('@RNauth:user', JSON.stringify(user));
-      await AsyncStorage.setItem('@RNauth:token', JSON.stringify(user));
+      await AsyncStorage.setItem('@RNauth:token', JSON.stringify(token));
     }
   }
 

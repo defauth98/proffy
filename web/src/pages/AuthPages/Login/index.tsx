@@ -12,6 +12,7 @@ import { Link, useHistory } from 'react-router-dom';
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState('');
 
   const history = useHistory();
   const { signIn, signed, user } = useAuth();
@@ -23,7 +24,25 @@ const Login: React.FC = () => {
   }, [signed, user, history]);
 
   function handleLogin() {
-    signIn(email, password, false).catch((err) => {
+    let isRemember;
+
+    if (remember === 'true') {
+      isRemember = true;
+    } else {
+      isRemember = false;
+    }
+
+    if (email.length < 6) {
+      alert('Informe um email válido');
+      return;
+    }
+
+    if (password.length < 3) {
+      alert('Informe um password válido');
+      return;
+    }
+
+    signIn(email, password, isRemember).catch((err) => {
       alert(err);
     });
   }
@@ -58,7 +77,14 @@ const Login: React.FC = () => {
         <div className="buttons-container">
           <div className="first-line">
             <div className="checkbox-container">
-              <input type="checkbox" id="remenber" />
+              <input
+                type="checkbox"
+                id="remenber"
+                value={remember}
+                onChange={(e) => {
+                  setRemember('true');
+                }}
+              />
               <label htmlFor="remenber">Lembrar-me</label>
             </div>
             <div className="forget-container">

@@ -49,15 +49,13 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   async function setUserAndToken(user: UserData, token: string, save: boolean) {
-    console.log({ user });
-
     setUser(user);
 
     api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
     if (save) {
       localStorage.setItem('@RNauth:user', JSON.stringify(user));
-      localStorage.setItem('@RNauth:token', JSON.stringify(user));
+      localStorage.setItem('@RNauth:token', JSON.stringify(token));
     }
   }
 
@@ -79,8 +77,10 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    if (response.status !== 400) {
+    if (response.data.user.id) {
       signIn(email, password, true);
+    } else {
+      return;
     }
   }
 
