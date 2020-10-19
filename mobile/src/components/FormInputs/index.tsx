@@ -1,8 +1,10 @@
-import React from 'react';
-import { TextInput } from 'react-native';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { TextInput, View, Image, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
+
+import closedEyeIcon from '../../assets/images/icons/closedEye.png';
+import EyeIcon from '../../assets/images/icons/eye.png';
 
 interface FormInputsProps {
   setFirtInput: Function;
@@ -19,6 +21,29 @@ const FormInputs: React.FC<FormInputsProps> = ({
   secondInputPlaceholder,
   isSecondInputPassword,
 }) => {
+  const [passwordShow, setPasswordShow] = useState(false);
+
+  function handleToggleEye() {
+    if (passwordShow) {
+      setPasswordShow(false);
+      return;
+    }
+
+    setPasswordShow(true);
+  }
+
+  function renderPasswordShownButton() {
+    if (isSecondInputPassword === false) {
+      return;
+    }
+
+    return passwordShow ? (
+      <Image source={EyeIcon} />
+    ) : (
+      <Image source={closedEyeIcon} />
+    );
+  }
+
   return (
     <View style={styles.formInputs}>
       <View
@@ -42,10 +67,16 @@ const FormInputs: React.FC<FormInputsProps> = ({
           <TextInput
             style={[styles.formInput]}
             placeholder={secondInputPlaceholder}
-            secureTextEntry={isSecondInputPassword}
+            secureTextEntry={passwordShow}
             onChangeText={(password) => setSecondInput(password)}
             autoCapitalize="none"
           />
+          <TouchableOpacity
+            style={styles.closedEyeIcon}
+            onPress={handleToggleEye}
+          >
+            {renderPasswordShownButton()}
+          </TouchableOpacity>
         </View>
       )}
     </View>

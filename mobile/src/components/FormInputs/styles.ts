@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: '#E6E6F0',
+    position: 'relative',
   },
   formInput: {},
   formInputPassword: {
@@ -17,6 +18,15 @@ const styles = StyleSheet.create({
   formInputEmail: {
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+  },
+  closedEyeIcon: {
+    position: 'absolute',
+
+    right: 12,
+    bottom: 4,
+
+    height: 40,
+    width: 40,
   },
 });
 
