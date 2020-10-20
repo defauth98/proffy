@@ -54,9 +54,13 @@
   align-items: center;
   justify-content: center;
 
-  background-color: var(--color-primary-dark);
-
   border-radius: 0.6rem;
+}
+
+#page-landing .logout-container button {
+  background: none;
+
+  margin-top: -10px;
 }
 
 #page-landing-content .logo-container {
