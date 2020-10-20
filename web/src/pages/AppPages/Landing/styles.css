@@ -13,6 +13,9 @@
 
 #page-landing header {
   width: 80%;
+
+  max-width: 1366px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -62,6 +65,9 @@
 
   margin-top: -10px;
 }
+#page-landing-content {
+  max-width: 1366px;
+}
 
 #page-landing-content .logo-container {
   display: none;
@@ -82,13 +88,23 @@
 
   display: flex;
   flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+}
+
+#page-landing footer .footer-wrapper {
+  width: 100%;
+  max-width: 1500px;
+
+  display: flex;
+  flex-direction: row;
 }
 
 #page-landing footer .welcome-container {
   display: flex;
   justify-content: space-between;
 
-  margin: 0 5rem;
   margin-top: 5rem;
 }
 

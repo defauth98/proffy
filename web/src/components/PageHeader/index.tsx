@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import logoImg from '../../assets/images/logo.svg';
 import backIcon from '../../assets/images/icons/back.svg';
+import defaultImage from '../../assets/images/default-avatar.png';
 
 import './styles.css';
 import { useAuth } from '../../contexts/auth';
@@ -36,7 +37,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
     return (
       <div className="header-content header-image">
         <img
-          src="https://avatars3.githubusercontent.com/u/52966246?s=460&u=42fc97534542db683f3daab62ce627e92bef846f&v=4"
+          src={user?.avatar || defaultImage}
           alt="Imagem de perfil"
           className="perfil-image"
         />
@@ -44,7 +45,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <h1 className="perfil-name">
           {`${user?.name} ${user?.surname}` || 'Not found'}
         </h1>
-        <h3 className="perfil-subject">Matemática</h3>
+        <h3 className="perfil-subject">{user?.surname}</h3>
       </div>
     );
   }

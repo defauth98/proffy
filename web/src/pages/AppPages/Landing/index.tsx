@@ -9,6 +9,8 @@ import studyIcon from '../../../assets/images/icons/study.svg';
 import giveClassesIcon from '../../../assets/images/icons/give-classes.svg';
 import purpleHeartIcon from '../../../assets/images/icons/purple-heart.svg';
 
+import defaltAvatar from '../../../assets/images/default-avatar.png';
+
 import logoutIcon from '../../../assets/images/icons/sign-out.svg';
 
 import './styles.css';
@@ -31,10 +33,7 @@ const Landing: React.FC = () => {
       <header>
         <div className="user-container">
           <Link className="user-button" to="/perfil">
-            <img
-              src="https://avatars3.githubusercontent.com/u/52966246?s=460&u=42fc97534542db683f3daab62ce627e92bef846f&v=4"
-              alt="Logo-Usuário"
-            />
+            <img src={user?.avatar || defaltAvatar} alt="Logo-Usuário" />
             <h2>{`${user?.name} ${user?.surname}`}</h2>
           </Link>
         </div>
@@ -59,28 +58,30 @@ const Landing: React.FC = () => {
         />
       </main>
       <footer>
-        <div className="welcome-container">
-          <div className="title">
-            <h1>Seja bem-vindo.</h1>
-            <h3>O que deseja fazer?</h3>
+        <div className="footer-wrapper">
+          <div className="welcome-container">
+            <div className="title">
+              <h1>Seja bem-vindo.</h1>
+              <h3>O que deseja fazer?</h3>
+            </div>
+
+            <span className="total-connections">
+              Total de {totalConnections} conexões já realizadas{' '}
+              <img src={purpleHeartIcon} alt="Coração roxo" />
+            </span>
           </div>
 
-          <span className="total-connections">
-            Total de {totalConnections} conexões já realizadas{' '}
-            <img src={purpleHeartIcon} alt="Coração roxo" />
-          </span>
-        </div>
+          <div className="buttons-container">
+            <Link to="/study" className="study">
+              <img src={studyIcon} alt="Estudar" />
+              Estudar
+            </Link>
 
-        <div className="buttons-container">
-          <Link to="/study" className="study">
-            <img src={studyIcon} alt="Estudar" />
-            Estudar
-          </Link>
-
-          <Link to="/give-classes" className="give-classes">
-            <img src={giveClassesIcon} alt="Dar aulas" />
-            Dar aulas
-          </Link>
+            <Link to="/give-classes" className="give-classes">
+              <img src={giveClassesIcon} alt="Dar aulas" />
+              Dar aulas
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
