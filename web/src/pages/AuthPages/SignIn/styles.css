@@ -50,11 +50,13 @@
 }
 
 .sign-form .button-container {
-  width: 35rem;
+  width: 55%;
+
+  max-width: 512px;
 }
 
 .sign-form .button-container button {
-  width: 35rem;
+  width: 100%;
   height: 5.6rem;
   background: var(--color-secundary);
   color: var(--color-button-text);
