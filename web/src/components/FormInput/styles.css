@@ -55,3 +55,40 @@
   margin-top: 0;
   color: #c1bccc;
 }
+
+.label-float:focus-within::after {
+  width: calc(100% - 3.2rem);
+  height: 2px;
+  content: '';
+  background: var(--color-primary-light);
+  position: absolute;
+  left: 1.6rem;
+  right: 1.6rem;
+  bottom: 0;
+}
+
+.inputIcon {
+  position: absolute;
+  margin-top: 0.8rem;
+  margin-left: -2.6rem;
+
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.label-float button {
+  position: absolute;
+  display: block;
+  background: none;
+  margin-top: 0;
+  border-radius: 0;
+  width: 30px;
+  height: 20px;
+
+  top: 0;
+  right: 0;
+}
+
+.label-float button:hover {
+  background: none;
+}

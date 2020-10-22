@@ -70,8 +70,8 @@ const Login: React.FC = () => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            isPassword
             value={password}
-            type="password"
           />
         </div>
         <div className="buttons-container">
