@@ -53,7 +53,7 @@ function UserPerfil() {
     async function getUserData() {
       const userData = await api.get(`/users/${user?.id}`);
 
-      setName(userData.data[0].name);
+      setName(`${userData.data[0].name} ${userData.data[0].surname}`);
       setAvatar(userData.data[0].avatar || '');
       setBio(userData.data[0].bio);
       setWhatsapp(userData.data[0].whatsapp);
@@ -111,9 +111,28 @@ function UserPerfil() {
   function handleUpdateClass(event: FormEvent) {
     event.preventDefault();
 
+    const firstName = name.split(' ')[0];
+
+    const surnamesArray = name.split(' ');
+
+    const surnamesArrayWithoutFirst = surnamesArray.map((surname, index) => {
+      if (index !== 0) {
+        return surname;
+      }
+
+      return null;
+    });
+
+    let surnames = '';
+
+    surnamesArrayWithoutFirst.forEach((surname) => {
+      if (surname !== null) surnames += `${surname} `;
+    });
+
     api
       .put(`users/${user?.id}`, {
-        name,
+        name: firstName,
+        surname: surnames,
         avatar,
         whatsapp,
         bio,
