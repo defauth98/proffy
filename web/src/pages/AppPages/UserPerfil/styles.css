@@ -102,6 +102,7 @@
   font: 700 1.6rem Archivo;
   cursor: pointer;
   transition: color 0.2s;
+  margin-top: 0px;
 }
 
 #page-perfil main fieldset legend button:hover {
