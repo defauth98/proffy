@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import warningIcon from '../../../assets/images/icons/warning.svg';
@@ -10,6 +10,14 @@ import Select from '../../../components/Select';
 
 import PageHeader from '../../../components/PageHeader';
 import api from '../../../services/api';
+import { useAuth } from '../../../contexts/auth';
+
+interface ScheduleItem {
+  week_day: string;
+  from: Number;
+  to: Number;
+  id: Number;
+}
 
 function TeacherForm() {
   const history = useHistory();
@@ -17,13 +25,64 @@ function TeacherForm() {
   const [avatar, setAvatar] = useState('');
   const [bio, setBio] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
-
   const [subject, setSubject] = useState('');
   const [cost, setCost] = useState('');
-
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: '', to: '' },
   ]);
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    async function getUserData() {
+      const userData = await api.get(`/users/${user?.id}`);
+
+      setName(`${userData.data[0].name} ${userData.data[0].surname}`);
+      setAvatar(userData.data[0].avatar || '');
+      setBio(userData.data[0].bio);
+      setWhatsapp(userData.data[0].whatsapp);
+
+      try {
+        const userClass = await api.get(`/classes/${user?.id}`);
+
+        setSubject(userClass.data.class.subject);
+        setCost(userClass.data.class.cost);
+        const scheduleItemsData = userClass.data.schedule;
+
+        const convertedScheduleItems = scheduleItemsData.map(
+          (item: ScheduleItem) => {
+            return {
+              week_day: item.week_day,
+              from: ConvertToDate(item.from),
+              to: ConvertToDate(item.to),
+              id: item.id,
+            };
+          }
+        );
+
+        setScheduleItems(convertedScheduleItems);
+      } catch (error) {
+        setSubject('');
+        setCost('');
+      }
+    }
+
+    getUserData();
+  }, [user]);
+
+  function ConvertToDate(date: any): String {
+    const hour = date / 60;
+    const minutes = date - hour * 60;
+
+    let hourString = hour.toString();
+    let minutesString = minutes.toString();
+
+    if (hour / 10 < 1) hourString = '0' + hourString;
+
+    if (minutes / 10 < 1) minutesString = '0' + minutesString;
+
+    return `${hourString}:${minutesString}`;
+  }
 
   function addNewScheduleItem() {
     setScheduleItems([...scheduleItems, { week_day: 0, from: '', to: '' }]);

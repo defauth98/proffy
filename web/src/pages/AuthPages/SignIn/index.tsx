@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Aside from '../../../components/Aside';
 import FormInput from '../../../components/FormInput';
@@ -15,7 +15,7 @@ const SignIn: React.FC = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
-  const { signUp, user } = useAuth();
+  const { signUp } = useAuth();
 
   const history = useHistory();
 
