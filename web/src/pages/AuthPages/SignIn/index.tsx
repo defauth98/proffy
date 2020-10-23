@@ -67,7 +67,7 @@ const SignIn: React.FC = () => {
               setPassword(e.target.value);
             }}
             value={password}
-            type="password"
+            isPassword
           />
         </div>
         <div className="button-container">
