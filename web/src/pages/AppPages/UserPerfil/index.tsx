@@ -163,13 +163,28 @@ function UserPerfil() {
 
     try {
       await api.delete(`/schedule/${user?.id}/${id}`, {});
+
+      const userClass = await api.get(`/classes/${user?.id}`);
+
+      const scheduleItemsData = userClass.data.schedule;
+
+      const convertedScheduleItems = scheduleItemsData.map(
+        (item: ScheduleItem) => {
+          return {
+            week_day: item.week_day,
+            from: ConvertToDate(item.from),
+            to: ConvertToDate(item.to),
+            id: item.id,
+          };
+        }
+      );
+
+      setScheduleItems(convertedScheduleItems);
+
       alert('Deletado com sucesso');
     } catch (error) {
       alert(error);
     }
-
-    // @todo update in schedulet items
-    // setScheduleItems();
   }
 
   function renderClassFields() {
