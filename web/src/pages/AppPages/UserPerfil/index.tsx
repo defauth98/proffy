@@ -26,9 +26,7 @@ function UserPerfil() {
   const [bio, setBio] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [userSubject, setSubject] = useState('');
-
   const [cost, setCost] = useState('');
-
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: '', to: '', id: '' },
   ]);
@@ -58,24 +56,29 @@ function UserPerfil() {
       setBio(userData.data[0].bio);
       setWhatsapp(userData.data[0].whatsapp);
 
-      const userClass = await api.get(`/classes/${user?.id}`, {});
+      try {
+        const userClass = await api.get(`/classes/${user?.id}`);
 
-      setSubject(userClass.data.class.subject);
-      setCost(userClass.data.class.cost);
-      const scheduleItemsData = userClass.data.schedule;
+        setSubject(userClass.data.class.subject);
+        setCost(userClass.data.class.cost);
+        const scheduleItemsData = userClass.data.schedule;
 
-      const convertedScheduleItems = scheduleItemsData.map(
-        (item: ScheduleItem) => {
-          return {
-            week_day: item.week_day,
-            from: ConvertToDate(item.from),
-            to: ConvertToDate(item.to),
-            id: item.id,
-          };
-        }
-      );
+        const convertedScheduleItems = scheduleItemsData.map(
+          (item: ScheduleItem) => {
+            return {
+              week_day: item.week_day,
+              from: ConvertToDate(item.from),
+              to: ConvertToDate(item.to),
+              id: item.id,
+            };
+          }
+        );
 
-      setScheduleItems(convertedScheduleItems);
+        setScheduleItems(convertedScheduleItems);
+      } catch (error) {
+        setSubject('');
+        setCost('');
+      }
     }
 
     getUserData();
@@ -169,49 +172,10 @@ function UserPerfil() {
     // setScheduleItems();
   }
 
-  return (
-    <div id="page-perfil" className="container">
-      <PageHeader pageTitle="Meu perfil" />
-
-      <main>
-        <form onSubmit={(event) => handleUpdateClass(event)}>
-          <fieldset>
-            <legend>Seus dados</legend>
-
-            <Input
-              name="name"
-              label="Nome completo"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <Input
-              name="avatar"
-              label="Avatar"
-              value={avatar}
-              onChange={(e) => {
-                setAvatar(e.target.value);
-              }}
-            />
-            <Input
-              name="whatsapp"
-              label="Whatsapp"
-              value={whatsapp}
-              onChange={(e) => {
-                setWhatsapp(e.target.value);
-              }}
-            />
-            <Textarea
-              label="Biografia"
-              name="bio"
-              value={bio}
-              onChange={(e) => {
-                setBio(e.target.value);
-              }}
-            />
-          </fieldset>
-
+  function renderClassFields() {
+    if (userSubject.length > 3) {
+      return (
+        <>
           <fieldset>
             <legend>Sobre a aula</legend>
 
@@ -305,6 +269,55 @@ function UserPerfil() {
               );
             })}
           </fieldset>
+        </>
+      );
+    }
+  }
+
+  return (
+    <div id="page-perfil" className="container">
+      <PageHeader pageTitle="Meu perfil" subject={userSubject} />
+
+      <main>
+        <form onSubmit={(event) => handleUpdateClass(event)}>
+          <fieldset>
+            <legend>Seus dados</legend>
+
+            <Input
+              name="name"
+              label="Nome completo"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <Input
+              name="avatar"
+              label="Avatar"
+              value={avatar}
+              onChange={(e) => {
+                setAvatar(e.target.value);
+              }}
+            />
+            <Input
+              name="whatsapp"
+              label="Whatsapp"
+              value={whatsapp}
+              onChange={(e) => {
+                setWhatsapp(e.target.value);
+              }}
+            />
+            <Textarea
+              label="Biografia"
+              name="bio"
+              value={bio}
+              onChange={(e) => {
+                setBio(e.target.value);
+              }}
+            />
+          </fieldset>
+          {renderClassFields()}
+
           <footer>
             <p>
               <img src={warningIcon} alt="Aviso importante" />

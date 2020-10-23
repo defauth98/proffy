@@ -14,6 +14,7 @@ interface PageHeaderProps {
   description?: string;
   perfil?: boolean;
   pageTitle?: string;
+  subject?: string;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
@@ -21,6 +22,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   description,
   pageTitle,
+  subject,
 }) => {
   const { user } = useAuth();
 
@@ -45,7 +47,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <h1 className="perfil-name">
           {`${user?.name} ${user?.surname}` || 'Not found'}
         </h1>
-        <h3 className="perfil-subject">{user?.surname}</h3>
+        <h3 className="perfil-subject">{subject || ' '}</h3>
       </div>
     );
   }

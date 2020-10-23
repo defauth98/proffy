@@ -15,13 +15,13 @@ const SignIn: React.FC = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
-  const { signUp, signed } = useAuth();
+  const { signUp, user } = useAuth();
 
   const history = useHistory();
 
   useEffect(() => {
-    if (signed) history.push('/landing');
-  }, [history, signed]);
+    if (user?.id) history.push('/landing');
+  }, [history, user]);
 
   function handleSign() {
     signUp(email, password, name, surname);
