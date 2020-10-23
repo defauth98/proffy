@@ -70,6 +70,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     email: string,
     password: string
   ) {
+    console.log({ name, surname, email, password });
+
     const response = await api.post('/signup', {
       name,
       surname,

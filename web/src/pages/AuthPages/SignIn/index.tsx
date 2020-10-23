@@ -24,7 +24,7 @@ const SignIn: React.FC = () => {
   }, [history, user]);
 
   function handleSign() {
-    signUp(email, password, name, surname);
+    signUp(name, surname, email, password);
   }
 
   return (
