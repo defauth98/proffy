@@ -19,12 +19,10 @@ const SignIn: React.FC = () => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    if (user?.id) history.push('/landing');
-  }, [history, user]);
-
   function handleSign() {
     signUp(name, surname, email, password);
+
+    history.push('/');
   }
 
   return (

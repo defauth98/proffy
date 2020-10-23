@@ -70,8 +70,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     email: string,
     password: string
   ) {
-    console.log({ name, surname, email, password });
-
     const response = await api.post('/signup', {
       name,
       surname,
@@ -79,7 +77,9 @@ export const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    if (response.data.user.id) {
+    console.log(response.data);
+
+    if (response.data.user[0].id) {
       signIn(email, password, true);
     } else {
       return;
