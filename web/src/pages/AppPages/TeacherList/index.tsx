@@ -14,6 +14,7 @@ function TeacherList() {
   const [subject, setSubject] = useState('');
   const [week_day, setWeekDay] = useState('');
   const [time, setTime] = useState('');
+  const [page, setPage] = useState(1);
 
   async function searchTeachers(e: FormEvent) {
     e.preventDefault();
@@ -23,10 +24,15 @@ function TeacherList() {
         week_day,
         subject,
         time,
+        page,
       },
     });
 
     setTeachers(response.data);
+
+    const newPage = page + 1;
+
+    setPage(newPage);
   }
 
   return (

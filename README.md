@@ -32,8 +32,8 @@ Durante essa semana de muito networking e muito código, foi contruido uma aplic
 - [x] Splash Screen no React Native
 - [x] Paginação na listagem de proffys
 - [ ] Exibindo horários disponiveis dos proffys
-- [ ] Salvando seus proffys favoritos
-- [ ] Logout da aplicação
+- [x] Salvando seus proffys favoritos
+- [x] Logout da aplicação
 - [ ] Deploy da aplicação
 
 ## :computer: Tecnologias
