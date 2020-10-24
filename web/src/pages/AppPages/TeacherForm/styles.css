@@ -100,6 +100,33 @@
 #page-teacher-form main fieldset legend button:hover {
   background: transparent !important;
 }
+#page-teacher-form div#userbutton-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 2rem;
+}
+
+#page-teacher-form #perfil-button {
+  display: flex;
+  align-items: center;
+
+  text-decoration-line: none;
+}
+
+#page-teacher-form #perfil-button img {
+  width: 8rem;
+  border-radius: 4rem;
+
+  margin-right: 1rem;
+}
+
+#page-teacher-form #perfil-button span {
+  font-family: Archivo;
+  font-size: 3rem;
+  color: var(--color-text-title);
+}
 
 @media (min-width: 700px) {
   #page-teacher-form {

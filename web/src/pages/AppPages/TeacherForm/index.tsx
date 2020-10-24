@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import warningIcon from '../../../assets/images/icons/warning.svg';
 
 import './styles.css';
@@ -12,6 +12,8 @@ import PageHeader from '../../../components/PageHeader';
 import api from '../../../services/api';
 import { useAuth } from '../../../contexts/auth';
 
+import defaultAvatar from '../../../assets/images/default-avatar.png';
+
 interface ScheduleItem {
   week_day: string;
   from: Number;
@@ -21,12 +23,14 @@ interface ScheduleItem {
 
 function TeacherForm() {
   const history = useHistory();
+
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   const [bio, setBio] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [subject, setSubject] = useState('');
   const [cost, setCost] = useState('');
+  const [isNewClass, setIsNewClass] = useState(true);
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: '', to: '' },
   ]);
@@ -59,11 +63,10 @@ function TeacherForm() {
             };
           }
         );
-
+        setIsNewClass(false);
         setScheduleItems(convertedScheduleItems);
       } catch (error) {
-        setSubject('');
-        setCost('');
+        setIsNewClass(true);
       }
     }
 
@@ -109,23 +112,27 @@ function TeacherForm() {
 
   function handleCreateClass(event: FormEvent) {
     event.preventDefault();
-    api
-      .post('classes', {
-        name,
-        avatar,
-        whatsapp,
-        bio,
-        subject,
-        cost: Number(cost),
-        schedule: scheduleItems,
-      })
-      .then(() => {
-        alert('Cadastro efetuado com sucesso');
-        history.push('/');
-      })
-      .catch((error) => {
-        alert(error);
-      });
+
+    if (isNewClass) {
+      api
+        .post('classes', {
+          user_id: user && user?.id,
+          subject,
+          cost: Number(cost),
+          schedule: scheduleItems,
+        })
+        .then(() => {
+          alert('Cadastro efetuado com sucesso');
+          history.push('/');
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+
+    alert(
+      'Já foi realizado o cadastro, vá para a página de perfil para editar'
+    );
   }
 
   return (
@@ -141,30 +148,23 @@ function TeacherForm() {
           <fieldset>
             <legend>Seus dados</legend>
 
-            <Input
-              name="name"
-              label="Nome completo"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <Input
-              name="avatar"
-              label="Avatar"
-              value={avatar}
-              onChange={(e) => {
-                setAvatar(e.target.value);
-              }}
-            />
-            <Input
-              name="whatsapp"
-              label="Whatsapp"
-              value={whatsapp}
-              onChange={(e) => {
-                setWhatsapp(e.target.value);
-              }}
-            />
+            <div id="userbutton-container">
+              <Link to="/" id="perfil-button">
+                <img src={avatar || defaultAvatar} alt="Avatar do proffy" />
+                <span>
+                  {user?.name} {user?.surname}
+                </span>
+              </Link>
+              <Input
+                name="whatsapp"
+                label="Whatsapp"
+                value={whatsapp}
+                onChange={(e) => {
+                  setWhatsapp(e.target.value);
+                }}
+              />
+            </div>
+
             <Textarea
               label="Biografia"
               name="bio"
