@@ -49,10 +49,10 @@ export default class ClassesController {
       .whereExists(function () {
         this.select('class_schedule.*')
           .from('class_schedule')
-          .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
-          .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
-          .whereRaw('`class_schedule`.`from` <= ?? ', [timeInMinutes])
-          .whereRaw('`class_schedule`.`to` > ?? ', [timeInMinutes]);
+          .whereRaw('class_schedule.class_id = classes.id')
+          .whereRaw('class_schedule.week_day = ??', [Number(week_day)])
+          .whereRaw('class_schedule.from <= ?? ', [timeInMinutes])
+          .whereRaw('class_schedule.to > ?? ', [timeInMinutes]);
       })
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
@@ -80,11 +80,13 @@ export default class ClassesController {
     const trx = await db.transaction();
 
     try {
-      const insertedClassesIds = await trx('classes').insert({
-        subject,
-        cost,
-        user_id,
-      });
+      const insertedClassesIds = await trx('classes')
+        .insert({
+          subject,
+          cost,
+          user_id,
+        })
+        .returning('id');
 
       const class_id = insertedClassesIds[0];
 
@@ -103,6 +105,8 @@ export default class ClassesController {
 
       return response.status(201).send();
     } catch (error) {
+      console.log(error);
+
       await trx.rollback();
 
       return response.status(400).json({
@@ -115,23 +119,31 @@ export default class ClassesController {
     const { id } = request.params;
     const { subject, cost, schedule } = request.body;
 
-    const updatedClassID = await db('classes')
-      .update({
-        subject,
-        cost,
-      })
-      .where({ user_id: id });
-
-    schedule.map(async (scheduleItem: ScheduleItem) => {
-      await db('class_schedule')
+    try {
+      const updatedClassID = await db('classes')
         .update({
-          week_day: scheduleItem.week_day,
-          from: covertHourToMinutes(scheduleItem.from),
-          to: covertHourToMinutes(scheduleItem.to),
+          subject,
+          cost,
         })
-        .where({ id: scheduleItem.id });
-    });
+        .where({ user_id: id })
+        .returning('id');
 
-    return response.status(200).json({ updatedClassID });
+      schedule.map(async (scheduleItem: ScheduleItem, index: number) => {
+        await db('class_schedule')
+          .update({
+            week_day: scheduleItem.week_day,
+            from: covertHourToMinutes(scheduleItem.from),
+            to: covertHourToMinutes(scheduleItem.to),
+          })
+          .where({ class_id: updatedClassID[0] })
+          .andWhere({ id: index + 1 });
+      });
+
+      return response.status(200).json({ id: updatedClassID[0] });
+    } catch (error) {
+      return response
+        .status(400)
+        .json({ error: 'Erro ao tentar dar update na class' });
+    }
   }
 }
