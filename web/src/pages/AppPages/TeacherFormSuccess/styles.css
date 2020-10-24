@@ -1,0 +1,44 @@
+.success-page {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: var(--color-primary);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.success-background {
+  background-image: url('../../../assets/images/success-background.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  width: 90%;
+  height: 90%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.success-background h2 {
+  color: var(--color-button-text);
+
+  margin-bottom: 1.4rem;
+}
+
+.success-background p {
+  color: var(--color-text-in-primary);
+
+  width: 30%;
+
+  text-align: center;
+}
+
+.success-background button {
+  color: var(--color-button-text);
+}

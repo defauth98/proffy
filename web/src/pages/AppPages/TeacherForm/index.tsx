@@ -24,7 +24,6 @@ interface ScheduleItem {
 function TeacherForm() {
   const history = useHistory();
 
-  const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   const [bio, setBio] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -41,7 +40,6 @@ function TeacherForm() {
     async function getUserData() {
       const userData = await api.get(`/users/${user?.id}`);
 
-      setName(`${userData.data[0].name} ${userData.data[0].surname}`);
       setAvatar(userData.data[0].avatar || '');
       setBio(userData.data[0].bio);
       setWhatsapp(userData.data[0].whatsapp);
@@ -123,16 +121,16 @@ function TeacherForm() {
         })
         .then(() => {
           alert('Cadastro efetuado com sucesso');
-          history.push('/');
+          history.push('/give-classes-succes');
         })
         .catch((error) => {
           alert(error);
         });
+    } else {
+      alert(
+        'Já foi realizado o cadastro, vá para a página de perfil para editar'
+      );
     }
-
-    alert(
-      'Já foi realizado o cadastro, vá para a página de perfil para editar'
-    );
   }
 
   return (
