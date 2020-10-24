@@ -141,20 +141,24 @@ function UserPerfil() {
         bio,
       })
       .then(() => {
-        api
-          .put(`/classes/${user?.id}`, {
-            subject: userSubject,
-            cost,
-            schedule: scheduleItems,
-          })
+        if (userSubject.length > 3) {
+          api
+            .put(`/classes/${user?.id}`, {
+              subject: userSubject,
+              cost,
+              schedule: scheduleItems,
+            })
 
-          .then(() => {
-            alert('Update realizado com sucesso');
-            history.push('/');
-          })
-          .catch((error) => {
-            alert(error);
-          });
+            .then(() => {
+              alert('Update realizado com sucesso');
+              history.push('/');
+            })
+            .catch((error) => {
+              alert('Erro ao tentar submeter o formulário');
+            });
+        } else {
+          alert('Sucesso ao editar o perfil');
+        }
       });
   }
 
