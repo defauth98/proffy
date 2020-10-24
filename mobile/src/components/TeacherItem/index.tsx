@@ -75,6 +75,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
             break;
           case 5:
             setFriday(responseItem);
+            break;
           default:
             break;
         }

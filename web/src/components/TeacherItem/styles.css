@@ -72,6 +72,43 @@
   text-decoration: none;
 }
 
+.schedule-container {
+  display: flex;
+  margin-top: 2rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-container .schedule-item {
+  padding: 2rem 3rem 2rem 2rem;
+  background-color: #f0f0f7;
+
+  width: 12rem;
+
+  border-radius: 0.8rem;
+  border: 2px solid #e6e6f0;
+}
+
+.schedule-container .schedule-item-off {
+  opacity: 0.4;
+}
+
+.schedule-container .schedule-item h3 {
+  font-family: Poppins;
+  font-size: 1.2rem;
+  color: var(--color-text-complement);
+}
+
+.schedule-container .schedule-item span {
+  font-family: Archivo;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--color-text-tittle);
+}
+
 .teacher-item footer button:hover {
   background: var(--color-secundary-dark);
 }

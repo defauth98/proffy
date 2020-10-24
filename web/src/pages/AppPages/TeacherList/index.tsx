@@ -93,7 +93,12 @@ function TeacherList() {
 
       <main>
         {teachers.map((teacher: Teacher) => {
-          return <TeacherItem key={teacher.id} teacher={teacher} />;
+          return (
+            <TeacherItem
+              key={`${teacher.id} ${teacher.name}`}
+              teacher={teacher}
+            />
+          );
         })}
       </main>
     </div>
