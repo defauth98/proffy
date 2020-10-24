@@ -91,15 +91,18 @@
 #page-teacher-form main fieldset legend button {
   background: none;
   border: 0;
-  color: var(--color-primary);
+  color: var(--color-primary) !important;
   font: 700 1.6rem Archivo;
   cursor: pointer;
   transition: color 0.2s;
+
+  margin-top: 0;
 }
 
 #page-teacher-form main fieldset legend button:hover {
   background: transparent !important;
 }
+
 #page-teacher-form div#userbutton-container {
   display: flex;
   align-items: center;
