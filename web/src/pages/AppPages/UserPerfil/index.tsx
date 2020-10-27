@@ -85,11 +85,11 @@ function UserPerfil() {
   }, [user]);
 
   async function addNewScheduleItem() {
-    // await api.post(`/schedule/${subjectId}`, {});
-    // setScheduleItems([
-    //   ...scheduleItems,
-    //   { week_day: 0, from: '', to: '', id: '' },
-    // ]);
+    await api.post(`/schedule/${user?.id}`);
+    setScheduleItems([
+      ...scheduleItems,
+      { week_day: 0, from: '', to: '', id: '' },
+    ]);
   }
 
   function setScheduleItemValue(
@@ -240,8 +240,8 @@ function UserPerfil() {
             </legend>
             {scheduleItems.map((scheduleItem, index) => {
               return (
-                <div key={index} className="schedule-container">
-                  <div className="schedule-item">
+                <div key={index} className="schedule-container-perfil">
+                  <div className="schedule-item-perfil">
                     <Select
                       name="week_day"
                       label="Dia da semana"

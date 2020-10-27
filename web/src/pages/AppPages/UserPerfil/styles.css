@@ -131,14 +131,15 @@
     padding: 0 6.4rem;
   }
 
-  #page-perfil main .schedule-item {
+  #page-perfil main .schedule-item-perfil {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     column-gap: 1.6rem;
   }
 
-  #page-perfil main .schedule-item .input-block {
+  #page-perfil main .schedule-item-perfil .input-block {
     margin-top: 0 !important;
+    width: 100%;
   }
 
   #page-perfil main footer {

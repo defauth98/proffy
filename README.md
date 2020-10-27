@@ -1,42 +1,40 @@
-<h1 align="center">
-    <img alt="NextLevelWeek" title="#NextLevelWeek" src=".github/logo.svg" width="250px" />
-</h1>
+<h1 align="center">Proffy 👨‍🎓 </h1>
 
-<h3 align="center">Next Level Week :rocket: </h1>
+<h2 align="center">
 
-<h1 align="center">
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=proffy-api&uri=https%3A%2F%2Fgithub.com%2Fdefauth98%2FProffy-2.0%2Fblob%2Fmaster%2FInsomnia_2020-10-27.json)
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=nlw-02&uri=https%3A%2F%2Fgithub.com%2Fdefauth98%2Fnlw-02%2Fblob%2Fmaster%2FInsomnia_2020-08-11.json)
+</h2>
 
-</h1>
+<p align="justify">Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores.</p>
 
-### :shrug: O que é a Next Level Week?
+> Status do Projeto: :heavy_check_mark: Concluido
 
-A semana next level foi um evento que ocorreu no dia 3 até o dia 8 de Agosto, onde desenvolvemos uma aplicação de ponta a ponta, desde o backend, frontend e mobile, usando ReactJS, React Native e NodeJS.
+## :file_folder: Link para a aplicação
 
-### :exploding_head: Qual é o objetivo do projeto?
+Link da aplicação: https://proffy-deploy-frontend.netlify.app/
 
-Durante essa semana de muito networking e muito código, foi contruido uma aplicação para professores se conectarem com os seus alunos.
-
-<h2 align="center">Proffy 👨‍🎓 </h2>
-
-<h1 align="center">
-    <img alt="capa" title="capa" src=".github/capa.svg" width="700px" />
-</h1>
-
-## Novas funcionalidades (Versão 2.0)
+### :computer: Funcionalidades
 
 - [x] Autenticação de usuários
-- [x] Recuperação de senhas
-- [x] Perfil do proffy
-- [x] Splash Screen no React Native
-- [x] Paginação na listagem de proffys
-- [x] Exibindo horários disponiveis dos proffys
-- [x] Salvando seus proffys favoritos
-- [x] Logout da aplicação
-- [ ] Deploy da aplicação
 
-## :computer: Tecnologias
+- [x] Recuperação de senhas
+
+- [x] Perfil do proffy
+
+- [x] Splash Screen no React Native
+
+- [x] Paginação na listagem de proffys
+
+- [x] Exibindo horários disponiveis dos proffys
+
+- [x] Salvando seus proffys favoritos
+
+- [x] Logout da aplicação
+
+- [x] Deploy da aplicação
+
+### :nut_and_bolt: Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes técnologias:
 
@@ -53,53 +51,59 @@ Esse projeto foi desenvolvido com as seguintes técnologias:
 [rn]: https://facebook.github.io/react-native/
 [yarn]: https://yarnpkg.com/
 
-## :file_folder: Como acessar o layout
+### Como rodar o projeto?
 
-O layout foi contruido usando o figma, você acessa-lo com esse link: [Projeto no Figma](https://www.figma.com/file/GHGS126t7WYjnPZdRKChJF/?viewer=1&node-id=).
+Você vai precisar ter docker instalado na sua máquina para rodar o banco de dados PostgreSQL ou instalar diretamente na sua máquina.
 
-## Como rodar o backend
+#### Backend
 
-```sh
-# Entrar na pasta do projeto backend
+```bash
+# Clone a aplicação
+git clone https://github.com/defauth98/Proffy-2.0.git
+
+# Entre no diretório do backend
 cd server
 
-### Instalar as depedencias usando yarn
+# Instale as dependencias
 yarn
 
-### Rodar as migrations
+# Rode o banco de dados usando o docker
+docker run --name nlw -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
+# Configure as variveis de ambiente (.env) e rode as migrations
 yarn migrate
 
-#Rodar o projeto
-yarn start
+# Rode a aplicação
+yarn dev
 ```
 
-## Como rodar o frontend
+#### Frontend
 
-```sh
-# Entrar na pasta do projeto backend
+```bash
+# Entre no diretório do backend
 cd web
 
-# Instalar as depedencias usando yarn
+# Instale as dependencias
 yarn
 
-#Rodar o projeto
+# Configure o seu api em /src/services/api.ts e rode o app
 yarn start
 ```
 
-## Como rodar o mobile
+#### Mobile
 
-```sh
-# Entrar na pasta do projeto backend
+```bash
+# Entre no diretório do backend
 cd mobile
 
-# Instalar as depedencias usando yarn
+# Instale as dependencias
 yarn
 
-#Rodar o projeto
+# Configure o seu api em /src/services/api.ts e rode o app
 yarn start
 ```
 
-## Autor
+### Autor
 
 👤 **Daniel Ribeiro**
 
@@ -107,4 +111,8 @@ yarn start
 - Github: [@defauth98](https://github.com/defauth98)
 - LinkedIn: [@daniel-ribeiro-397604164](https://linkedin.com/in/daniel-ribeiro-397604164)
 
-<h4 align="center">Com ❤️ por Daniel Ribeiro</h3>
+## Licença
+
+The [MIT License]() (MIT)
+
+Copyright :copyright: 2020 - Proffy

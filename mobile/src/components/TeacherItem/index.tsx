@@ -57,7 +57,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
 
   useEffect(() => {
     async function getSchedule() {
-      const response = await api.get(`classes/${teacher.class_id}`);
+      const response = await api.get(`classes/${teacher.user_id}`);
 
       response?.data.schedule.map((responseItem: scheduleItem) => {
         switch (responseItem.week_day) {
