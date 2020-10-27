@@ -62,6 +62,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function signIn(email: string, password: string, save: boolean) {
     const response = await api.post('/login', { email, password });
+
     await setUserAndToken(response.data.user, response.data.token, save);
   }
 
