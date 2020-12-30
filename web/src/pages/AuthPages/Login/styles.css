@@ -27,9 +27,17 @@
   color: var(--color-text-title);
 }
 
+.login-form .inputs {
+  width: 65%;
+
+  max-width: 350px;
+}
+
 .login-form .inputs :nth-child(1) {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+
+
 }
 
 .login-form .inputs :last-child {
