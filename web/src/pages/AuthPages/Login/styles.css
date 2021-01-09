@@ -36,6 +36,8 @@
 .login-form .inputs :nth-child(1) {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+
+
 }
 
 .login-form .inputs :last-child {
