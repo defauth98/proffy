@@ -20,9 +20,9 @@ export default class FavoritesController {
         favorited_class_id,
       });
 
-      res.json(insertedFavorite);
+      return res.json(insertedFavorite);
     } catch (error) {
-      res.json(error);
+      return res.json(error);
     }
   }
 

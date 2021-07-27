@@ -9,7 +9,7 @@ export default class ConnectionController {
       user_id
     })
 
-    response.status(201).send()
+    return response.status(201).send()
   }
 
   async index(request: Request, response: Response) {
