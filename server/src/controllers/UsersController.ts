@@ -47,7 +47,7 @@ export default class UserController {
     const { name, surname, email, whatsapp, bio, avatar } = req.body;
 
     try {
-      const updatedUserID = await db('users')
+      await db('users')
         .update({ name, surname, whatsapp, email, bio, avatar })
         .where({ id });
 
