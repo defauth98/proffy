@@ -34,7 +34,7 @@ Link da aplicação: https://proffy-deploy-frontend.netlify.app/
 
 ### :nut_and_bolt: Tecnologias
 
-Esse projeto foi desenvolvido com as seguintes técnologias:
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [Node.js][nodejs]
 - [TypeScript][typescript]
