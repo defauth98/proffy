@@ -66,7 +66,12 @@ const Landing: React.FC = () => {
             </div>
 
             <span className="total-connections">
-              Total de {totalConnections} conexões já realizadas{' '}
+              Total de
+              {' '}
+              {totalConnections}
+              {' '}
+              conexões já realizadas
+              {' '}
               <img src={purpleHeartIcon} alt="Coração roxo" />
             </span>
           </div>
