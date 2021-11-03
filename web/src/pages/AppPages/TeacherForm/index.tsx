@@ -120,7 +120,6 @@ function TeacherForm() {
           schedule: scheduleItems,
         })
         .then(() => {
-          alert('Cadastro efetuado com sucesso');
           history.push('/give-classes-succes');
         })
         .catch((error) => {
