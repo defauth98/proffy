@@ -8,8 +8,6 @@
 
 <p align="justify">Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores.</p>
 
-> Status do Projeto: :heavy_check_mark: Concluido
-
 ## :file_folder: Link para a aplicação
 
 Link da aplicação: https://proffy-deploy-frontend.netlify.app/
@@ -65,16 +63,16 @@ git clone https://github.com/defauth98/Proffy-2.0.git
 cd server
 
 # Instale as dependencias
-yarn
+npm i
 
 # Rode o banco de dados usando o docker
 docker run --name nlw -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 
 # Configure as variveis de ambiente (.env) e rode as migrations
-yarn migrate
+npm run migrate
 
 # Rode a aplicação
-yarn dev
+npm run dev
 ```
 
 #### Frontend
@@ -84,10 +82,10 @@ yarn dev
 cd web
 
 # Instale as dependencias
-yarn
+npm i
 
 # Configure o seu api em /src/services/api.ts e rode o app
-yarn start
+npm start
 ```
 
 #### Mobile
@@ -97,10 +95,10 @@ yarn start
 cd mobile
 
 # Instale as dependencias
-yarn
+npm i
 
 # Configure o seu api em /src/services/api.ts e rode o app
-yarn start
+npm start
 ```
 
 ### Autor
