@@ -1,6 +1,7 @@
 #page-perfil {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 #page-perfil .page-header .header-content {
@@ -16,6 +17,7 @@
   max-width: 74rem;
   border-radius: 0.8rem;
   margin: -3.2rem auto 3.2rem;
+  margin-bottom: 4rem;
   padding-top: 6.4rem;
   overflow: hidden;
 }

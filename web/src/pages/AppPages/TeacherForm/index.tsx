@@ -110,7 +110,6 @@ function TeacherForm() {
 
   function handleCreateClass(event: FormEvent) {
     event.preventDefault();
-
     if (isNewClass) {
       api
         .post('classes', {
@@ -133,12 +132,12 @@ function TeacherForm() {
   }
 
   return (
-    <div id="page-teacher-form" className="container">
+    <div id='page-teacher-form' className='container'>
       <PageHeader
-        title="Que incrível que você quer dar aulas."
-        description="O primeiro passo, é preencher esse
-        formulário de inscrição."
-        pageTitle="Dar aulas"
+        title='Que incrível que você quer dar aulas.'
+        description='O primeiro passo, é preencher esse
+        formulário de inscrição.'
+        pageTitle='Dar aulas'
       />
 
       <main>
@@ -146,16 +145,16 @@ function TeacherForm() {
           <fieldset>
             <legend>Seus dados</legend>
 
-            <div id="userbutton-container">
-              <Link to="/" id="perfil-button">
-                <img src={avatar || defaultAvatar} alt="Avatar do proffy" />
+            <div id='userbutton-container'>
+              <Link to='/' id='perfil-button'>
+                <img src={avatar || defaultAvatar} alt='Avatar do proffy' />
                 <span>
                   {user?.name} {user?.surname}
                 </span>
               </Link>
               <Input
-                name="whatsapp"
-                label="Whatsapp"
+                name='whatsapp'
+                label='Whatsapp'
                 value={whatsapp}
                 onChange={(e) => {
                   setWhatsapp(e.target.value);
@@ -164,8 +163,8 @@ function TeacherForm() {
             </div>
 
             <Textarea
-              label="Biografia"
-              name="bio"
+              label='Biografia'
+              name='bio'
               value={bio}
               onChange={(e) => {
                 setBio(e.target.value);
@@ -177,8 +176,8 @@ function TeacherForm() {
             <legend>Sobre a aula</legend>
 
             <Select
-              name="subject"
-              label="Matéria"
+              name='subject'
+              label='Matéria'
               value={subject}
               onChange={(e) => {
                 setSubject(e.target.value);
@@ -197,8 +196,8 @@ function TeacherForm() {
               ]}
             />
             <Input
-              name="cost"
-              label="Custo da hora por aula"
+              name='cost'
+              label='Custo da hora por aula'
               value={cost}
               onChange={(e) => {
                 setCost(e.target.value);
@@ -208,16 +207,16 @@ function TeacherForm() {
           <fieldset>
             <legend>
               Horários disponíveis
-              <button type="button" onClick={addNewScheduleItem}>
+              <button type='button' onClick={addNewScheduleItem}>
                 + Novo horário
               </button>
             </legend>
             {scheduleItems.map((scheduleItem, index) => {
               return (
-                <div key={scheduleItem.week_day} className="schedule-item">
+                <div key={scheduleItem.week_day} className='schedule-item'>
                   <Select
-                    name="week_day"
-                    label="Dia da semana"
+                    name='week_day'
+                    label='Dia da semana'
                     onChange={(e) =>
                       setScheduleItemValue(index, 'week_day', e.target.value)
                     }
@@ -237,18 +236,18 @@ function TeacherForm() {
                       setScheduleItemValue(index, 'from', e.target.value)
                     }
                     value={scheduleItem.from}
-                    name="from"
-                    label="Das"
-                    type="time"
+                    name='from'
+                    label='Das'
+                    type='time'
                   />
                   <Input
                     onChange={(e) =>
                       setScheduleItemValue(index, 'to', e.target.value)
                     }
                     value={scheduleItem.to}
-                    name="to"
-                    label="Até"
-                    type="time"
+                    name='to'
+                    label='Até'
+                    type='time'
                   />
                 </div>
               );
@@ -256,11 +255,11 @@ function TeacherForm() {
           </fieldset>
           <footer>
             <p>
-              <img src={warningIcon} alt="Aviso importante" />
+              <img src={warningIcon} alt='Aviso importante' />
               Importante! <br />
               Preencha todos os dados
             </p>
-            <button type="submit">Salvar cadastro</button>
+            <button type='submit'>Salvar cadastro</button>
           </footer>
         </form>
       </main>

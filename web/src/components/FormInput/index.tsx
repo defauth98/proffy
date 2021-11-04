@@ -22,24 +22,24 @@ const FormInputs: React.FC<FormInputProps> = ({
   }
 
   return (
-    <div className="label-float">
+    <div className='label-float'>
       {isPassword ? (
         <input
-          placeholder=" "
+          placeholder=' '
           {...rest}
           type={passwordShow ? 'text' : 'password'}
         />
       ) : (
-        <input placeholder=" " {...rest} type="text" />
+        <input placeholder=' ' {...rest} type='text' />
       )}
 
       <label>{label}</label>
       {isPassword ? (
         <button onClick={handleTogglePasswordShow}>
           {passwordShow ? (
-            <img src={closedEye} alt="Ocultar senha" className="inputIcon" />
+            <img src={closedEye} alt='Ocultar senha' className='inputIcon' />
           ) : (
-            <img src={Eye} alt="Ocultar senha" className="inputIcon" />
+            <img src={Eye} alt='Ocultar senha' className='inputIcon' />
           )}
         </button>
       ) : null}

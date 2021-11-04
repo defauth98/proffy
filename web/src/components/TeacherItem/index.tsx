@@ -33,9 +33,11 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
   const [thursday, setThursday] = useState<scheduleItem | null>(null);
   const [friday, setFriday] = useState<scheduleItem | null>(null);
 
-  useEffect(() => {
-    api.get(`classes/${teacher.class_id}`).then((response) => {
-      response?.data.schedule.map((responseItem: scheduleItem) => {
+  function getDaysOfWeek(data: any) {
+    if (data) {
+      const schedule = data.schedule;
+
+      schedule.map((responseItem: scheduleItem) => {
         switch (responseItem.week_day) {
           case 1:
             setMonday(responseItem);
@@ -56,7 +58,17 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
             break;
         }
       });
+    }
+  }
+
+  function getWeekDays() {
+    api.get(`classes/${teacher.class_id}`).then((response) => {
+      getDaysOfWeek(response.data);
     });
+  }
+
+  useEffect(() => {
+    getWeekDays();
   }, [teacher, teacher.id]);
 
   function createNewConnection() {
@@ -72,7 +84,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
   }
 
   return (
-    <article className="teacher-item">
+    <article className='teacher-item'>
       <header>
         <img src={teacher.avatar} alt={teacher.name} />
         <div>
@@ -83,7 +95,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
 
       <p>{teacher.bio}</p>
 
-      <div className="schedule-container">
+      <div className='schedule-container'>
         <div
           className={`schedule-item ${monday?.from ? '' : 'schedule-item-off'}`}
         >
@@ -155,11 +167,11 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
 
         <a
           href={`https://wa.me/${teacher.whatsapp}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          target='_blank'
+          rel='noopener noreferrer'
           onClick={createNewConnection}
         >
-          <img src={whatsAppIcon} alt="whatsapp" />
+          <img src={whatsAppIcon} alt='whatsapp' />
           Entrar em contato
         </a>
       </footer>

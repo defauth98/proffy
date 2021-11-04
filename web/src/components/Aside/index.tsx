@@ -9,8 +9,8 @@ import logo from '../../assets/images/asideLogo.svg';
 const Aside: React.FC = () => {
   return (
     <aside>
-      <div className="background-image">
-        <img src={logo} alt="proffy-logo" />
+      <div className='background-image'>
+        <img src={logo} alt='proffy-logo' />
       </div>
     </aside>
   );
