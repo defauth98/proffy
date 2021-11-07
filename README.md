@@ -1,38 +1,43 @@
 <h1 align="center">Proffy 👨‍🎓 </h1>
 
-<h2 align="center">
+<p align="center">
+  <a href="#user-content-computer-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#user-content-boom-funcionalidades-da-versão-20">Funcionalidades da versão 2.0</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#user-content--tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#user-content-rocket-como-rodar-o-projeto">Como rodar o projeto?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#user-content-autor">Autor</a>
+</p>
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=proffy-api&uri=https%3A%2F%2Fgithub.com%2Fdefauth98%2FProffy-2.0%2Fblob%2Fmaster%2FInsomnia_2020-10-27.json)
+<p align="center">
+  <img src=".github/capa.svg" align="center" width="900rem"/>
+</p>
 
-</h2>
+<h1 align="center">
+  <a 
+  href="https://insomnia.rest/run/?label=Proffy%20Backend%20API&uri=https%3A%2F%2Fgithub.com%2Fdefauth98%2Fproffy%2Fblob%2Fmaster%2Fserver%2FInsomnia_2020-10-27.json" 
+  target="_blank"  ><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+</h1>
 
-<p align="justify">Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores.</p>
 
-## :file_folder: Link para a aplicação
+### :computer: Projeto 
+
+Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores
 
 Link da aplicação: https://proffy-deploy-frontend.netlify.app/
 
-### :computer: Funcionalidades
+### :boom: Funcionalidades da versão 2.0
 
-- [x] Autenticação de usuários
+- Autenticação de usuários
+- Recuperação de senhas
+- Perfil do proffy
+- Splash Screen no React Native
+- Paginação na listagem de proffys
+- Exibindo horários disponiveis dos proffys
+- Salvando seus proffys favoritos
+- Logout da aplicação
+- Deploy da aplicação
 
-- [x] Recuperação de senhas
-
-- [x] Perfil do proffy
-
-- [x] Splash Screen no React Native
-
-- [x] Paginação na listagem de proffys
-
-- [x] Exibindo horários disponiveis dos proffys
-
-- [x] Salvando seus proffys favoritos
-
-- [x] Logout da aplicação
-
-- [x] Deploy da aplicação
-
-### :nut_and_bolt: Tecnologias
+### ✨ Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
@@ -49,7 +54,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 [rn]: https://facebook.github.io/react-native/
 [yarn]: https://yarnpkg.com/
 
-### Como rodar o projeto?
+### :rocket: Como rodar o projeto?
 
 Você vai precisar ter docker instalado na sua máquina para rodar o banco de dados PostgreSQL ou instalar diretamente na sua máquina.
 
@@ -57,34 +62,60 @@ Você vai precisar ter docker instalado na sua máquina para rodar o banco de da
 
 ```bash
 # Clone a aplicação
-git clone https://github.com/defauth98/Proffy-2.0.git
+git clone https://github.com/defauth98/proffy.git
 
 # Entre no diretório do backend
-cd server
+cd proffy/server
 
 # Instale as dependencias
 npm i
 
 # Rode o banco de dados usando o docker
 docker run --name nlw -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+```
 
-# Configure as variveis de ambiente (.env) e rode as migrations
+Crie um arquivo .end e configure as variaveis de ambiente
+
+```js
+SECRET='proffy'
+PG_HOST='localhost'
+PG_USER='postgres'
+PG_PASSWORD='docker'
+PG_DATABASE='proffy'
+PORT=3333
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASSWORD=
+```
+
+Rode as migrations e inicie o projeto, para isso é necessário criar um banco de dados com o nome igual ao que está no arquivo .env
+
+```sql
+create database proffy;
+```
+
+
+```bash
+# Rodar a migrations
 npm run migrate
 
-# Rode a aplicação
+# Rodar o projeto
 npm run dev
 ```
 
 #### Frontend
 
+O projeto está configurado para rodar usando a api que está no heroku, para usar a api em localhost é necessário mudar no arquivo `src/services/api.ts`
+
 ```bash
 # Entre no diretório do backend
-cd web
+cd proffy/web
 
 # Instale as dependencias
 npm i
 
-# Configure o seu api em /src/services/api.ts e rode o app
+# Rode o projeto
 npm start
 ```
 
@@ -92,12 +123,12 @@ npm start
 
 ```bash
 # Entre no diretório do backend
-cd mobile
+cd proffy/mobile
 
 # Instale as dependencias
 npm i
 
-# Configure o seu api em /src/services/api.ts e rode o app
+# Rode o projeto
 npm start
 ```
 
@@ -108,9 +139,3 @@ npm start
 - Twitter: [@defauth8](https://twitter.com/defauth8)
 - Github: [@defauth98](https://github.com/defauth98)
 - LinkedIn: [@daniel-ribeiro-397604164](https://linkedin.com/in/daniel-ribeiro-397604164)
-
-## Licença
-
-The [MIT License]() (MIT)
-
-Copyright :copyright: 2020 - Proffy
