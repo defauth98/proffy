@@ -1,38 +1,39 @@
 <h1 align="center">Proffy 👨‍🎓 </h1>
 
-<h2 align="center">
+<p align="center">
+  <a href="#desktop_computer-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#nut_and_bolt-tecnologias">Funcionalidades da versão 2.0</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#tractor-como-rodar-o-projeto">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#whale-criando-um-container-com-o-docker">Como rodar o projeto?</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#autor">Autor</a>
+</p>
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=proffy-api&uri=https%3A%2F%2Fgithub.com%2Fdefauth98%2FProffy-2.0%2Fblob%2Fmaster%2FInsomnia_2020-10-27.json)
+<h1 align="center">
+  <a 
+  href="https://insomnia.rest/run/?label=Proffy%20Backend%20API&uri=https%3A%2F%2Fgithub.com%2Fdefauth98%2Fproffy%2Fblob%2Fmaster%2Fserver%2FInsomnia_2020-10-27.json" 
+  target="_blank"  ><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+</h1>
 
-</h2>
 
-<p align="justify">Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores.</p>
+### :computer: Projeto 
 
-## :file_folder: Link para a aplicação
+Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores
 
 Link da aplicação: https://proffy-deploy-frontend.netlify.app/
 
-### :computer: Funcionalidades
+### :boom: Funcionalidades da versão 2.0
 
-- [x] Autenticação de usuários
+- Autenticação de usuários
+- Recuperação de senhas
+- Perfil do proffy
+- Splash Screen no React Native
+- Paginação na listagem de proffys
+- Exibindo horários disponiveis dos proffys
+- Salvando seus proffys favoritos
+- Logout da aplicação
+- Deploy da aplicação
 
-- [x] Recuperação de senhas
-
-- [x] Perfil do proffy
-
-- [x] Splash Screen no React Native
-
-- [x] Paginação na listagem de proffys
-
-- [x] Exibindo horários disponiveis dos proffys
-
-- [x] Salvando seus proffys favoritos
-
-- [x] Logout da aplicação
-
-- [x] Deploy da aplicação
-
-### :nut_and_bolt: Tecnologias
+### ✨ Tecnologias
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
@@ -49,7 +50,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 [rn]: https://facebook.github.io/react-native/
 [yarn]: https://yarnpkg.com/
 
-### Como rodar o projeto?
+### :rocket: Como rodar o projeto?
 
 Você vai precisar ter docker instalado na sua máquina para rodar o banco de dados PostgreSQL ou instalar diretamente na sua máquina.
 
@@ -57,21 +58,45 @@ Você vai precisar ter docker instalado na sua máquina para rodar o banco de da
 
 ```bash
 # Clone a aplicação
-git clone https://github.com/defauth98/Proffy-2.0.git
+git clone https://github.com/defauth98/proffy.git
 
 # Entre no diretório do backend
-cd server
+cd proffy/server
 
 # Instale as dependencias
 npm i
 
 # Rode o banco de dados usando o docker
 docker run --name nlw -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+```
 
-# Configure as variveis de ambiente (.env) e rode as migrations
+Crie um arquivo .end e configure as variaveis de ambiente
+
+```js
+SECRET='proffy'
+PG_HOST='localhost'
+PG_USER='postgres'
+PG_PASSWORD='docker'
+PG_DATABASE='proffy'
+PORT=3333
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASSWORD=
+```
+
+Rode as migrations e inicie o projeto, para isso é necessário criar um banco de dados com o nome igual ao que está no arquivo .env
+
+```sql
+create database proffy;
+```
+
+
+```bash
+# Rodar a migrations
 npm run migrate
 
-# Rode a aplicação
+# Rodar o projeto
 npm run dev
 ```
 
