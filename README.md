@@ -23,7 +23,9 @@
 
 Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores
 
-Link da aplicação: https://proffy-deploy-frontend.netlify.app/
+
+[Link da aplicação](https://proffy-deploy-frontend.netlify.app/){:target="_blank" rel="noopener"}
+
 
 ### :boom: Funcionalidades da versão 2.0
 
@@ -74,7 +76,7 @@ npm i
 docker run --name nlw -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
 
-Crie um arquivo .end e configure as variaveis de ambiente
+Crie um arquivo .env e configure as variaveis de ambiente
 
 ```js
 SECRET='proffy'
