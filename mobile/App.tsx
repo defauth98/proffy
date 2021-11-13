@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { AppLoading } from 'expo';
+// import { AppLoading } from 'expo';
 
 import { AuthProvider } from './src/contexts/auth';
 
@@ -15,6 +15,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import Routes from './src/routes/index';
+import { Text } from 'react-native';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -25,7 +26,7 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return <Text>Loading</Text>;
   } else {
     return (
       <>
