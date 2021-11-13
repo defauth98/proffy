@@ -8,6 +8,7 @@ import purpleHeartIcon from '../../../assets/images/icons/purple-heart.svg';
 import './styles.css';
 import { useAuth } from '../../../contexts/auth';
 import { Link, useHistory } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -25,6 +26,7 @@ const Login: React.FC = () => {
   }, [signed, user, history]);
 
   function handleLogin() {
+    setIsLoading(true);
     let isRemember;
 
     if (remember === 'true') {
@@ -100,7 +102,11 @@ const Login: React.FC = () => {
                 handleLogin();
               }}
             >
-              Entrar
+              {isLoading ? (
+                <Loading type='spin' color='green' width={30} height={30} />
+              ) : (
+                'Entrar'
+              )}
             </button>
           </div>
         </div>

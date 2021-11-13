@@ -11,6 +11,7 @@ import Select from '../../../components/Select';
 import PageHeader from '../../../components/PageHeader';
 import api from '../../../services/api';
 import { useAuth } from '../../../contexts/auth';
+import Loading from '../../../components/Loading';
 
 interface ScheduleItem {
   week_day: string;
@@ -21,6 +22,8 @@ interface ScheduleItem {
 
 function UserPerfil() {
   const history = useHistory();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
   const [bio, setBio] = useState('');
@@ -114,6 +117,8 @@ function UserPerfil() {
   function handleUpdateClass(event: FormEvent) {
     event.preventDefault();
 
+    setIsLoading(true);
+
     const firstName = name.split(' ')[0];
 
     const surnamesArray = name.split(' ');
@@ -160,6 +165,8 @@ function UserPerfil() {
           alert('Sucesso ao editar o perfil');
         }
       });
+
+    setIsLoading(false);
   }
 
   async function handleDeleteScheduleItem(event: FormEvent, id: Number) {
@@ -343,7 +350,13 @@ function UserPerfil() {
               Importante! <br />
               Preencha todos os dados
             </p>
-            <button type='submit'>Salvar cadastro</button>
+            <button type='submit'>
+              {isLoading ? (
+                <Loading type='spin' color='green' width={30} height={30} />
+              ) : (
+                'Salvar cadastro'
+              )}
+            </button>
           </footer>
         </form>
       </main>
