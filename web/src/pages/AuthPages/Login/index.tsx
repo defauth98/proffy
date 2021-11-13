@@ -13,6 +13,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
   const { signIn, signed, user } = useAuth();
@@ -48,25 +49,25 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="login-page">
+    <div className='login-page'>
       <Aside />
-      <div className="login-form">
-        <div className="title-container">
+      <div className='login-form'>
+        <div className='title-container'>
           <h2>Fazer login</h2>
         </div>
 
-        <div className="inputs">
+        <div className='inputs'>
           <FormInput
-            label="E-mail"
-            id="input-email"
+            label='E-mail'
+            id='input-email'
             onChange={(e) => {
               setEmail(e.target.value);
             }}
             value={email}
           />
           <FormInput
-            label="Senha"
-            id="input-password"
+            label='Senha'
+            id='input-password'
             onChange={(e) => {
               setPassword(e.target.value);
             }}
@@ -74,27 +75,27 @@ const Login: React.FC = () => {
             value={password}
           />
         </div>
-        <div className="buttons-container">
-          <div className="first-line">
-            <div className="checkbox-container">
+        <div className='buttons-container'>
+          <div className='first-line'>
+            <div className='checkbox-container'>
               <input
-                type="checkbox"
-                id="remenber"
+                type='checkbox'
+                id='remenber'
                 value={remember}
                 onChange={(e) => {
                   setRemember('true');
                 }}
               />
-              <label htmlFor="remenber">Lembrar-me</label>
+              <label htmlFor='remenber'>Lembrar-me</label>
             </div>
-            <div className="forget-container">
-              <Link to="forget-password">Esqueci minha senha</Link>
+            <div className='forget-container'>
+              <Link to='forget-password'>Esqueci minha senha</Link>
             </div>
           </div>
 
-          <div className="second-line">
+          <div className='second-line'>
             <button
-              type="button"
+              type='button'
               onClick={() => {
                 handleLogin();
               }}
@@ -104,15 +105,15 @@ const Login: React.FC = () => {
           </div>
         </div>
 
-        <div className="footer">
-          <div className="signup-container">
+        <div className='footer'>
+          <div className='signup-container'>
             <span>Não tem conta?</span>
-            <Link to="signin" className="sign-link">
+            <Link to='signin' className='sign-link'>
               Cadastre-se
             </Link>
           </div>
           <span>
-            É de graça <img alt="Coração roxo" src={purpleHeartIcon} />
+            É de graça <img alt='Coração roxo' src={purpleHeartIcon} />
           </span>
         </div>
       </div>
