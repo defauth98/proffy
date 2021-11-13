@@ -199,8 +199,8 @@ function UserPerfil() {
             <legend>Sobre a aula</legend>
 
             <Select
-              name="subject"
-              label="Matéria"
+              name='subject'
+              label='Matéria'
               value={userSubject}
               onChange={(e) => {
                 setSubject(e.target.value);
@@ -219,8 +219,8 @@ function UserPerfil() {
               ]}
             />
             <Input
-              name="cost"
-              label="Custo da hora por aula"
+              name='cost'
+              label='Custo da hora por aula'
               value={cost}
               onChange={(e) => {
                 setCost(e.target.value);
@@ -231,20 +231,20 @@ function UserPerfil() {
             <legend>
               Horários disponíveis
               <button
-                type="button"
+                type='button'
                 onClick={addNewScheduleItem}
-                id="legend-button"
+                id='legend-button'
               >
                 + Novo horário
               </button>
             </legend>
             {scheduleItems.map((scheduleItem, index) => {
               return (
-                <div key={index} className="schedule-container-perfil">
-                  <div className="schedule-item-perfil">
+                <div key={index} className='schedule-container-perfil'>
+                  <div className='schedule-item-perfil'>
                     <Select
-                      name="week_day"
-                      label="Dia da semana"
+                      name='week_day'
+                      label='Dia da semana'
                       onChange={(e) =>
                         setScheduleItemValue(index, 'week_day', e.target.value)
                       }
@@ -264,22 +264,22 @@ function UserPerfil() {
                         setScheduleItemValue(index, 'from', e.target.value)
                       }
                       value={scheduleItem.from}
-                      name="from"
-                      label="Das"
-                      type="time"
+                      name='from'
+                      label='Das'
+                      type='time'
                     />
                     <Input
                       onChange={(e) =>
                         setScheduleItemValue(index, 'to', e.target.value)
                       }
                       value={scheduleItem.to}
-                      name="to"
-                      label="Até"
-                      type="time"
+                      name='to'
+                      label='Até'
+                      type='time'
                     />
                   </div>
                   <button
-                    id="delete-button"
+                    id='delete-button'
                     onClick={(event) => handleDeleteScheduleItem(event, index)}
                   >
                     Excluir horário
@@ -294,8 +294,8 @@ function UserPerfil() {
   }
 
   return (
-    <div id="page-perfil" className="container">
-      <PageHeader pageTitle="Meu perfil" subject={userSubject} />
+    <div id='page-perfil' className='container'>
+      <PageHeader pageTitle='Meu perfil' subject={userSubject} />
 
       <main>
         <form onSubmit={(event) => handleUpdateClass(event)}>
@@ -303,32 +303,32 @@ function UserPerfil() {
             <legend>Seus dados</legend>
 
             <Input
-              name="name"
-              label="Nome completo"
+              name='name'
+              label='Nome completo'
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
               }}
             />
             <Input
-              name="avatar"
-              label="Avatar"
+              name='avatar'
+              label='Avatar'
               value={avatar}
               onChange={(e) => {
                 setAvatar(e.target.value);
               }}
             />
             <Input
-              name="whatsapp"
-              label="Whatsapp"
+              name='whatsapp'
+              label='Whatsapp'
               value={whatsapp}
               onChange={(e) => {
                 setWhatsapp(e.target.value);
               }}
             />
             <Textarea
-              label="Biografia"
-              name="bio"
+              label='Biografia'
+              name='bio'
               value={bio}
               onChange={(e) => {
                 setBio(e.target.value);
@@ -339,14 +339,15 @@ function UserPerfil() {
 
           <footer>
             <p>
-              <img src={warningIcon} alt="Aviso importante" />
+              <img src={warningIcon} alt='Aviso importante' />
               Importante! <br />
               Preencha todos os dados
             </p>
-            <button type="submit">Salvar cadastro</button>
+            <button type='submit'>Salvar cadastro</button>
           </footer>
         </form>
       </main>
+      <br />
     </div>
   );
 }
