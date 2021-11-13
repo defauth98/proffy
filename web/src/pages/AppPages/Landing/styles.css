@@ -303,9 +303,8 @@ h3 {
 }
 
 @media (min-height: 900px) {
-  #page-landing .content-container {
-    align-items: center;
-    justify-content: space-between;
+  #page-landing footer .welcome-container {
+    margin-left: 8%;
   }
 
   #page-landing .content-container .logo-container img {
