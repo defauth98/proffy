@@ -156,8 +156,11 @@ function TeacherForm() {
                 name='whatsapp'
                 label='Whatsapp'
                 value={whatsapp}
+                placeholder='( ) ____ ____'
                 onChange={(e) => {
-                  setWhatsapp(e.target.value);
+                  setWhatsapp(
+                    e.target.value.replace(/^(\d{2})(\d{4})(\d+)$/, '($1)$2-$3')
+                  );
                 }}
               />
             </div>
@@ -263,6 +266,7 @@ function TeacherForm() {
           </footer>
         </form>
       </main>
+      <br />
     </div>
   );
 }
