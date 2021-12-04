@@ -3,3 +3,6 @@ api:
 
 clear:
 	docker-compose down
+
+react:
+	cd web && npm start
