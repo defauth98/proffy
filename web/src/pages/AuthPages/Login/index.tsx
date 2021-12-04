@@ -6,6 +6,7 @@ import FormInput from '../../../components/FormInput';
 import purpleHeartIcon from '../../../assets/images/icons/purple-heart.svg';
 
 import './styles.css';
+
 import { useAuth } from '../../../contexts/auth';
 import { Link, useHistory } from 'react-router-dom';
 import Loading from '../../../components/Loading';
