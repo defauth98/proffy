@@ -1,8 +1,8 @@
 api:
 	docker-compose up -d
 
-clear:
-	docker-compose down
+stop:
+	docker-compose stop
 
 react:
 	cd web && npm start

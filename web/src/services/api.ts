@@ -1,7 +1,10 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 const api = axios.create({
-  baseURL: 'https://proffy-deploy-2.herokuapp.com',
+  baseURL: process.env.API_URL,
 });
 
 export default api;
