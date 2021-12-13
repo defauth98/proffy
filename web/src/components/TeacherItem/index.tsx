@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 
 import whatsAppIcon from '../../assets/images/icons/whatsapp.svg';
@@ -35,7 +36,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
 
   function getDaysOfWeek(data: any) {
     if (data) {
-      const schedule = data.schedule;
+      const { schedule } = data;
 
       schedule.map((responseItem: scheduleItem) => {
         switch (responseItem.week_day) {
@@ -78,7 +79,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
   function convertToHour(date: any): String {
     const hour = date / 60;
 
-    let hourString = hour.toString();
+    const hourString = hour.toString();
 
     return `${hourString}h`;
   }
