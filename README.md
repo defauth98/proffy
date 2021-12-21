@@ -24,8 +24,7 @@
 Plataforma WEB e Mobile, para os alunos poderem encontrar suas aulas, e entrar em contato com os professores
 
 
-[Link da aplicação](https://proffy-deploy-frontend.netlify.app/){:target="_blank" rel="noopener"}
-
+[Link da aplicação](https://proffy-deploy-frontend.netlify.app/)
 
 ### :boom: Funcionalidades da versão 2.0
 
