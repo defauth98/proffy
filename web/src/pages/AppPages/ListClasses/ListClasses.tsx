@@ -1,47 +1,61 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import PageHeader from '../../../components/PageHeader';
-import TeacherItem, { Teacher } from '../../../components/TeacherItem';
+import TeacherItem from '../../../components/TeacherItem';
 
-import './styles.css';
+import './ListClassesStyles.css';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
-import api from '../../../services/api';
+import { Class } from '../../../type/classes';
+import {
+  requestAllClasses,
+  requestFilteredClasses,
+} from '../../../services/classesApi';
 
-function TeacherList() {
-  const [teachers, setTeachers] = useState([]);
+function ListClasses() {
+  const [teachers, setTeachers] = useState<Class[]>([]);
 
   const [subject, setSubject] = useState('');
-  const [week_day, setWeekDay] = useState('');
+  const [weekDay, setWeekDay] = useState('');
   const [time, setTime] = useState('');
   const [page, setPage] = useState(1);
+
+  async function getAllClasses() {
+    const response = await requestAllClasses();
+
+    if (response) {
+      setTeachers(response);
+    }
+  }
 
   async function searchTeachers(e: FormEvent) {
     e.preventDefault();
 
-    const response = await api.get('classes', {
-      params: {
-        week_day,
-        subject,
-        time,
-        page,
-      },
+    const response = await requestFilteredClasses({
+      week_day: weekDay,
+      subject,
+      time,
+      page,
     });
 
-    setTeachers(response.data);
+    setTeachers(response);
 
     const newPage = page + 1;
 
     setPage(newPage);
   }
 
+  useEffect(() => {
+    getAllClasses();
+  }, []);
+
   return (
-    <div id="page-teacher-list" className="container">
-      <PageHeader title="Estes sãos os proffys disponíveis" pageTitle="Estudar">
-        <form id="search-teachers" onSubmit={searchTeachers}>
+    <div id='page-teacher-list' className='container'>
+      <PageHeader title='Estes sãos os proffys disponíveis' pageTitle='Estudar'>
+        <form id='search-teachers' onSubmit={searchTeachers}>
           <Select
-            name="subject"
-            label="Matéria"
+            name='subject'
+            label='Matéria'
             onChange={(e) => {
               setSubject(e.target.value);
             }}
@@ -60,12 +74,12 @@ function TeacherList() {
             ]}
           />
           <Select
-            name="week_day"
-            label="Dia da semana"
+            name='weekDay'
+            label='Dia da semana'
             onChange={(e) => {
               setWeekDay(e.target.value);
             }}
-            value={week_day}
+            value={weekDay}
             options={[
               { value: '0', label: 'Domingo' },
               { value: '1', label: 'Segunda-Feira' },
@@ -77,32 +91,30 @@ function TeacherList() {
             ]}
           />
           <Input
-            type="time"
-            name="time"
-            label="Hora"
+            type='time'
+            name='time'
+            label='Hora'
             onChange={(e) => {
               setTime(e.target.value);
             }}
             value={time}
           />
-          <button type="submit" onClick={searchTeachers}>
+          <button type='submit' onClick={searchTeachers}>
             Buscar
           </button>
         </form>
       </PageHeader>
 
       <main>
-        {teachers.map((teacher: Teacher) => {
-          return (
-            <TeacherItem
-              key={`${teacher.id} ${teacher.name}`}
-              teacher={teacher}
-            />
-          );
-        })}
+        {teachers.map((teacher: Class) => (
+          <TeacherItem
+            key={`${teacher.id} ${teacher.name}`}
+            teacher={teacher}
+          />
+        ))}
       </main>
     </div>
   );
 }
 
-export default TeacherList;
+export default ListClasses;

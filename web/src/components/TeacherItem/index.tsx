@@ -5,20 +5,10 @@ import whatsAppIcon from '../../assets/images/icons/whatsapp.svg';
 
 import './styles.css';
 import api from '../../services/api';
-
-export interface Teacher {
-  avatar: string;
-  bio: string;
-  cost: number;
-  id: number;
-  name: string;
-  subject: string;
-  whatsapp: string;
-  class_id: string;
-}
+import { Class } from '../../type/classes';
 
 export interface TeacherItemProps {
-  teacher: Teacher;
+  teacher: Class;
 }
 
 interface scheduleItem {

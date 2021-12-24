@@ -119,7 +119,7 @@ function TeacherForm() {
           schedule: scheduleItems,
         })
         .then(() => {
-          history.push('/give-classes-succes');
+          history.push('/give-classes-success');
         })
         .catch((error) => {
           alert(error);
