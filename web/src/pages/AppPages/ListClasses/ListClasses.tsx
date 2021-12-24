@@ -13,18 +13,18 @@ import {
 } from '../../../services/classesApi';
 
 function ListClasses() {
-  const [teachers, setTeachers] = useState<Class[]>([]);
+  const [classes, setClasses] = useState<Class[]>([]);
 
   const [subject, setSubject] = useState('');
   const [weekDay, setWeekDay] = useState('');
   const [time, setTime] = useState('');
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
 
   async function getAllClasses() {
     const response = await requestAllClasses();
 
     if (response) {
-      setTeachers(response);
+      setClasses(response);
     }
   }
 
@@ -35,14 +35,13 @@ function ListClasses() {
       week_day: weekDay,
       subject,
       time,
-      page,
     });
 
-    setTeachers(response);
+    setClasses(response);
 
-    const newPage = page + 1;
+    // const newPage = page + 1;
 
-    setPage(newPage);
+    // setPage(newPage);
   }
 
   useEffect(() => {
@@ -106,7 +105,7 @@ function ListClasses() {
       </PageHeader>
 
       <main>
-        {teachers.map((teacher: Class) => (
+        {classes.map((teacher: Class) => (
           <TeacherItem
             key={`${teacher.id} ${teacher.name}`}
             teacher={teacher}

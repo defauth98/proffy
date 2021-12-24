@@ -2,7 +2,6 @@ export interface ClassFilter {
   week_day: string;
   subject: string;
   time: string;
-  page: number;
 }
 
 export interface Class {
