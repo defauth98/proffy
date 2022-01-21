@@ -13,7 +13,7 @@ import defaltAvatar from '../../../assets/images/default-avatar.png';
 
 import logoutIcon from '../../../assets/images/icons/sign-out.svg';
 
-import './styles.css';
+import "./lading-page.css"
 import { useAuth } from '../../../contexts/auth';
 
 const Landing: React.FC = () => {

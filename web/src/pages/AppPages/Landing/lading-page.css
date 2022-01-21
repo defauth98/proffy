@@ -302,6 +302,22 @@ h3 {
   }
 }
 
+@media (min-width: 768px) and (max-width: 1366px) {
+  #page-landing footer .footer-wrapper {
+    width: 80%;
+  }
+
+  #page-landing footer .welcome-container {
+    margin-left: 0;
+  }
+}
+
+@media(min-width: 1920px) {
+  #page-landing .content-container {
+    align-items: center;
+  }
+}
+
 @media (min-height: 900px) {
   #page-landing footer .welcome-container {
     margin-left: 8%;
@@ -318,5 +334,21 @@ h3 {
 
   #page-landing .content-container img {
     height: 40rem;
+  }
+}
+
+@media(max-width: 375px) {
+  #page-landing footer .footer-wrapper {
+    flex-direction: column;
+    width: 80%;
+  }
+
+  #page-landing footer .buttons-container {
+    width: 100%;
+  }
+
+  #page-landing footer .buttons-container .study {
+    margin: 0;
+    margin-right: 2rem;
   }
 }
