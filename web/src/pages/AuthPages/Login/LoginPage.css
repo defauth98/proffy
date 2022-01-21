@@ -197,9 +197,3 @@ button:hover {
     width: 100%;
   }
 }
-
-@media(max-width: var(--bp-mobile)) {
-  .login-page {
-    flex-direction: row;
-  }
-}

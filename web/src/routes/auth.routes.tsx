@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Login from '../pages/AuthPages/Login/LoginPage';
 import SignIn from '../pages/AuthPages/SignIn';
 import SignInSucces from '../pages/AuthPages/SignInSucess';
-import ForgetPassword from '../pages/AuthPages/ForgetPassword';
+import ForgetPassword from '../pages/AuthPages/ForgetPassword/ForgetPassword';
 import RecoveryPassword from '../pages/AuthPages/RecoveryPassword';
 import RecoverySuccess from '../pages/AuthPages/RecoverySuccess';
 
