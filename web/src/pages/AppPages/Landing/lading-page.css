@@ -312,7 +312,7 @@ h3 {
   }
 }
 
-@media(min-width: 1920px) {
+@media(min-width: 1366px) {
   #page-landing .content-container {
     align-items: center;
   }
