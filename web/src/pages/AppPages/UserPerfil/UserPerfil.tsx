@@ -3,7 +3,8 @@ import React, { useState, FormEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import warningIcon from '../../../assets/images/icons/warning.svg';
 
-import './styles.css';
+import './userPerfil.css'
+
 import Input from '../../../components/Input';
 import Textarea from '../../../components/Textarea';
 import Select from '../../../components/Select';
@@ -43,9 +44,9 @@ function UserPerfil() {
     let hourString = hour.toString();
     let minutesString = minutes.toString();
 
-    if (hour / 10 < 1) hourString = '0' + hourString;
+    if (hour / 10 < 1) hourString = `0${  hourString}`;
 
-    if (minutes / 10 < 1) minutesString = '0' + minutesString;
+    if (minutes / 10 < 1) minutesString = `0${  minutesString}`;
 
     return `${hourString}:${minutesString}`;
   }
@@ -67,14 +68,12 @@ function UserPerfil() {
         const scheduleItemsData = userClass.data.schedule;
 
         const convertedScheduleItems = scheduleItemsData.map(
-          (item: ScheduleItem) => {
-            return {
+          (item: ScheduleItem) => ({
               week_day: item.week_day,
               from: ConvertToDate(item.from),
               to: ConvertToDate(item.to),
               id: item.id,
-            };
-          }
+            })
         );
 
         setScheduleItems(convertedScheduleItems);
@@ -180,14 +179,12 @@ function UserPerfil() {
       const scheduleItemsData = userClass.data.schedule;
 
       const convertedScheduleItems = scheduleItemsData.map(
-        (item: ScheduleItem) => {
-          return {
+        (item: ScheduleItem) => ({
             week_day: item.week_day,
             from: ConvertToDate(item.from),
             to: ConvertToDate(item.to),
             id: item.id,
-          };
-        }
+          })
       );
 
       setScheduleItems(convertedScheduleItems);
@@ -245,8 +242,7 @@ function UserPerfil() {
                 + Novo horário
               </button>
             </legend>
-            {scheduleItems.map((scheduleItem, index) => {
-              return (
+            {scheduleItems.map((scheduleItem, index) => (
                 <div key={index} className='schedule-container-perfil'>
                   <div className='schedule-item-perfil'>
                     <Select
@@ -292,8 +288,7 @@ function UserPerfil() {
                     Excluir horário
                   </button>
                 </div>
-              );
-            })}
+              ))}
           </fieldset>
         </>
       );

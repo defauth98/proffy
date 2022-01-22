@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Landing from '../pages/AppPages/Landing/LandingPage';
 import TeacherForm from '../pages/AppPages/TeacherForm';
-import UserPerfil from '../pages/AppPages/UserPerfil';
+import UserPerfil from '../pages/AppPages/UserPerfil/UserPerfil';
 import TeacherFormSuccess from '../pages/AppPages/TeacherFormSuccess';
 import ListClasses from '../pages/AppPages/ListClasses/ListClasses';
 

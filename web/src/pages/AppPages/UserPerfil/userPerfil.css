@@ -159,3 +159,13 @@
     margin: 0;
   }
 }
+
+@media(max-width: 768px) {
+  #page-perfil .page-header .header-content {
+    flex-direction: column;
+  }
+
+  #page-perfil main fieldset legend button {
+    width: 100%;
+  }
+}
