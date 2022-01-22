@@ -49,7 +49,11 @@ const Login: React.FC = () => {
 
     signIn(email, password, isRemember).catch((err) => {
       alert(err);
+    }).then(() => {
+      setIsLoading(false)
     });
+
+
   }
 
   return (
