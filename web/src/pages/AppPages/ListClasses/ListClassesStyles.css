@@ -61,3 +61,13 @@
     margin: 0 auto;
   }
 }
+
+@media(max-width: 375px) {
+  .schedule-container {
+    display: none;
+  }
+
+  main {
+    padding-bottom: 4rem;
+  }
+}
