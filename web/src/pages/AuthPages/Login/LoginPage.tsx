@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
 
 import Aside from '../../../components/Aside';
 import FormInput from '../../../components/FormInput';
@@ -38,22 +38,31 @@ const Login: React.FC = () => {
     }
 
     if (email.length < 6) {
-      alert('Informe um email válido');
+      toast.error('Informe um email válido',{
+        theme: "light",
+        closeButton: false,
+        progressStyle: {
+          background: '#8257E5'
+        }
+      });
+
       return;
     }
 
     if (password.length < 3) {
-      alert('Informe um password válido');
+      toast.error('Informe um password válido',{
+        theme: "light",
+        closeButton: false,
+        progressStyle: {
+          background: '#8257E5'
+        }
+      });
       return;
     }
 
-    signIn(email, password, isRemember).catch((err) => {
-      alert(err);
-    }).then(() => {
-      setIsLoading(false)
-    });
-
-
+    signIn(email, password, isRemember).then(() => {
+      setIsLoading(false);
+    })
   }
 
   return (

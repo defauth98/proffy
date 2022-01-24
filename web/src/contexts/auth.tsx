@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { toast } from 'react-toastify';
 import api from '../services/api';
+import { LoginResponse } from '../types/LoginRequestType';
 
 export interface UserData {
   id: string;
@@ -60,8 +62,42 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   async function signIn(email: string, password: string, save: boolean) {
-    const response = await api.post('/login', { email, password });
-    await setUserAndToken(response.data.user, response.data.token, save);
+    try {
+      const response = await api.post('/login', { email, password }) as LoginResponse;
+
+      if(response.status === 200) {
+        await setUserAndToken(response.data.user, response.data.token, save);
+
+        toast.success('Login efetuado com sucesso',{
+          theme: "light",
+          closeButton: false,
+          progressStyle: {
+            background: '#8257E5'
+          },
+          autoClose: 2000
+        });
+      }
+
+      if(response.status === 500) {
+        toast.info('Eita, talvez a API esteja fora, aguarde um instante e tente novamente  :(' ,{
+          theme: "light",
+          closeButton: false,
+          progressStyle: {
+            background: '#8257E5'
+          },
+          autoClose: 2000
+        });
+      }
+    } catch (error) {
+        toast.error('Dados inválidos, tente novamente' ,{
+          theme: "light",
+          closeButton: false,
+          progressStyle: {
+            background: '#8257E5'
+          },
+          autoClose: 2000
+        });
+    }
   }
 
   async function signUp(
@@ -76,8 +112,6 @@ export const AuthProvider: React.FC = ({ children }) => {
       email,
       password,
     });
-
-    console.log(response.data);
 
     if (response.data.user[0].id) {
       signIn(email, password, true);

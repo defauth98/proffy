@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    '@typescript-eslint/no-use-before-define': 'off',
+    'no-use-before-define': 'off',
     'react/jsx-filename-extension': 'off',
     'import/prefer-default-export': 'off',
     'jsx-quotes': ['error', 'prefer-single'],
