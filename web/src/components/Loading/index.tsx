@@ -9,7 +9,8 @@ interface LoadingProps {
 }
 
 const Loading: React.FC<LoadingProps> = ({ type, color, height, width }) => (
-  <ReactLoading type={type} color={color} height={height} width={width} />
+  // <ReactLoading type={type} color={color} height={height} width={width} />
+  <p>Loading</p>
 );
 
 export default Loading;

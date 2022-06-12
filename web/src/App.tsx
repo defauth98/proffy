@@ -9,7 +9,7 @@ function App() {
   return (
     <AuthProvider>
       <Routes />
-      <ToastContainer/>
+      <ToastContainer />
     </AuthProvider>
   );
 }
