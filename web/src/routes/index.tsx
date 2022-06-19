@@ -5,10 +5,10 @@ import AppRoutes from './app.routes';
 
 import { useAuth } from '../contexts/auth';
 
-const Routes: React.FC = () => {
+function Routes() {
   const { user } = useAuth();
 
   return user?.email ? <AppRoutes /> : <AuthRoutes />;
-};
+}
 
 export default Routes;

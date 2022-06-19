@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Routes as RoutesElement, Route } from 'react-router-dom';
 
 import Landing from '../pages/AppPages/Landing/LandingPage';
 import TeacherForm from '../pages/AppPages/TeacherForm/TeacherForm';
@@ -10,11 +10,13 @@ import ListClasses from '../pages/AppPages/ListClasses/ListClasses';
 function Routes() {
   return (
     <BrowserRouter>
-      <Route path='/' exact component={Landing} />
-      <Route path='/perfil' exact component={UserPerfil} />
-      <Route path='/study' component={ListClasses} />
-      <Route path='/give-classes' component={TeacherForm} />
-      <Route path='/give-classes-success' component={TeacherFormSuccess} />
+      <RoutesElement>
+        <Route path='/' element={<Landing />} />
+        <Route path='/perfil' element={<UserPerfil />} />
+        <Route path='/study' element={<ListClasses />} />
+        <Route path='/give-classes' element={<TeacherForm />} />
+        <Route path='/give-classes-success' element={<TeacherFormSuccess />} />
+      </RoutesElement>
     </BrowserRouter>
   );
 }

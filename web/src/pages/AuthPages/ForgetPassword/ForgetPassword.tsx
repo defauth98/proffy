@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Aside from '../../../components/Aside';
 import FormInput from '../../../components/FormInput';
 
-import backIcon from '../../../assets/images/icons/back.svg';
-
-import './ForgetPassword.css'
 import api from '../../../services/api';
 
-const ForgetPassword: React.FC = () => {
+import './ForgetPassword.css';
+
+function ForgetPassword() {
   const [email, setEmail] = useState('');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleRecoveryPassword() {
     api.post('/forget_password', { email }).then(() => {
-      history.push('/recovery-success');
+      navigate('/recovery-success');
     });
   }
 
@@ -25,7 +24,7 @@ const ForgetPassword: React.FC = () => {
       <div className='forget-form'>
         <header className='header'>
           <Link to='/'>
-            <img src={backIcon} alt='Ícone para voltar' />
+            <img src='images/icons/back.png' alt='Ícone para voltar' />
           </Link>
         </header>
 
@@ -43,6 +42,7 @@ const ForgetPassword: React.FC = () => {
               setEmail(e.target.value);
             }}
             value={email}
+            isPassword={false}
           />
         </div>
 
@@ -58,10 +58,10 @@ const ForgetPassword: React.FC = () => {
         </div>
       </div>
       <div className='aside-wrapper'>
-      <Aside />
+        <Aside />
       </div>
     </div>
   );
-};
+}
 
 export default ForgetPassword;

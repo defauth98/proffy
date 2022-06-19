@@ -5,12 +5,11 @@ aside {
 
   align-items: center;
   justify-content: center;
-
   padding: 30px;
 }
 
 div.background-image {
-  background-image: url('../../assets/images/background.svg');
+  background-image: url('../../assets/images/background.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

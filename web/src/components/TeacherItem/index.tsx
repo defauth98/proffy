@@ -1,8 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 
-import whatsAppIcon from '../../assets/images/icons/whatsapp.svg';
-
 import './styles.css';
 import api from '../../services/api';
 import { Class } from '../../type/classes';
@@ -17,7 +15,7 @@ interface scheduleItem {
   week_day: Number;
 }
 
-const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+function TeacherItem({ teacher }: TeacherItemProps) {
   const [monday, setMonday] = useState<scheduleItem | null>(null);
   const [tuesday, setTuesday] = useState<scheduleItem | null>(null);
   const [wednesday, setWednesday] = useState<scheduleItem | null>(null);
@@ -94,9 +92,11 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
           <span>Segunda</span>
 
           <h3>Horário</h3>
-          <span>{`${monday?.from ? convertToHour(monday?.from) : ''} - ${
-            monday?.to ? convertToHour(monday?.to) : ''
-          }`}</span>
+          <span>
+            {`${monday?.from ? convertToHour(monday?.from) : ''} - ${
+              monday?.to ? convertToHour(monday?.to) : ''
+            }`}
+          </span>
         </div>
         <div
           className={`schedule-item ${
@@ -107,9 +107,11 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
           <span>Terça</span>
 
           <h3>Horário</h3>
-          <span>{`${tuesday?.from ? convertToHour(tuesday?.from) : ''} - ${
-            tuesday?.to ? convertToHour(tuesday?.to) : ''
-          }`}</span>
+          <span>
+            {`${tuesday?.from ? convertToHour(tuesday?.from) : ''} - ${
+              tuesday?.to ? convertToHour(tuesday?.to) : ''
+            }`}
+          </span>
         </div>
         <div
           className={`schedule-item ${
@@ -120,9 +122,11 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
           <span>Quarta</span>
 
           <h3>Horário</h3>
-          <span>{`${wednesday?.from ? convertToHour(wednesday?.from) : ''} - ${
-            wednesday?.to ? convertToHour(wednesday?.to) : ''
-          }`}</span>
+          <span>
+            {`${wednesday?.from ? convertToHour(wednesday?.from) : ''} - ${
+              wednesday?.to ? convertToHour(wednesday?.to) : ''
+            }`}
+          </span>
         </div>
         <div
           className={`schedule-item ${
@@ -133,9 +137,11 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
           <span>Quinta</span>
 
           <h3>Horário</h3>
-          <span>{`${thursday?.from ? convertToHour(thursday?.from) : ''} - ${
-            thursday?.to ? convertToHour(thursday?.to) : ''
-          }`}</span>
+          <span>
+            {`${thursday?.from ? convertToHour(thursday?.from) : ''} - ${
+              thursday?.to ? convertToHour(thursday?.to) : ''
+            }`}
+          </span>
         </div>
         <div
           className={`schedule-item ${friday?.from ? '' : 'schedule-item-off'}`}
@@ -144,16 +150,21 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
           <span>Sexta</span>
 
           <h3>Horário</h3>
-          <span>{`${friday?.from ? convertToHour(friday?.from) : ''} - ${
-            friday?.to ? convertToHour(friday?.to) : ''
-          }`}</span>
+          <span>
+            {`${friday?.from ? convertToHour(friday?.from) : ''} - ${
+              friday?.to ? convertToHour(friday?.to) : ''
+            }`}
+          </span>
         </div>
       </div>
 
       <footer>
         <p>
           Preço/hora
-          <strong>R$ {teacher.cost}</strong>
+          <strong>
+            R$
+            {teacher.cost}
+          </strong>
         </p>
 
         <a
@@ -162,12 +173,12 @@ const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
           rel='noopener noreferrer'
           onClick={createNewConnection}
         >
-          <img src={whatsAppIcon} alt='whatsapp' />
+          <img src='images/icons/whatsapp.png' alt='whatsapp' />
           Entrar em contato
         </a>
       </footer>
     </article>
   );
-};
+}
 
 export default TeacherItem;

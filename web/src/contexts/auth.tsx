@@ -1,4 +1,11 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+/* eslint-disable no-unused-vars */
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  ReactNode,
+} from 'react';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 import { LoginResponse } from '../types/LoginRequestType';
@@ -22,14 +29,18 @@ interface AuthContextData {
     email: string,
     password: string,
     name: string,
-    surname: string
+    surname: string,
   ): Promise<void>;
   signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export const AuthProvider: React.FC = ({ children }) => {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +50,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       const storagedToken = localStorage.getItem('@RNauth:token');
 
       if (storagedUser && storagedToken) {
-        api.defaults.headers['Authorization'] = `Bearer ${storagedToken}`;
+        api.defaults.headers.common.Authorization = `Bearer ${storagedToken}`;
         setUser(JSON.parse(storagedUser));
         setLoading(false);
       } else {
@@ -50,53 +61,63 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadSoragedData();
   }, []);
 
-  async function setUserAndToken(user: UserData, token: string, save: boolean) {
-    setUser(user);
+  async function setUserAndToken(
+    userData: UserData,
+    token: string,
+    save: boolean,
+  ) {
+    setUser(userData);
 
-    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
     if (save) {
-      localStorage.setItem('@RNauth:user', JSON.stringify(user));
+      localStorage.setItem('@RNauth:user', JSON.stringify(userData));
       localStorage.setItem('@RNauth:token', JSON.stringify(token));
     }
   }
 
   async function signIn(email: string, password: string, save: boolean) {
     try {
-      const response = await api.post('/login', { email, password }) as LoginResponse;
+      const response = (await api.post('/login', {
+        email,
+        password,
+      })) as LoginResponse;
 
-      if(response.status === 200) {
+      if (response.status === 200) {
         await setUserAndToken(response.data.user, response.data.token, save);
 
-        toast.success('Login efetuado com sucesso',{
-          theme: "light",
+        toast.success('Login efetuado com sucesso', {
+          theme: 'light',
           closeButton: false,
           progressStyle: {
-            background: '#8257E5'
+            background: '#8257E5',
           },
-          autoClose: 2000
+          autoClose: 2000,
         });
       }
 
-      if(response.status === 500) {
-        toast.info('Eita, talvez a API esteja fora, aguarde um instante e tente novamente  :(' ,{
-          theme: "light",
-          closeButton: false,
-          progressStyle: {
-            background: '#8257E5'
+      if (response.status === 500) {
+        toast.info(
+          'Eita, talvez a API esteja fora, aguarde um instante e tente novamente  :(',
+          {
+            theme: 'light',
+            closeButton: false,
+            progressStyle: {
+              background: '#8257E5',
+            },
+            autoClose: 2000,
           },
-          autoClose: 2000
-        });
+        );
       }
     } catch (error) {
-        toast.error('Dados inválidos, tente novamente' ,{
-          theme: "light",
-          closeButton: false,
-          progressStyle: {
-            background: '#8257E5'
-          },
-          autoClose: 2000
-        });
+      toast.error('Dados inválidos, tente novamente', {
+        theme: 'light',
+        closeButton: false,
+        progressStyle: {
+          background: '#8257E5',
+        },
+        autoClose: 2000,
+      });
     }
   }
 
@@ -104,7 +125,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     name: string,
     surname: string,
     email: string,
-    password: string
+    password: string,
   ) {
     const response = await api.post('/signup', {
       name,
@@ -115,8 +136,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     if (response.data.user[0].id) {
       signIn(email, password, true);
-    } else {
-      return;
     }
   }
 
@@ -128,12 +147,20 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, loading, signIn, signUp, signOut }}
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
+      value={{
+        signed: !!user,
+        user,
+        loading,
+        signIn,
+        signUp,
+        signOut,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export function useAuth() {
   const context = useContext(AuthContext);

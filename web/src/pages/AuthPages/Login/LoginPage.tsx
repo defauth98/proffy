@@ -1,31 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import Aside from '../../../components/Aside';
 import FormInput from '../../../components/FormInput';
-
-import purpleHeartIcon from '../../../assets/images/icons/purple-heart.svg';
 
 import './LoginPage.css';
 
 import { useAuth } from '../../../contexts/auth';
 import Loading from '../../../components/Loading';
 
-const Login: React.FC = () => {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
+
   const { signIn, signed, user } = useAuth();
 
   useEffect(() => {
     if (signed && user) {
-      history.push('/landing');
+      navigate('/landing');
     }
-  }, [signed, user, history]);
+  }, [signed, user]);
 
   function handleLogin() {
     setIsLoading(true);
@@ -38,31 +37,31 @@ const Login: React.FC = () => {
     }
 
     if (email.length < 6) {
-      toast.error('Informe um email válido',{
-        theme: "light",
+      toast.error('Informe um email válido', {
+        theme: 'light',
         closeButton: false,
         progressStyle: {
-          background: '#8257E5'
-        }
+          background: '#8257E5',
+        },
       });
 
       return;
     }
 
     if (password.length < 3) {
-      toast.error('Informe um password válido',{
-        theme: "light",
+      toast.error('Informe um password válido', {
+        theme: 'light',
         closeButton: false,
         progressStyle: {
-          background: '#8257E5'
-        }
+          background: '#8257E5',
+        },
       });
       return;
     }
 
     signIn(email, password, isRemember).then(() => {
       setIsLoading(false);
-    })
+    });
   }
 
   return (
@@ -81,6 +80,7 @@ const Login: React.FC = () => {
               setEmail(e.target.value);
             }}
             value={email}
+            isPassword={false}
           />
           <FormInput
             label='Senha'
@@ -99,10 +99,11 @@ const Login: React.FC = () => {
                 type='checkbox'
                 id='remenber'
                 value={remember}
-                onChange={(e) => {
+                onChange={() => {
                   setRemember('true');
                 }}
               />
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor='remenber'>Lembrar-me</label>
             </div>
             <div className='forget-container'>
@@ -134,12 +135,13 @@ const Login: React.FC = () => {
             </Link>
           </div>
           <span>
-            É de graça <img alt='Coração roxo' src={purpleHeartIcon} />
+            É de graça
+            <img alt='Coração roxo' src='images/icons/purple-heart.png' />
           </span>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Login;

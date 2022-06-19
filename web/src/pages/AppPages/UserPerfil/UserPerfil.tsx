@@ -1,9 +1,7 @@
 import React, { useState, FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useHistory } from 'react-router-dom';
-import warningIcon from '../../../assets/images/icons/warning.svg';
-
-import './userPerfil.css'
+import './userPerfil.css';
 
 import Input from '../../../components/Input';
 import Textarea from '../../../components/Textarea';
@@ -22,7 +20,7 @@ interface ScheduleItem {
 }
 
 function UserPerfil() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
@@ -32,7 +30,12 @@ function UserPerfil() {
   const [userSubject, setSubject] = useState('');
   const [cost, setCost] = useState('');
   const [scheduleItems, setScheduleItems] = useState([
-    { week_day: 0, from: '', to: '', id: '' },
+    {
+      week_day: 0,
+      from: '',
+      to: '',
+      id: '',
+    },
   ]);
 
   const { user } = useAuth();
@@ -44,9 +47,9 @@ function UserPerfil() {
     let hourString = hour.toString();
     let minutesString = minutes.toString();
 
-    if (hour / 10 < 1) hourString = `0${  hourString}`;
+    if (hour / 10 < 1) hourString = `0${hourString}`;
 
-    if (minutes / 10 < 1) minutesString = `0${  minutesString}`;
+    if (minutes / 10 < 1) minutesString = `0${minutesString}`;
 
     return `${hourString}:${minutesString}`;
   }
@@ -69,11 +72,11 @@ function UserPerfil() {
 
         const convertedScheduleItems = scheduleItemsData.map(
           (item: ScheduleItem) => ({
-              week_day: item.week_day,
-              from: ConvertToDate(item.from),
-              to: ConvertToDate(item.to),
-              id: item.id,
-            })
+            week_day: item.week_day,
+            from: ConvertToDate(item.from),
+            to: ConvertToDate(item.to),
+            id: item.id,
+          }),
         );
 
         setScheduleItems(convertedScheduleItems);
@@ -90,14 +93,19 @@ function UserPerfil() {
     await api.post(`/schedule/${user?.id}`);
     setScheduleItems([
       ...scheduleItems,
-      { week_day: 0, from: '', to: '', id: '' },
+      {
+        week_day: 0,
+        from: '',
+        to: '',
+        id: '',
+      },
     ]);
   }
 
   function setScheduleItemValue(
     position: number,
     field: string,
-    value: string
+    value: string,
   ) {
     const updatedScheduleItem = scheduleItems.map((scheduleItem, index) => {
       if (index === position) {
@@ -155,9 +163,9 @@ function UserPerfil() {
 
             .then(() => {
               alert('Update realizado com sucesso');
-              history.push('/');
+              navigate('/');
             })
-            .catch((error) => {
+            .catch(() => {
               alert('Erro ao tentar submeter o formulário');
             });
         } else {
@@ -180,11 +188,11 @@ function UserPerfil() {
 
       const convertedScheduleItems = scheduleItemsData.map(
         (item: ScheduleItem) => ({
-            week_day: item.week_day,
-            from: ConvertToDate(item.from),
-            to: ConvertToDate(item.to),
-            id: item.id,
-          })
+          week_day: item.week_day,
+          from: ConvertToDate(item.from),
+          to: ConvertToDate(item.to),
+          id: item.id,
+        }),
       );
 
       setScheduleItems(convertedScheduleItems);
@@ -195,6 +203,7 @@ function UserPerfil() {
     }
   }
 
+  // eslint-disable-next-line consistent-return
   function renderClassFields() {
     if (userSubject.length > 3) {
       return (
@@ -243,52 +252,47 @@ function UserPerfil() {
               </button>
             </legend>
             {scheduleItems.map((scheduleItem, index) => (
-                <div key={index} className='schedule-container-perfil'>
-                  <div className='schedule-item-perfil'>
-                    <Select
-                      name='week_day'
-                      label='Dia da semana'
-                      onChange={(e) =>
-                        setScheduleItemValue(index, 'week_day', e.target.value)
-                      }
-                      value={scheduleItem.week_day}
-                      options={[
-                        { value: '0', label: 'Domingo' },
-                        { value: '1', label: 'Segunda-Feira' },
-                        { value: '2', label: 'Terça-Feira' },
-                        { value: '3', label: 'Quarta-Feira' },
-                        { value: '4', label: 'Quinta-Feira' },
-                        { value: '5', label: 'Sexta-Feira' },
-                        { value: '6', label: 'Sábado' },
-                      ]}
-                    />
-                    <Input
-                      onChange={(e) =>
-                        setScheduleItemValue(index, 'from', e.target.value)
-                      }
-                      value={scheduleItem.from}
-                      name='from'
-                      label='Das'
-                      type='time'
-                    />
-                    <Input
-                      onChange={(e) =>
-                        setScheduleItemValue(index, 'to', e.target.value)
-                      }
-                      value={scheduleItem.to}
-                      name='to'
-                      label='Até'
-                      type='time'
-                    />
-                  </div>
-                  <button
-                    id='delete-button'
-                    onClick={(event) => handleDeleteScheduleItem(event, index)}
-                  >
-                    Excluir horário
-                  </button>
+              <div key={scheduleItem.id} className='schedule-container-perfil'>
+                <div className='schedule-item-perfil'>
+                  <Select
+                    name='week_day'
+                    label='Dia da semana'
+                    onChange={(e) => setScheduleItemValue(index, 'week_day', e.target.value)}
+                    value={scheduleItem.week_day}
+                    options={[
+                      { value: '0', label: 'Domingo' },
+                      { value: '1', label: 'Segunda-Feira' },
+                      { value: '2', label: 'Terça-Feira' },
+                      { value: '3', label: 'Quarta-Feira' },
+                      { value: '4', label: 'Quinta-Feira' },
+                      { value: '5', label: 'Sexta-Feira' },
+                      { value: '6', label: 'Sábado' },
+                    ]}
+                  />
+                  <Input
+                    onChange={(e) => setScheduleItemValue(index, 'from', e.target.value)}
+                    value={scheduleItem.from}
+                    name='from'
+                    label='Das'
+                    type='time'
+                  />
+                  <Input
+                    onChange={(e) => setScheduleItemValue(index, 'to', e.target.value)}
+                    value={scheduleItem.to}
+                    name='to'
+                    label='Até'
+                    type='time'
+                  />
                 </div>
-              ))}
+                <button
+                  id='delete-button'
+                  onClick={(event) => handleDeleteScheduleItem(event, index)}
+                  type='button'
+                >
+                  Excluir horário
+                </button>
+              </div>
+            ))}
           </fieldset>
         </>
       );
@@ -341,8 +345,9 @@ function UserPerfil() {
 
           <footer>
             <p>
-              <img src={warningIcon} alt='Aviso importante' />
-              Importante! <br />
+              <img src='images/icons/warning.png' alt='Aviso importante' />
+              Importante!
+              <br />
               Preencha todos os dados
             </p>
             <button type='submit'>

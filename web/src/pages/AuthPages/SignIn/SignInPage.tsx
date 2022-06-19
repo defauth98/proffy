@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 import Aside from '../../../components/Aside';
 import FormInput from '../../../components/FormInput';
 
 import { useAuth } from '../../../contexts/auth';
 
-import './SignInPage.css'
-import backIcon from '../../../assets/images/icons/back.svg';
+import './SignInPage.css';
 
-const SignIn: React.FC = () => {
+function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -18,19 +16,19 @@ const SignIn: React.FC = () => {
 
   const { signUp } = useAuth();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleSign() {
     signUp(name, surname, email, password);
 
-    history.push('/');
+    navigate('/');
   }
 
   return (
     <div className='sign-page'>
       <div className='sign-form'>
         <Link to='/'>
-          <img src={backIcon} alt='Ícone para voltar' />
+          <img src='images/icons/back.png' alt='Ícone para voltar' />
         </Link>
 
         <div className='title-container'>
@@ -45,6 +43,7 @@ const SignIn: React.FC = () => {
               setName(e.target.value);
             }}
             value={name}
+            isPassword={false}
           />
           <FormInput
             label='Sobrenome'
@@ -52,6 +51,7 @@ const SignIn: React.FC = () => {
               setSurname(e.target.value);
             }}
             value={surname}
+            isPassword={false}
           />
           <FormInput
             label='E-mail'
@@ -59,6 +59,7 @@ const SignIn: React.FC = () => {
               setEmail(e.target.value);
             }}
             value={email}
+            isPassword={false}
           />
           <FormInput
             label='Senha'
@@ -83,11 +84,10 @@ const SignIn: React.FC = () => {
         </div>
       </div>
       <div className='aside-wrapper'>
-
-      <Aside />
+        <Aside />
       </div>
     </div>
   );
-};
+}
 
 export default SignIn;

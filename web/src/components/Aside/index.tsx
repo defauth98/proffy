@@ -2,18 +2,16 @@ import React from 'react';
 
 import './styles.css';
 
-import logo from '../../assets/images/asideLogo.svg';
+import AsideLogo from '../../assets/images/asideLogo.png';
 
-// fazer o componente ficar responsive
-
-const Aside: React.FC = () => {
+function Aside() {
   return (
     <aside>
       <div className='background-image'>
-        <img src={logo} alt='proffy-logo' />
+        <img src={AsideLogo} alt='proffy-logo' />
       </div>
     </aside>
   );
-};
+}
 
 export default Aside;

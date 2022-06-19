@@ -1,19 +1,14 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
-import warningIcon from '../../../assets/images/icons/warning.svg';
-
-import './teacherForm.css'
+import { Link, useNavigate } from 'react-router-dom';
+import './teacherForm.css';
 
 import Input from '../../../components/Input';
 import Textarea from '../../../components/Textarea';
 import Select from '../../../components/Select';
-
 import PageHeader from '../../../components/PageHeader';
 import api from '../../../services/api';
 import { useAuth } from '../../../contexts/auth';
-
-import defaultAvatar from '../../../assets/images/default-avatar.png';
 
 interface ScheduleItem {
   week_day: string;
@@ -23,7 +18,7 @@ interface ScheduleItem {
 }
 
 function TeacherForm() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [avatar, setAvatar] = useState('');
   const [bio, setBio] = useState('');
@@ -54,11 +49,11 @@ function TeacherForm() {
 
         const convertedScheduleItems = scheduleItemsData.map(
           (item: ScheduleItem) => ({
-              week_day: item.week_day,
-              from: ConvertToDate(item.from),
-              to: ConvertToDate(item.to),
-              id: item.id,
-            })
+            week_day: item.week_day,
+            from: ConvertToDate(item.from),
+            to: ConvertToDate(item.to),
+            id: item.id,
+          }),
         );
         setIsNewClass(false);
         setScheduleItems(convertedScheduleItems);
@@ -77,9 +72,9 @@ function TeacherForm() {
     let hourString = hour.toString();
     let minutesString = minutes.toString();
 
-    if (hour / 10 < 1) hourString = `0${  hourString}`;
+    if (hour / 10 < 1) hourString = `0${hourString}`;
 
-    if (minutes / 10 < 1) minutesString = `0${  minutesString}`;
+    if (minutes / 10 < 1) minutesString = `0${minutesString}`;
 
     return `${hourString}:${minutesString}`;
   }
@@ -91,7 +86,7 @@ function TeacherForm() {
   function setScheduleItemValue(
     position: number,
     field: string,
-    value: string
+    value: string,
   ) {
     const updatedScheduleItem = scheduleItems.map((scheduleItem, index) => {
       if (index === position) {
@@ -118,14 +113,14 @@ function TeacherForm() {
           schedule: scheduleItems,
         })
         .then(() => {
-          history.push('/give-classes-success');
+          navigate('/give-classes-success');
         })
         .catch((error) => {
           alert(error);
         });
     } else {
       alert(
-        'Já foi realizado o cadastro, vá para a página de perfil para editar'
+        'Já foi realizado o cadastro, vá para a página de perfil para editar',
       );
     }
   }
@@ -146,9 +141,13 @@ function TeacherForm() {
 
             <div id='userbutton-container'>
               <Link to='/' id='perfil-button'>
-                <img src={avatar || defaultAvatar} alt='Avatar do proffy' />
+                <img
+                  src={avatar || 'images/default-avatar.png'}
+                  alt='Avatar do proffy'
+                />
                 <span>
-                  {user?.name} {user?.surname}
+                  {user?.name}
+                  {user?.surname}
                 </span>
               </Link>
               <Input
@@ -158,7 +157,10 @@ function TeacherForm() {
                 placeholder='( ) ____ ____'
                 onChange={(e) => {
                   setWhatsapp(
-                    e.target.value.replace(/^(\d{2})(\d{4})(\d+)$/, '($1)$2-$3')
+                    e.target.value.replace(
+                      /^(\d{2})(\d{4})(\d+)$/,
+                      '($1)$2-$3',
+                    ),
                   );
                 }}
               />
@@ -214,49 +216,45 @@ function TeacherForm() {
               </button>
             </legend>
             {scheduleItems.map((scheduleItem, index) => (
-                <div key={scheduleItem.week_day} className='schedule-item'>
-                  <Select
-                    name='week_day'
-                    label='Dia da semana'
-                    onChange={(e) =>
-                      setScheduleItemValue(index, 'week_day', e.target.value)
-                    }
-                    value={scheduleItem.week_day}
-                    options={[
-                      { value: '0', label: 'Domingo' },
-                      { value: '1', label: 'Segunda-Feira' },
-                      { value: '2', label: 'Terça-Feira' },
-                      { value: '3', label: 'Quarta-Feira' },
-                      { value: '4', label: 'Quinta-Feira' },
-                      { value: '5', label: 'Sexta-Feira' },
-                      { value: '6', label: 'Sábado' },
-                    ]}
-                  />
-                  <Input
-                    onChange={(e) =>
-                      setScheduleItemValue(index, 'from', e.target.value)
-                    }
-                    value={scheduleItem.from}
-                    name='from'
-                    label='Das'
-                    type='time'
-                  />
-                  <Input
-                    onChange={(e) =>
-                      setScheduleItemValue(index, 'to', e.target.value)
-                    }
-                    value={scheduleItem.to}
-                    name='to'
-                    label='Até'
-                    type='time'
-                  />
-                </div>
-              ))}
+              <div key={scheduleItem.week_day} className='schedule-item'>
+                <Select
+                  name='week_day'
+                  label='Dia da semana'
+                  onChange={(e) => setScheduleItemValue(index, 'week_day', e.target.value)}
+                  value={scheduleItem.week_day}
+                  options={[
+                    { value: '0', label: 'Domingo' },
+                    { value: '1', label: 'Segunda-Feira' },
+                    { value: '2', label: 'Terça-Feira' },
+                    { value: '3', label: 'Quarta-Feira' },
+                    { value: '4', label: 'Quinta-Feira' },
+                    { value: '5', label: 'Sexta-Feira' },
+                    { value: '6', label: 'Sábado' },
+                  ]}
+                />
+                <Input
+                  onChange={(e) => setScheduleItemValue(index, 'from', e.target.value)}
+                  value={scheduleItem.from}
+                  name='from'
+                  label='Das'
+                  type='time'
+                />
+                <Input
+                  onChange={(e) => setScheduleItemValue(index, 'to', e.target.value)}
+                  value={scheduleItem.to}
+                  name='to'
+                  label='Até'
+                  type='time'
+                />
+              </div>
+            ))}
           </fieldset>
           <footer>
             <p>
-              <img src={warningIcon} alt='Aviso importante' />
-              Importante! <br />
+              <img src='images/icons/warning.png' alt='Aviso importante' />
+              Importante!
+              {' '}
+              <br />
               Preencha todos os dados
             </p>
             <button type='submit'>Salvar cadastro</button>

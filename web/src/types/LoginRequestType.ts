@@ -8,7 +8,7 @@ export interface LoginResponse {
       id: string;
       name: string;
       surname: string;
-      whatsapp: string; 
+      whatsapp: string;
     }
   },
   status: number;
