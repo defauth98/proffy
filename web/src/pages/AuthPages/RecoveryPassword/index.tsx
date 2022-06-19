@@ -7,6 +7,8 @@ import FormInput from '../../../components/FormInput';
 import './styles.css';
 import api from '../../../services/api';
 
+import backIcon from '../../../assets/images/icons/back.png';
+
 function RecoveryPassword() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -41,7 +43,7 @@ function RecoveryPassword() {
       <div className='recovery-form'>
         <header className='header'>
           <Link to='/'>
-            <img src='images/icons/back.png' alt='Ícone para voltar' />
+            <img src={backIcon} alt='Ícone para voltar' />
           </Link>
         </header>
 

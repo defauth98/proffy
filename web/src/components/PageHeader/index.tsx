@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 import { useAuth } from '../../contexts/auth';
 
+import avatarImage from '../../assets/images/default-avatar.png';
+import backIcon from '../../assets/images/icons/back.png';
+import logoIcon from '../../assets/images/logo.png';
+
 interface PageHeaderProps {
   title?: string;
   subject?: string;
@@ -38,7 +42,7 @@ function PageHeader({
     return (
       <div className='header-content header-image'>
         <img
-          src={user?.avatar || 'images/default-avatar.png'}
+          src={user?.avatar || avatarImage}
           alt='Imagem de perfil'
           className='perfil-image'
         />
@@ -55,10 +59,10 @@ function PageHeader({
     <header className='page-header'>
       <div className='top-bar-container'>
         <Link to='/'>
-          <img src='images/icons/back.png' alt='Voltar' />
+          <img src={backIcon} alt='Voltar' />
         </Link>
         <span>{pageTitle}</span>
-        <img src='images/logo.png' alt='Proffy' />
+        <img src={logoIcon} alt='Proffy' />
       </div>
 
       {renderTitleOrPerfil()}

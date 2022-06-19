@@ -10,6 +10,8 @@ import './LoginPage.css';
 import { useAuth } from '../../../contexts/auth';
 import Loading from '../../../components/Loading';
 
+import purpleHeartIcon from '../../../assets/images/icons/purple-heart.png';
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -136,7 +138,8 @@ function Login() {
           </div>
           <span>
             É de graça
-            <img alt='Coração roxo' src='images/icons/purple-heart.png' />
+            {' '}
+            <img alt='Coração roxo' src={purpleHeartIcon} />
           </span>
         </div>
       </div>

@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 
 import './styles.css';
 
+import sucessIcon from '../../../assets/images/icons/success-check-icon.png';
+
 function RecoverySuccess() {
   return (
     <div className='recovery-success'>
       <div className='recovery-background'>
-        <img src='images/icons/success-check-icon.png' alt='Ícone de check' />
+        <img src={sucessIcon} alt='Ícone de check' />
         <h2>Redefinição enviada!</h2>
         <p>
           Boa, agora é só checar o e-mail que foi enviado para você redefinir

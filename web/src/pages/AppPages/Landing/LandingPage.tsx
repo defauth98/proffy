@@ -6,6 +6,13 @@ import api from '../../../services/api';
 import './lading-page.css';
 import { useAuth } from '../../../contexts/auth';
 
+import signOutIcon from '../../../assets/images/icons/sign-out.png';
+import purpleHeartIcon from '../../../assets/images/icons/purple-heart.png';
+import studyIcon from '../../../assets/images/icons/study.png';
+import giveClassesIcon from '../../../assets/images/icons/give-classes.png';
+import logoIcon from '../../../assets/images/logo.png';
+import landingIcon from '../../../assets/images/landing.png';
+
 function Landing() {
   const [totalConnections, setTotalConnections] = useState(0);
 
@@ -29,19 +36,19 @@ function Landing() {
         <div className='logout-container'>
           <button type='button' className='logout-button' onClick={signOut}>
             <div className='logout'>
-              <img src='images/icons/sign-out.png' alt='Icone para voltar' />
+              <img src={signOutIcon} alt='Icone para voltar' />
             </div>
           </button>
         </div>
       </header>
       <main id='page-landing-content' className='content-container'>
         <div className='logo-container'>
-          <img src='images/logo.png' alt='Proffy' />
+          <img src={logoIcon} alt='Proffy' />
           <h2>Sua plataforma de estudos online.</h2>
         </div>
 
         <img
-          src='images/landing.png'
+          src={landingIcon}
           alt='Plataforma de estudos'
           className='hero-image'
         />
@@ -58,18 +65,18 @@ function Landing() {
               Total de
               {totalConnections}
               conexões já realizadas
-              <img src='images/icons/purple-heart.png' alt='Coração roxo' />
+              <img src={purpleHeartIcon} alt='Coração roxo' />
             </span>
           </div>
 
           <div className='buttons-container'>
             <Link to='/study' className='study'>
-              <img src='images/icons/study.png' alt='Estudar' />
+              <img src={studyIcon} alt='Estudar' />
               Estudar
             </Link>
 
             <Link to='/give-classes' className='give-classes'>
-              <img src='images/icons/give-classes.png' alt='Dar aulas' />
+              <img src={giveClassesIcon} alt='Dar aulas' />
               Dar aulas
             </Link>
           </div>

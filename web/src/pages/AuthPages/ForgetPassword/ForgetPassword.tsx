@@ -8,6 +8,8 @@ import api from '../../../services/api';
 
 import './ForgetPassword.css';
 
+import backIcon from '../../../assets/images/icons/back.png';
+
 function ForgetPassword() {
   const [email, setEmail] = useState('');
 
@@ -24,7 +26,7 @@ function ForgetPassword() {
       <div className='forget-form'>
         <header className='header'>
           <Link to='/'>
-            <img src='images/icons/back.png' alt='Ícone para voltar' />
+            <img src={backIcon} alt='Ícone para voltar' />
           </Link>
         </header>
 

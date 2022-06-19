@@ -4,6 +4,9 @@ import React, { InputHTMLAttributes, useState } from 'react';
 
 import './styles.css';
 
+import ClosedEyeIcon from '../../assets/images/icons/closedEye.png';
+import EyeIcon from '../../assets/images/icons/eye.png';
+
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   isPassword: boolean;
@@ -38,13 +41,13 @@ function FormInput({ label, isPassword, ...rest }: FormInputProps) {
         >
           {passwordShow ? (
             <img
-              src='images/icons/closedEye.png'
+              src={ClosedEyeIcon}
               alt='Ocultar senha'
               className='inputIcon'
             />
           ) : (
             <img
-              src='images/icons/eye.png'
+              src={EyeIcon}
               alt='Ocultar senha'
               className='inputIcon'
             />

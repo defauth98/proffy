@@ -12,6 +12,8 @@ import api from '../../../services/api';
 import { useAuth } from '../../../contexts/auth';
 import Loading from '../../../components/Loading';
 
+import warningIcon from '../../../assets/images/icons/warning.png';
+
 interface ScheduleItem {
   week_day: string;
   from: Number;
@@ -345,7 +347,7 @@ function UserPerfil() {
 
           <footer>
             <p>
-              <img src='images/icons/warning.png' alt='Aviso importante' />
+              <img src={warningIcon} alt='Aviso importante' />
               Importante!
               <br />
               Preencha todos os dados

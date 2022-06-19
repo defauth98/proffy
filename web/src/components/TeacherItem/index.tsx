@@ -5,6 +5,8 @@ import './styles.css';
 import api from '../../services/api';
 import { Class } from '../../type/classes';
 
+import whatsAppIcon from '../../assets/images/icons/whatsapp.png';
+
 export interface TeacherItemProps {
   teacher: Class;
 }
@@ -173,7 +175,7 @@ function TeacherItem({ teacher }: TeacherItemProps) {
           rel='noopener noreferrer'
           onClick={createNewConnection}
         >
-          <img src='images/icons/whatsapp.png' alt='whatsapp' />
+          <img src={whatsAppIcon} alt='whatsapp' />
           Entrar em contato
         </a>
       </footer>

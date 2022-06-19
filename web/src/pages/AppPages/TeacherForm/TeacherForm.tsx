@@ -10,6 +10,9 @@ import PageHeader from '../../../components/PageHeader';
 import api from '../../../services/api';
 import { useAuth } from '../../../contexts/auth';
 
+import defaultAvatar from '../../../assets/images/default-avatar.png';
+import warningIcon from '../../../assets/images/icons/warning.png';
+
 interface ScheduleItem {
   week_day: string;
   from: Number;
@@ -142,7 +145,7 @@ function TeacherForm() {
             <div id='userbutton-container'>
               <Link to='/' id='perfil-button'>
                 <img
-                  src={avatar || 'images/default-avatar.png'}
+                  src={avatar || defaultAvatar}
                   alt='Avatar do proffy'
                 />
                 <span>
@@ -251,7 +254,7 @@ function TeacherForm() {
           </fieldset>
           <footer>
             <p>
-              <img src='images/icons/warning.png' alt='Aviso importante' />
+              <img src={warningIcon} alt='Aviso importante' />
               Importante!
               {' '}
               <br />

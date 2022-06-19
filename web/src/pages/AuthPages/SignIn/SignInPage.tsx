@@ -8,6 +8,8 @@ import { useAuth } from '../../../contexts/auth';
 
 import './SignInPage.css';
 
+import backIcon from '../../../assets/images/icons/back.png';
+
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +30,7 @@ function SignIn() {
     <div className='sign-page'>
       <div className='sign-form'>
         <Link to='/'>
-          <img src='images/icons/back.png' alt='Ícone para voltar' />
+          <img src={backIcon} alt='Ícone para voltar' />
         </Link>
 
         <div className='title-container'>
