@@ -11,7 +11,8 @@
     "migrate": "pnpm exec knex migrate:latest",
     "seed": "pnpm exec knex migrate:rollback && pnpm exec knex migrate:latest && pnpm exec knex seed:run",
     "rollback": "pnpm exec knex migrate:rollback",
-    "migrate:prod": "pnpm exec knex --knexfile ./dist/knexfile.js migrate:latest"
+    "migrate:prod": "pnpm exec knex --knexfile ./dist/knexfile.js migrate:latest",
+    "create:test-user": "node scripts/create-test-user.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
