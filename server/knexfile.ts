@@ -1,14 +1,25 @@
 import path from 'path';
 import 'dotenv/config';
 
+const connection = process.env.DATABASE_URL
+  ? {
+      connectionString: process.env.DATABASE_URL,
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : undefined,
+    }
+  : {
+      host: process.env.PGHOST,
+      user: process.env.PGUSER,
+      password: process.env.PGPASSWORD,
+      database: process.env.PGDATABASE,
+      port: Number(process.env.PGPORT),
+    };
+
 module.exports = {
   client: 'pg',
-  connection: {
-    host: process.env.PG_HOST,
-    user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD,
-    database: process.env.PG_DATABASE,
-  },
+  connection,
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
   },

@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { saltRounds } from '../../controllers/AuthController';
 
 export async function seed(knex: Knex): Promise<void> {

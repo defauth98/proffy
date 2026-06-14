@@ -1,19 +1,20 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "packageManager": "pnpm@10.30.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "node dist/src/server.js",
-    "dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "build": "npx tsc",
-    "migrate": "npx knex migrate:latest",
-    "seed": "npx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run",
-    "rollback": "npx knex migrate:rollback",
-    "migrate:prod": "npx knex --knexfile ./dist/knexfile.js migrate:latest"
+    "dev": "tsx watch src/server.ts",
+    "build": "pnpm exec tsc",
+    "migrate": "pnpm exec knex migrate:latest",
+    "seed": "pnpm exec knex migrate:rollback && pnpm exec knex migrate:latest && pnpm exec knex seed:run",
+    "rollback": "pnpm exec knex migrate:rollback",
+    "migrate:prod": "pnpm exec knex --knexfile ./dist/knexfile.js migrate:latest"
   },
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.17.1",
@@ -24,7 +25,6 @@
     "pg": "^8.4.1"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.7",
     "@types/express": "^4.17.7",
     "@types/express-handlebars": "^6.0.0",
@@ -32,7 +32,7 @@
     "@types/node": "^17.0.42",
     "@types/nodemailer": "^6.4.0",
     "ts-node": "^10.8.1",
-    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.22.4",
     "typescript": "^4.7.3"
   }
 }

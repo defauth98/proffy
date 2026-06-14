@@ -1,27 +1,21 @@
-version: '3'
-
 services:
-  api:
-    image: node:fermium-alpine
-    depends_on:
-      - postgres
-    ports:
-      - 3333:3333
-    volumes:
-      - ./:/server
-    working_dir: /server
-    networks:
-      - proffy
-    command: "npm run dev"
-
   postgres:
-    image: postgres
+    image: postgres:16-alpine
+    container_name: proffy-postgres
+    restart: unless-stopped
     environment:
+      POSTGRES_DB: proffy
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
     ports:
-      - 5432:5432
-    networks:
-      - proffy
+      - '5432:5432'
+    volumes:
+      - proffy-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d proffy']
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
-networks:
-  proffy: null
+volumes:
+  proffy-postgres-data:

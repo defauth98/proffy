@@ -1,4 +1,5 @@
 {
+  "packageManager": "pnpm@10.30.3",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

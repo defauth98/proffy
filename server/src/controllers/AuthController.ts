@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../database/connection';
 import crypto from 'crypto';
@@ -32,7 +32,7 @@ export default class AuthController {
       }
 
       await bcrypt.genSalt(saltRounds, function (err, salt) {
-        bcrypt.hash(password, salt, async function (err, hash) {
+        bcrypt.hash(password, salt as string, async function (err, hash) {
           await db('users').insert({
             name,
             surname,
@@ -154,7 +154,7 @@ export default class AuthController {
       if (now <= user.passwordResetExpires) {
         if (user) {
           await bcrypt.genSalt(saltRounds, function (err, salt) {
-            bcrypt.hash(password, salt, async function (err, hash) {
+            bcrypt.hash(password, salt as string, async function (err, hash) {
               const updatedUserID = await db('users')
                 .update({
                   password: hash,
