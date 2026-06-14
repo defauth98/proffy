@@ -47,91 +47,149 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [React][reactjs]
 - [React Native][rn]
 - [Expo][expo]
+- [Vite][vite]
+- [PostgreSQL][postgresql]
+- [Docker][docker]
+- [pnpm][pnpm]
 
 [nodejs]: https://nodejs.org/
 [typescript]: https://www.typescriptlang.org/
 [expo]: https://expo.io/
 [reactjs]: https://reactjs.org
 [rn]: https://facebook.github.io/react-native/
-[yarn]: https://yarnpkg.com/
+[vite]: https://vitejs.dev/
+[postgresql]: https://www.postgresql.org/
+[docker]: https://www.docker.com/
+[pnpm]: https://pnpm.io/
 
 ### :rocket: Como rodar o projeto?
 
-Você vai precisar ter docker instalado na sua máquina para rodar o banco de dados PostgreSQL ou instalar diretamente na sua máquina.
+O projeto usa **pnpm**, **Vite** no frontend web e **PostgreSQL via Docker** para o banco local.
 
-#### Backend
+#### Pré-requisitos
+
+- Node.js
+- pnpm
+- Docker e Docker Compose
+
+#### Instalação
 
 ```bash
 # Clone a aplicação
 git clone https://github.com/defauth98/proffy.git
+cd proffy
 
-# Entre no diretório do backend
-cd proffy/server
-
-# Instale as dependencias
-npm i
-
-# Rode o banco de dados usando o docker
-docker run --name nlw -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+# Instale as dependências de web, server e mobile
+make install
 ```
 
-Crie um arquivo .env e configure as variaveis de ambiente
+Também é possível instalar por projeto:
 
-```js
-SECRET='proffy'
-PG_HOST='localhost'
-PG_USER='postgres'
-PG_PASSWORD='docker'
-PG_DATABASE='proffy'
+```bash
+pnpm --dir web install
+pnpm --dir server install
+pnpm --dir mobile install
+```
+
+#### Setup do banco de dados
+
+O banco local é iniciado via Docker usando `server/docker-compose.yml`.
+
+```bash
+# Inicia o PostgreSQL local
+make db-up
+
+# Executa as migrations
+make migrate
+```
+
+Para recriar o banco e rodar os seeds:
+
+```bash
+make seed
+# ou
+make db-reset
+```
+
+Para parar o banco:
+
+```bash
+make db-down
+```
+
+Para acompanhar os logs do banco:
+
+```bash
+make db-logs
+```
+
+#### Variáveis de ambiente do backend
+
+O backend usa o arquivo `server/.env`. Existe um exemplo em `server/.env-example`.
+
+Configuração local padrão:
+
+```env
+SECRET=proffy-local-secret
 PORT=3333
+
+PGHOST=localhost
+PGUSER=postgres
+PGPASSWORD=docker
+PGDATABASE=proffy
+PGPORT=5432
+
 SMTP_HOST=
 SMTP_PORT=
 SMTP_USER=
 SMTP_PASSWORD=
 ```
 
-Rode as migrations e inicie o projeto, para isso é necessário criar um banco de dados com o nome igual ao que está no arquivo .env
+#### Variáveis de ambiente do frontend web
 
-```sql
-create database proffy;
+Em desenvolvimento, o frontend está configurado para usar a API local:
+
+```env
+VITE_API_URL=http://localhost:3333
 ```
 
+Esse valor fica em `web/.env.development`.
+
+#### Rodando em desenvolvimento
+
+Para subir banco, backend e frontend web juntos:
 
 ```bash
-# Rodar a migrations
-npm run migrate
-
-# Rodar o projeto
-npm run dev
+make dev
 ```
 
-#### Frontend
-
-O projeto está configurado para rodar usando a api que está no heroku, para usar a api em localhost é necessário mudar no arquivo `src/services/api.ts`
+Para rodar individualmente:
 
 ```bash
-# Entre no diretório do backend
-cd proffy/web
+# Apenas frontend web
+make dev-web
 
-# Instale as dependencias
-npm i
+# Apenas backend, iniciando o banco antes
+make dev-server
 
-# Rode o projeto
-npm start
+# Apenas mobile
+make dev-mobile
 ```
 
-#### Mobile
+#### Build do frontend web
 
 ```bash
-# Entre no diretório do backend
-cd proffy/mobile
-
-# Instale as dependencias
-npm i
-
-# Rode o projeto
-npm start
+make build-web
 ```
+
+#### Portas configuradas
+
+| Serviço | Porta | URL |
+| --- | ---: | --- |
+| Frontend web Vite | 5173 | http://localhost:5173 |
+| Backend API | 3333 | http://localhost:3333 |
+| PostgreSQL | 5432 | localhost:5432 |
+| Expo mobile | 8081/19000+ | definido pelo Expo |
 
 ### Autor
 
