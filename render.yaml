@@ -11,8 +11,7 @@ services:
     plan: free
     rootDir: server
     buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
-    preDeployCommand: pnpm migrate
-    startCommand: pnpm start
+    startCommand: pnpm migrate && pnpm start
     envVars:
       - key: NODE_ENV
         value: production
