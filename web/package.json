@@ -19,9 +19,11 @@
     "svg-url-loader": "^7.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "serve": "serve build"
+    "start": "craco start",
+    "build": "craco build",
+    "serve": "serve build",
+    "test:e2e": "playwright test",
+    "coverage:report": "nyc report --reporter=html --reporter=lcov --reporter=json --reporter=text-summary"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +41,8 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@playwright/test": "^1.60.0",
     "@types/jest": "^28.1.1",
     "@types/node": "^17.0.42",
     "@types/react": "^18.0.12",
@@ -46,6 +50,8 @@
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
+    "babel-plugin-istanbul": "^8.0.0",
+    "cross-env": "^10.1.0",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-standard": "^17.0.0",
@@ -55,6 +61,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "nyc": "^18.0.0",
     "prettier": "^2.4.1",
     "typescript": "^4.7.3"
   }

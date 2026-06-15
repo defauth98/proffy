@@ -22,3 +22,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Playwright
+playwright-report/
+test-results/
+.nyc_output/
+coverage/

@@ -1,0 +1,20 @@
+{
+  "all": true,
+  "include": [
+    "src/**/*.{js,jsx,ts,tsx}"
+  ],
+  "exclude": [
+    "src/**/*.test.{js,jsx,ts,tsx}",
+    "src/**/*.spec.{js,jsx,ts,tsx}",
+    "src/serviceWorker.ts",
+    "src/setupTests.ts"
+  ],
+  "reporter": [
+    "html",
+    "lcov",
+    "json",
+    "text-summary"
+  ],
+  "temp-dir": ".nyc_output",
+  "report-dir": "coverage"
+}
