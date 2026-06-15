@@ -18,14 +18,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm start',
+    command: 'VITE_COVERAGE=true npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',
-    env: {
-      BROWSER: 'none',
-      NODE_ENV: 'test',
-    }
   },
 });

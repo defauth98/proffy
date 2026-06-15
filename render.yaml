@@ -1,0 +1,41 @@
+databases:
+  - name: proffy-db
+    databaseName: proffy
+    user: proffy
+    plan: free
+
+services:
+  - type: web
+    name: proffy-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm migrate && pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: proffy-db
+          property: connectionString
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+
+  - type: web
+    name: proffy-web
+    runtime: static
+    rootDir: web
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://proffy-api.onrender.com
