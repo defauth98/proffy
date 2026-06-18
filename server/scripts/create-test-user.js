@@ -1,28 +1,25 @@
 require('dotenv/config');
 
-const knex = require('knex');
+const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 
-const connection = process.env.DATABASE_URL
-  ? {
-      connectionString: process.env.DATABASE_URL,
-      ssl:
-        process.env.NODE_ENV === 'production'
-          ? { rejectUnauthorized: false }
-          : undefined,
-    }
-  : {
-      host: process.env.PGHOST,
-      user: process.env.PGUSER,
-      password: process.env.PGPASSWORD,
-      database: process.env.PGDATABASE,
-      port: Number(process.env.PGPORT),
-    };
-
-const db = knex({
-  client: 'pg',
-  connection,
-});
+const pool = new Pool(
+  process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl:
+          process.env.NODE_ENV === 'production'
+            ? { rejectUnauthorized: false }
+            : undefined,
+      }
+    : {
+        host: process.env.PGHOST,
+        user: process.env.PGUSER,
+        password: process.env.PGPASSWORD,
+        database: process.env.PGDATABASE,
+        port: Number(process.env.PGPORT),
+      }
+);
 
 const user = {
   name: process.env.TEST_USER_NAME || 'Usuário',
@@ -38,23 +35,35 @@ const user = {
 
 async function main() {
   const passwordHash = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10));
-  const existingUser = await db('users').where({ email: user.email }).first();
 
-  const payload = {
-    name: user.name,
-    surname: user.surname,
-    email: user.email,
-    password: passwordHash,
-    avatar: user.avatar,
-    whatsapp: user.whatsapp,
-    bio: user.bio,
-  };
+  const payload = [
+    user.name,
+    user.surname,
+    user.email,
+    passwordHash,
+    user.avatar,
+    user.whatsapp,
+    user.bio,
+  ];
 
-  if (existingUser) {
-    await db('users').where({ email: user.email }).update(payload);
+  const existingUser = await pool.query('SELECT id FROM users WHERE email = $1 LIMIT 1', [
+    user.email,
+  ]);
+
+  if (existingUser.rows[0]) {
+    await pool.query(
+      `UPDATE users
+       SET name = $1, surname = $2, email = $3, password = $4, avatar = $5, whatsapp = $6, bio = $7
+       WHERE email = $3`,
+      payload
+    );
     console.log('Usuário de teste atualizado.');
   } else {
-    await db('users').insert(payload);
+    await pool.query(
+      `INSERT INTO users (name, surname, email, password, avatar, whatsapp, bio)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      payload
+    );
     console.log('Usuário de teste criado.');
   }
 
@@ -68,5 +77,5 @@ main()
     process.exitCode = 1;
   })
   .finally(async () => {
-    await db.destroy();
+    await pool.end();
   });

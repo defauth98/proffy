@@ -19,14 +19,16 @@ const favoritesController = new FavoritesController();
 
 routes.post('/signup', authController.signin);
 routes.post('/login', authController.login);
-
 routes.post('/forget_password', authController.forgotPassword);
 routes.post('/recovery_password', authController.recoveryPassword);
+
+routes.use(AuthMiddleware);
 
 routes.get('/users/:id', userController.index);
 routes.put('/users/:id', userController.update);
 
 routes.get('/connections', connectionsController.index);
+routes.post('/connections', connectionsController.create);
 
 routes.post('/favorites', favoritesController.create);
 routes.get('/favorites/:id', favoritesController.index);
@@ -40,7 +42,4 @@ routes.put('/classes/:id', classesController.update);
 routes.post('/schedule/:id', scheduleController.create);
 routes.delete('/schedule/:class_id/:id', scheduleController.delete);
 
-routes.post('/connections', connectionsController.create);
-
-// routes.use(AuthMiddleware);
 export default routes;

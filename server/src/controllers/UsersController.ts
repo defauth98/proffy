@@ -1,40 +1,39 @@
+import { eq } from 'drizzle-orm';
 import { Request, Response } from 'express';
 
 import db from '../database/connection';
+import { users } from '../database/schema';
 
 export default class UserController {
   async index(req: Request, res: Response) {
     const { id } = req.params;
-    const users = await db('users')
-      .where({ id })
-      .select(
-        'users.id',
-        'users.name',
-        'users.surname',
-        'users.email',
-        'users.avatar',
-        'users.whatsapp',
-        'users.bio'
-      );
+    const user = await db.query.users.findFirst({
+      columns: {
+        id: true,
+        name: true,
+        surname: true,
+        email: true,
+        avatar: true,
+        whatsapp: true,
+        bio: true,
+      },
+      where: eq(users.id, Number(id)),
+    });
 
-    if (!users) {
-      return res.status(400).json({
-        error: 'Erro ao listar os usuários',
-      });
+    if (!user) {
+      return res.status(404).json({ error: 'Usuário não encontrado' });
     }
 
-    return res.json(users);
+    return res.json([user]);
   }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
 
     try {
-      await db('users').where({ id }).del();
+      await db.delete(users).where(eq(users.id, Number(id)));
 
-      return res.status(204).json({
-        message: 'Usuário deletado com sucesso.',
-      });
+      return res.status(204).json({ message: 'Usuário deletado com sucesso.' });
     } catch (error) {
       return res.status(400).json({
         error: 'Erro inesperado ao tentar deletar um usuário',
@@ -47,11 +46,21 @@ export default class UserController {
     const { name, surname, email, whatsapp, bio, avatar } = req.body;
 
     try {
-      await db('users')
-        .update({ name, surname, whatsapp, email, bio, avatar })
-        .where({ id });
+      const [updatedUser] = await db
+        .update(users)
+        .set({ name, surname, email, whatsapp, bio, avatar })
+        .where(eq(users.id, Number(id)))
+        .returning({ id: users.id });
+
+      if (!updatedUser) {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+      }
 
       return res.status(200).json({ message: 'success' });
-    } catch (error) {}
+    } catch (error) {
+      return res.status(400).json({
+        error: 'Erro inesperado ao tentar atualizar o usuário',
+      });
+    }
   }
 }

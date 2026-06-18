@@ -1,31 +1,80 @@
+import { and, eq, exists, gt, lte } from 'drizzle-orm';
 import { Request, Response } from 'express';
 
 import db from '../database/connection';
+import { classes, classSchedule } from '../database/schema';
 import covertHourToMinutes from '../utils/convertHourToMinutes';
 
 interface ScheduleItem {
-  id: string;
-  week_day: number;
+  id?: string | number;
+  week_day: number | string;
   from: string;
   to: string;
+}
+
+function normalizePage(page: unknown) {
+  const pageNumber = Number(page || 1);
+  return Number.isFinite(pageNumber) && pageNumber > 0 ? pageNumber : 1;
+}
+
+function mapClassListItem(classItem: any) {
+  return {
+    class_id: classItem.id,
+    subject: classItem.subject,
+    cost: classItem.cost,
+    user_id: classItem.user.id,
+    name: classItem.user.name,
+    avatar: classItem.user.avatar,
+    bio: classItem.user.bio,
+    email: classItem.user.email,
+    surname: classItem.user.surname,
+    whatsapp: classItem.user.whatsapp,
+  };
+}
+
+function mapClass(classItem: typeof classes.$inferSelect) {
+  return {
+    id: classItem.id,
+    subject: classItem.subject,
+    cost: classItem.cost,
+    user_id: classItem.userId,
+  };
+}
+
+function mapSchedule(scheduleItem: typeof classSchedule.$inferSelect) {
+  return {
+    id: scheduleItem.id,
+    week_day: scheduleItem.weekDay,
+    from: scheduleItem.from,
+    to: scheduleItem.to,
+    class_id: scheduleItem.classId,
+    created_at: scheduleItem.createdAt,
+  };
 }
 
 export default class ClassesController {
   async index(request: Request, response: Response) {
     const { id } = request.params;
-    const { page } = request.query;
+    const page = normalizePage(request.query.page);
+    const offset = (page - 1) * 5;
 
     if (id) {
       try {
-        const userClass = await db('classes').where({ user_id: id });
-
-        const classSchedule = await db('class_schedule').where({
-          class_id: userClass[0].id,
+        const userClass = await db.query.classes.findFirst({
+          where: eq(classes.userId, Number(id)),
+          with: {
+            schedule: true,
+          },
         });
 
-        return response
-          .status(200)
-          .json({ class: userClass[0], schedule: classSchedule });
+        if (!userClass) {
+          return response.status(404).json({ error: 'Class not found' });
+        }
+
+        return response.status(200).json({
+          class: mapClass(userClass),
+          schedule: userClass.schedule.map(mapSchedule),
+        });
       } catch (error) {
         return response.status(400).json({ error });
       }
@@ -35,94 +84,82 @@ export default class ClassesController {
 
     if (filters.subject && filters.week_day && filters.time) {
       const subject = filters.subject as string;
-      const week_day = filters.week_day as string;
+      const week_day = Number(filters.week_day);
       const time = filters.time as string;
 
       const timeInMinutes = covertHourToMinutes(time);
 
-      const classes = await db('classes')
-        .whereExists(function () {
-          this.select('class_schedule.*')
-            .from('class_schedule')
-            .whereRaw('class_schedule.class_id = classes.id')
-            .whereRaw('class_schedule.week_day = ??', [Number(week_day)])
-            .whereRaw('class_schedule.from <= ?? ', [timeInMinutes])
-            .whereRaw('class_schedule.to > ?? ', [timeInMinutes]);
-        })
-        .where('classes.subject', '=', subject)
-        .join('users', 'classes.user_id', '=', 'users.id')
-        .select([
-          'classes.id as class_id',
-          'classes.subject',
-          'classes.cost',
-          'users.id as user_id',
-          'users.name',
-          'users.avatar',
-          'users.bio',
-          'users.email',
-          'users.surname',
-          'users.whatsapp',
-        ])
-        .limit(5)
-        .offset((Number(page) - 1) * 5);
+      const filteredClasses = await db.query.classes.findMany({
+        where: and(
+          eq(classes.subject, subject),
+          exists(
+            db
+              .select({ id: classSchedule.id })
+              .from(classSchedule)
+              .where(
+                and(
+                  eq(classSchedule.classId, classes.id),
+                  eq(classSchedule.weekDay, week_day),
+                  lte(classSchedule.from, timeInMinutes),
+                  gt(classSchedule.to, timeInMinutes)
+                )
+              )
+          )
+        ),
+        with: {
+          user: true,
+        },
+        limit: 5,
+        offset,
+      });
 
-      return response.json(classes);
+      return response.json(filteredClasses.map(mapClassListItem));
     }
 
-    const classes = await db('classes')
-      .join('users', 'classes.user_id', '=', 'users.id')
-      .select([
-        'classes.id as class_id',
-        'classes.subject',
-        'classes.cost',
-        'users.id as user_id',
-        'users.name',
-        'users.avatar',
-        'users.bio',
-        'users.email',
-        'users.surname',
-        'users.whatsapp',
-      ])
-      .limit(5)
-      .offset((Number(page) - 1) * 5);
+    const allClasses = await db.query.classes.findMany({
+      with: {
+        user: true,
+      },
+      limit: 5,
+      offset,
+    });
 
-    return response.json(classes);
+    return response.json(allClasses.map(mapClassListItem));
   }
 
   async create(request: Request, response: Response) {
     const { subject, cost, schedule, user_id } = request.body;
 
-    const trx = await db.transaction();
+    if (!subject || !cost || !user_id || !Array.isArray(schedule)) {
+      return response.status(400).json({ error: 'Dados obrigatórios ausentes' });
+    }
 
     try {
-      const insertedClassesIds = await trx('classes')
-        .insert({
+      const [insertedClass] = await db
+        .insert(classes)
+        .values({
           subject,
-          cost,
-          user_id,
+          cost: String(cost),
+          userId: Number(user_id),
         })
-        .returning('id');
+        .returning({ id: classes.id });
 
-      const class_id = insertedClassesIds[0];
+      const classId = insertedClass.id;
 
-      const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {
-        return {
-          class_id,
-          week_day: scheduleItem.week_day,
-          from: covertHourToMinutes(scheduleItem.from),
-          to: covertHourToMinutes(scheduleItem.to),
-        };
-      });
+      await Promise.all(
+        schedule.map((scheduleItem: ScheduleItem) =>
+          db.insert(classSchedule).values({
+            classId,
+            weekDay: Number(scheduleItem.week_day),
+            from: covertHourToMinutes(scheduleItem.from),
+            to: covertHourToMinutes(scheduleItem.to),
+          })
+        )
+      );
 
-      await trx('class_schedule').insert(classSchedule);
-
-      await trx.commit();
-
-      return response.status(201).send();
+      return response.status(201).json({ id: classId });
     } catch (error) {
       console.log(error);
-
-      await trx.rollback();
 
       return response.status(400).json({
         error: 'Unexpected error while creating new class',
@@ -134,27 +171,48 @@ export default class ClassesController {
     const { id } = request.params;
     const { subject, cost, schedule } = request.body;
 
-    try {
-      const updatedClassID = await db('classes')
-        .update({
-          subject,
-          cost,
-        })
-        .where({ user_id: id })
-        .returning('id');
+    if (!subject || !cost || !Array.isArray(schedule)) {
+      return response.status(400).json({ error: 'Dados obrigatórios ausentes' });
+    }
 
-      schedule.map(async (scheduleItem: ScheduleItem, index: number) => {
-        await db('class_schedule')
-          .update({
-            week_day: scheduleItem.week_day,
+    try {
+      const [updatedClass] = await db
+        .update(classes)
+        .set({ subject, cost: String(cost) })
+        .where(eq(classes.userId, Number(id)))
+        .returning({ id: classes.id });
+
+      if (!updatedClass) {
+        return response.status(404).json({ error: 'Class not found' });
+      }
+
+      const classId = updatedClass.id;
+
+      await Promise.all(
+        schedule.map((scheduleItem: ScheduleItem) => {
+          const values = {
+            weekDay: Number(scheduleItem.week_day),
             from: covertHourToMinutes(scheduleItem.from),
             to: covertHourToMinutes(scheduleItem.to),
-          })
-          .where({ class_id: updatedClassID[0] })
-          .andWhere({ id: index + 1 });
-      });
+          };
 
-      return response.status(200).json({ id: updatedClassID[0] });
+          if (scheduleItem.id) {
+            return db
+              .update(classSchedule)
+              .set(values)
+              .where(
+                and(
+                  eq(classSchedule.classId, classId),
+                  eq(classSchedule.id, Number(scheduleItem.id))
+                )
+              );
+          }
+
+          return db.insert(classSchedule).values({ ...values, classId });
+        })
+      );
+
+      return response.status(200).json({ id: classId });
     } catch (error) {
       return response
         .status(400)

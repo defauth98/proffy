@@ -1,4 +1,4 @@
-.PHONY: help install install-web install-server install-mobile db-up db-wait db-down db-logs db-reset migrate seed dev dev-web dev-server dev-mobile build-web
+.PHONY: help install install-web install-server install-mobile db-up db-wait db-down db-logs db-reset migrate seed dev dev-web dev-server dev-mobile build-web test-server test-server-unit test-server-integration typecheck-server typecheck-web typecheck-mobile verify
 
 COMPOSE = docker compose -f server/docker-compose.yml
 
@@ -16,6 +16,13 @@ help:
 	@echo "  make dev-server     Inicia banco e roda apenas o server"
 	@echo "  make dev-mobile     Roda apenas o mobile com Expo"
 	@echo "  make build-web      Gera build de produção do web"
+	@echo "  make test-server    Roda testes unitários e integração do server com Testcontainers"
+	@echo "  make test-server-unit         Roda testes unitários do server"
+	@echo "  make test-server-integration  Roda testes de integração do server com Docker/Testcontainers"
+	@echo "  make typecheck-server         Roda typecheck do server"
+	@echo "  make typecheck-web            Roda build/typecheck do web"
+	@echo "  make typecheck-mobile         Roda typecheck do mobile"
+	@echo "  make verify         Roda testes do server e verificações de server/web/mobile"
 
 install: install-web install-server install-mobile
 
@@ -68,3 +75,23 @@ dev-mobile:
 
 build-web:
 	pnpm --dir web run build
+
+test-server:
+	pnpm --dir server run test
+
+test-server-unit:
+	pnpm --dir server run test:unit
+
+test-server-integration:
+	pnpm --dir server run test:integration
+
+typecheck-server:
+	pnpm --dir server exec tsc --noEmit
+
+typecheck-web:
+	pnpm --dir web run build
+
+typecheck-mobile:
+	pnpm --dir mobile exec tsc --noEmit
+
+verify: test-server typecheck-server typecheck-web typecheck-mobile
