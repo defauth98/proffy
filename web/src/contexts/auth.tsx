@@ -50,7 +50,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const storagedToken = localStorage.getItem('@RNauth:token');
 
       if (storagedUser && storagedToken) {
-        api.defaults.headers.common.Authorization = `Bearer ${storagedToken}`;
+        const token = storagedToken.startsWith('"')
+          ? JSON.parse(storagedToken)
+          : storagedToken;
+
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
         setUser(JSON.parse(storagedUser));
         setLoading(false);
       } else {
@@ -72,7 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (save) {
       localStorage.setItem('@RNauth:user', JSON.stringify(userData));
-      localStorage.setItem('@RNauth:token', JSON.stringify(token));
+      localStorage.setItem('@RNauth:token', token);
     }
   }
 

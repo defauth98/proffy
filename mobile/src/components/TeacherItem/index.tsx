@@ -47,6 +47,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
   LoadFavorites,
 }) => {
   const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<string | null>(null);
   const [monday, setMonday] = useState<scheduleItem | null>(null);
   const [tuesday, setTuesday] = useState<scheduleItem | null>(null);
   const [wednesday, setWednesday] = useState<scheduleItem | null>(null);
@@ -92,6 +93,7 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
       response.data.map((responseItem: ResponseItem) => {
         if (teacher.class_id === responseItem.class_id) {
           setIsFavorited(true);
+          setFavoriteId(responseItem.id);
         }
       });
     }
@@ -107,14 +109,16 @@ const TeacherItem: React.FC<TeacherItemProps> = ({
   }
 
   async function handleToggleFavorite() {
-    if (isFavorited === true) {
-      await api.delete(`favorites/${teacher?.id}`);
+    if (isFavorited === true && favoriteId) {
+      await api.delete(`favorites/${favoriteId}`);
+      setFavoriteId(null);
       setIsFavorited(false);
     } else {
-      await api.post('favorites', {
+      const response = await api.post('favorites', {
         favorite_user_id: user?.id,
         favorited_class_id: teacher.class_id,
       });
+      setFavoriteId(String(response.data[0]));
       setIsFavorited(true);
     }
 

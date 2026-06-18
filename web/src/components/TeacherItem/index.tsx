@@ -53,17 +53,17 @@ function TeacherItem({ teacher }: TeacherItemProps) {
   }
 
   function getWeekDays() {
-    api.get(`classes/${teacher.class_id}`).then((response) => {
+    api.get(`classes/${teacher.user_id}`).then((response) => {
       getDaysOfWeek(response.data);
     });
   }
 
   useEffect(() => {
     getWeekDays();
-  }, [teacher, teacher.id]);
+  }, [teacher, teacher.user_id]);
 
   function createNewConnection() {
-    api.post('connections', { user_id: teacher.id });
+    api.post('connections', { user_id: teacher.user_id });
   }
 
   function convertToHour(date: any): String {

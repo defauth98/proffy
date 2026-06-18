@@ -107,7 +107,7 @@ function ListClasses() {
       <main>
         {classes.map((teacher: Class) => (
           <TeacherItem
-            key={`${teacher.id} ${teacher.name}`}
+            key={`${teacher.class_id} ${teacher.name}`}
             teacher={teacher}
           />
         ))}

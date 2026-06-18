@@ -3,14 +3,16 @@ import api from './api';
 
 export const requestFilteredClasses = async (classFilter: ClassFilter) => {
   const response = await api.get<Class[]>('classes', {
-    params: classFilter,
+    params: { ...classFilter, page: 1 },
   });
 
   return response.data;
 };
 
 export const requestAllClasses = async () => {
-  const response = await api.get<Class[]>('classes');
+  const response = await api.get<Class[]>('classes', {
+    params: { page: 1 },
+  });
 
   return response.data;
 };

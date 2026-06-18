@@ -29,6 +29,9 @@ importers:
       '@expo-google-fonts/poppins':
         specifier: ^0.1.0
         version: 0.1.0
+      '@expo/vector-icons':
+        specifier: ^12.0.5
+        version: 12.0.5
       '@react-native-async-storage/async-storage':
         specifier: ~1.15.0
         version: 1.15.11(react-native@0.64.3(@babel/core@7.16.0)(@babel/preset-env@7.16.0(@babel/core@7.16.0))(react@17.0.1))
@@ -9189,7 +9192,7 @@ snapshots:
   type-is@1.6.18:
     dependencies:
       media-typer: 0.3.0
-      mime-types: 2.1.34
+      mime-types: 2.1.35
 
   typescript@4.3.5: {}
 
